@@ -31,7 +31,7 @@ function App() {
       <Components.OverlayContainer signingIn={signIn}>
         <Components.Overlay signingIn={signIn}>
           <Components.LeftOverlayPanel signingIn={signIn}>
-            <Components.Title>Benvenuto!</Components.Title>
+            <Components.Title>Benvenuti!</Components.Title>
             <Components.Paragraph>
               Sei uno studente? Clicca qui sotto!
             </Components.Paragraph>
