@@ -1,12 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import * as Components from "./Components";
-import "../styles.css";
-import HomePage from "../main/HomePage";
-import OTP from "../OTP/indexOTP";
+import * as Components from "./RegisterComponents";
+import "../../styles.css";
+import HomePage from "../../main/HomePage";
+import OTP from "../../OTP/indexOTP";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import Login from "../login/login";
 
-function App() {
+function Register() {
     const [signIn, toggle] = React.useState(true);
     return (
         <>
@@ -62,16 +63,5 @@ function App() {
     );
 }
 
-export default App; // Add this line to export App as a default export
+export default Register; // Add this line to export App as a default export
 
-const rootElement = document.getElementById("root");
-ReactDOM.render(
-    <Router>
-        <Routes>
-            <Route path="/" element={<App />} />
-            <Route path="/homepage" element={<HomePage />} />
-            <Route path="/OTP" element={<OTP />} />
-        </Routes>
-    </Router>,
-    rootElement
-);
