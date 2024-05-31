@@ -20,7 +20,7 @@ function App() {
       <Components.SignInContainer signingIn={signIn}>
         <Components.Form>
           <Components.Title>Studente</Components.Title>
-          <Components.Input type="naame" placeholder="Nome" />
+          <Components.Input type="name" placeholder="Nome" />
           <Components.Input type="surname" placeholder="Cognome" />
           <Components.Input type="email" placeholder="Email" />
           <Components.Input type="password" placeholder="Password" />
@@ -40,9 +40,9 @@ function App() {
             </Components.GhostButton>
           </Components.LeftOverlayPanel>
           <Components.RightOverlayPanel signingIn={signIn}>
-            <Components.Title>Benvenuti!</Components.Title>
+            <Components.Title>Benvenuto!</Components.Title>
             <Components.Paragraph>
-              Siete un'azienda? Cliccate qui sotto!
+              Sei un'azienda? Clicca qui sotto!
             </Components.Paragraph>
             <Components.GhostButton onClick={() => toggle(false)}>
               Azienda

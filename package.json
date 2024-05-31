@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "main": "src/index.jsx",
+  "main": "src/indexOTP.jsx",
   "dependencies": {
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
+    "react-router-dom": "^6.23.1",
     "styled-components": "4.4.1"
   },
   "devDependencies": {
