@@ -9,7 +9,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 function App() {
     const [signIn, toggle] = React.useState(true);
     return (
-        <Components.Container>
+        <>
+            <Components.Container>
             <Components.SignUpContainer signingIn={signIn}>
                 <Components.Form>
                     <Components.Title>Azienda</Components.Title>
@@ -18,6 +19,8 @@ function App() {
                     <Components.Input type="password" placeholder="Telefono" />
                     <Components.Input type="address" placeholder="Indirizzo" />
                     <Components.Button>Richiedi Accesso</Components.Button>
+                    <Components.AlreadyRegistered to="/login"> Hai già un account? </Components.AlreadyRegistered>
+
                 </Components.Form>
             </Components.SignUpContainer>
             <Components.SignInContainer signingIn={signIn}>
@@ -29,6 +32,7 @@ function App() {
                     <Components.Input type="password" placeholder="Password" />
                     <Components.Input type="passwordConf" placeholder="Conferma Password" />
                     <Components.Button>Registrati</Components.Button>
+                    <Components.AlreadyRegistered to="/login"> Hai già un account? </Components.AlreadyRegistered>
                 </Components.Form>
             </Components.SignInContainer>
             <Components.OverlayContainer signingIn={signIn}>
@@ -54,6 +58,7 @@ function App() {
                 </Components.Overlay>
             </Components.OverlayContainer>
         </Components.Container>
+        </>
     );
 }
 

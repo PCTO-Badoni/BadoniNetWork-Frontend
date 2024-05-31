@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import {Link} from "react-router-dom";
 
 // const show = keyframes`
 //   0%, 49.99% {
@@ -96,16 +97,18 @@ export const Button = styled.button`
   border: 1px solid #5865F2;
   background-color: #5865F2;
   color: #ffffff;
-  margin: 8px 0;
+  margin: 8px 0 0;
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
+
   &:active {
     transform: scale(0.95);
   }
+
   &:focus {
     outline: none;
   }
@@ -186,4 +189,24 @@ export const Paragraph = styled.p`
   line-height: 20px;
   letter-spacing: 0.5px;
   margin: 20px 0 30px;
+`;
+
+export const Header = styled.div`
+    background-color: white;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    `;
+
+// "sei già registrato?" testo
+
+export const AlreadyRegistered = styled(Link)`
+  font-size: 14px;
+  font-weight: 100;
+  line-height: 20px;
+  letter-spacing: 0.5px;
+  color: inherit; // Add this to keep the inherited color
+  text-decoration: none; // Add this to remove the underline
+  margin: 10px 0 30px;
 `;

@@ -6,6 +6,10 @@ import OTP from "./OTP/indexOTP";
 
 function PageController() {
     return (
+        <>
+        <div>
+            <h1>Page Controller</h1>
+        </div>
         <Router>
             <Routes>
                 <Route path="/" element={<App />} />
@@ -13,6 +17,7 @@ function PageController() {
                 <Route path="/OTP" element={<OTP />} />
             </Routes>
         </Router>
+        </>
     );
 }
 
