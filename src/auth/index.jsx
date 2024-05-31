@@ -14,7 +14,7 @@ function App() {
                 <Components.Form>
                     <Components.Title>Azienda</Components.Title>
                     <Components.Input type="text" placeholder="Ragione Sociale" />
-                    P<Components.Input type="email" placeholder="Email" />
+                    <Components.Input type="email" placeholder="Email" />
                     <Components.Input type="password" placeholder="Telefono" />
                     <Components.Input type="address" placeholder="Indirizzo" />
                     <Components.Button>Richiedi Accesso</Components.Button>
