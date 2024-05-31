@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "keywords": [],
-  "main": "src/indexOTP.jsx",
+  "main": "src/PageController.jsx",
   "dependencies": {
     "react": "^16.14.0",
     "react-dom": "^16.14.0",

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import batmanLogo from '../assets/logo.png'; // Assicurati che il percorso sia corretto
+import batmanLogo from '../../assets/logo.png';
 
 export const Container = styled.div`
     background-color: #fff;
