@@ -1,4 +1,4 @@
-import * as OTPComponents from "./homeComponents.js";
+import * as HomeComponents from "./HomeComponents.js";
 import ReactDOM from "react-dom";
 import React from "react";
 import "../styles.css";
@@ -7,9 +7,9 @@ import Register from '../auth/register/register';
 
 function HomePage() {
     return (
-        <OTPComponents.Container>
+        <HomeComponents.Container>
             {/* Aggiungi qui il contenuto della tua homepage */}
-        </OTPComponents.Container>
+        </HomeComponents.Container>
     );
 }
 export default HomePage;
