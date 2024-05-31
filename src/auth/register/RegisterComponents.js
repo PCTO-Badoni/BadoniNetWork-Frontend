@@ -36,6 +36,26 @@ export const Container = styled.div`
   min-height: 600px;
 `;
 
+export const sendingEmail = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    text-align: center; 
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+    `
+
+
 export const SignUpContainer = styled.div`
   position: absolute;
   top: 0;
