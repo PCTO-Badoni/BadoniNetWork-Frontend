@@ -12,7 +12,7 @@ function Login() {
                 <LoginComponents.Input type="email" placeholder="Email" required/>
                 <LoginComponents.Input type="password" placeholder="Password" required/>
                 <LoginComponents.Button>Accedi</LoginComponents.Button>
-                <LoginComponents.clickableText to="/forgotPassword">Password Dimenticata</LoginComponents.clickableText>
+                <LoginComponents.clickableText to="/forgotPassword">Password dimenticata?</LoginComponents.clickableText>
                 <LoginComponents.clickableText to="/">Non hai un account? Registrati</LoginComponents.clickableText>
             </LoginComponents.Form>
         </LoginComponents.Container>
