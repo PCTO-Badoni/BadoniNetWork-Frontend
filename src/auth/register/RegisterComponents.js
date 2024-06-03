@@ -53,8 +53,7 @@ export const sendingEmail = styled.div`
     font-weight: bold;
     font-size: 20px;
     color: #333;
-    `
-
+`;
 
 export const SignUpContainer = styled.div`
   position: absolute;
@@ -62,17 +61,17 @@ export const SignUpContainer = styled.div`
   height: 100%;
   transition: all 0.6s ease-in-out;
   left: 0;
-  width: 50%;
+  width: ${(props) => (props.isRegisterClicked ? "100%" : "50%")};
   opacity: 0;
   z-index: 1;
   ${(props) =>
-    props.signingIn !== true
-      ? `
+      props.signingIn !== true
+          ? `
   transform: translateX(100%);
-	opacity: 1;
-	z-index: 5;
-	`
-      : null}
+ opacity: 1;
+ z-index: 5;
+ `
+          : null}
 `;
 
 export const SignInContainer = styled.div`
@@ -81,10 +80,10 @@ export const SignInContainer = styled.div`
   height: 100%;
   transition: all 0.6s ease-in-out;
   left: 0;
-  width: 50%;
-  z-index: 2;
+  width: ${(props) => (props.isRegisterClicked ? "100%" : "50%")};
+  z-index: ${(props) => (props.isRegisterClicked ? "200" : "2")}; // Aggiunto cambio di z-index
   ${(props) =>
-    props.signingIn !== true ? `transform: translateX(100%);` : null}
+      props.signingIn !== true ? `transform: translateX(100%);` : null}
 `;
 
 export const Form = styled.form`

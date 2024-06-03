@@ -11,7 +11,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const errore = ""
 
-
 const sendingEmail = () => toast.info('Invio richiesta in corso...', {
     position: "top-right",
     autoClose: 30000,
@@ -47,7 +46,6 @@ const error = () => toast.error(errore, {
     transition: Bounce,
 });
 
-
 function Register() {
     const [signIn, toggle] = React.useState(true);
     const [ragionesociale, setRagione] = useState("")
@@ -57,12 +55,10 @@ function Register() {
     const [nome, setNome] = useState("");
     const [cognome, setCognome] = useState("");
     const [password, setPassword] = useState("");
+    const [isRegisterClicked, setRegisterClicked] = useState(false);
 
     let navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
-
-
-
 
     async function handleSubmitAzienda(event) {
         setIsSending(true);
@@ -159,7 +155,7 @@ function Register() {
     return (
             <>
                 <Components.Container>
-                <Components.SignUpContainer signingIn={signIn}>
+                <Components.SignUpContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
                     {isSending ? (
                         <Components.sendingEmail> invio richiesta in corso ... </Components.sendingEmail>
                     ) : (
@@ -176,16 +172,14 @@ function Register() {
                     }
 
                 </Components.SignUpContainer>
-                <Components.SignInContainer signingIn={signIn}>
-                    <Components.Form onSubmit={handleSubmitStudente}>
+                <Components.SignInContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>                    <Components.Form onSubmit={handleSubmitStudente}>
                         <Components.Title>Studente</Components.Title>
                         <Components.Input type="name" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required/>
                         <Components.Input type="surname" placeholder="Cognome" value={cognome} onChange={e => setCognome(e.target.value)} required/>
                         <Components.Input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required/>
                         <Components.Input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required/>
                         <Components.Input type="password" placeholder="Conferma Password" required/>
-                        <Components.Button>Registrati</Components.Button>
-                        <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
+                        <Components.Button onClick={() => setRegisterClicked(true)}>Registrati</Components.Button>                        <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
                     </Components.Form>
                 </Components.SignInContainer>
                 <Components.OverlayContainer signingIn={signIn}>
