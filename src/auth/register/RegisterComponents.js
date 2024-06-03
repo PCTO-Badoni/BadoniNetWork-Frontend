@@ -33,7 +33,8 @@ export const Container = styled.div`
   overflow: hidden;
   width: 1000px;
   max-width: 100%;
-  min-height: 600px;
+  min-height: 800px;
+  
 `;
 
 export const sendingEmail = styled.div`
@@ -55,33 +56,27 @@ export const sendingEmail = styled.div`
     color: #333;
 `;
 
-export const SignUpContainer = styled.div`
-  position: absolute;
-  top: 0;
-  height: 100%;
-  transition: all 0.6s ease-in-out;
-  left: 0;
-  width: ${(props) => (props.isRegisterClicked ? "100%" : "50%")};
-  opacity: 0;
-  z-index: 1;
-  ${(props) =>
-      props.signingIn !== true
-          ? `
-  transform: translateX(100%);
- opacity: 1;
- z-index: 5;
- `
-          : null}
+export const AziendaContainer = styled.div`
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    width   : 50%;
+    left: 0;
+    opacity: 0;
+    z-index: 1;
+    ${(props) => 
+            props.signingIn !== true ? `transform: translateX(100%); opacity: 1; z-index: 5;` : null}
 `;
 
-export const SignInContainer = styled.div`
+export const StudenteContainer = styled.div`
   position: absolute;
   top: 0;
   height: 100%;
   transition: all 0.6s ease-in-out;
   left: 0;
-  width: ${(props) => (props.isRegisterClicked ? "100%" : "50%")};
-  z-index: ${(props) => (props.isRegisterClicked ? "200" : "2")}; // Aggiunto cambio di z-index
+  width: 50%;
+  z-index: 1;
   ${(props) =>
       props.signingIn !== true ? `transform: translateX(100%);` : null}
 `;
@@ -89,7 +84,6 @@ export const SignInContainer = styled.div`
 export const Form = styled.form`
   background-color: #ffffff;
   display: flex;
-  align-items: center;
   justify-content: center;
   flex-direction: column;
   padding: 0 50px;
@@ -102,13 +96,13 @@ export const Title = styled.h1`
   margin: 0;
 `;
 
+
 export const Input = styled.input`
-  background-color: #eee;
-  border: none;
-  padding: 12px 15px;
-  margin: 7px 0;
-  width: 100%;
-  border-radius: 15px;
+    background-color: #ffffff;
+    border: 3px solid #eee;
+    padding: 12px 15px;
+    width: 100%;
+    border-radius: 15px;
 `;
 
 export const Button = styled.button`
@@ -116,18 +110,18 @@ export const Button = styled.button`
   border: 1px solid #5865F2;
   background-color: #5865F2;
   color: #ffffff;
-  margin: 8px 0 0;
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
   letter-spacing: 1px;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
-
+  margin: 8px 0 0;
+   
   &:active {
     transform: scale(0.95);
   }
-
+   
   &:focus {
     outline: none;
   }
@@ -138,24 +132,19 @@ export const GhostButton = styled(Button)`
   border-color: #ffffff;
 `;
 
-export const Anchor = styled.a`
-  color: #333;
-  font-size: 14px;
-  text-decoration: none;
-  margin: 15px 0;
-`;
-
 export const OverlayContainer = styled.div`
   position: absolute;
   top: 0;
   left: 50%;
-  width: 50%;
+  width: ${(props) => (props.isRegisterClicked ? "0%" : "50%")};
   height: 100%;
   overflow: hidden;
   transition: transform 0.6s ease-in-out;
-  z-index: 100;
+  z-index: 200;
+  transform-origin: right;
+  transform: scaleX(${(props) => (props.isRegisterClicked ? 0 : 1)});
   ${(props) =>
-    props.signingIn !== true ? `transform: translateX(-100%);` : null}
+      props.signingIn !== true ? `transform: translateX(-100%);` : null}
 `;
 
 export const Overlay = styled.div`
@@ -170,7 +159,7 @@ export const Overlay = styled.div`
   left: -100%;
   height: 100%;
   width: 200%;
-  transform: translateX(0);
+  transform: scaleX(${(props) => (props.isRegisterClicked ? 0 : 1)});
   transition: transform 0.6s ease-in-out;
   ${(props) =>
     props.signingIn !== true ? `transform: translateX(50%);` : null}
@@ -193,15 +182,17 @@ export const OverlayPanel = styled.div`
 
 export const LeftOverlayPanel = styled(OverlayPanel)`
   transform: translateX(-20%);
-  ${(props) => (props.signingIn !== true ? `transform: translateX(0);` : null)}
+  ${(props) => 
+          (props.signingIn !== true ? `transform: translateX(0);` : null)}
 `;
 
 export const RightOverlayPanel = styled(OverlayPanel)`
   right: 0;
   transform: translateX(0);
-  ${(props) =>
-    props.signingIn !== true ? `transform: translateX(20%);` : null}
+  ${(props) => 
+          props.signingIn !== true ? `transform: translateX(20%);` : null}
 `;
+
 export const Paragraph = styled.p`
   font-size: 14px;
   font-weight: 100;
@@ -216,7 +207,7 @@ export const Header = styled.div`
     padding: 10px;
     text-align: center;
     border-radius: 10px 10px 0 0;
-    `;
+`;
 
 // "sei già registrato?" testo
 

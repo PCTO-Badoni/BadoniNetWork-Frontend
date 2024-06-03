@@ -8,7 +8,10 @@ import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-
 import Login from "../login/login";
 import {ToastContainer, toast, Bounce} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 
+const arrowLeft = <FontAwesomeIcon icon={faArrowLeft} />
 const errore = ""
 
 const sendingEmail = () => toast.info('Invio richiesta in corso...', {
@@ -22,6 +25,7 @@ const sendingEmail = () => toast.info('Invio richiesta in corso...', {
     theme: "light",
     transition: Bounce,
 });
+
 const emailSent = () => toast.success('Richiesta inviata!', {
     position: "top-right",
     autoClose: 5000,
@@ -56,6 +60,8 @@ function Register() {
     const [cognome, setCognome] = useState("");
     const [password, setPassword] = useState("");
     const [isRegisterClicked, setRegisterClicked] = useState(false);
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordsMatch, setPasswordsMatch] = useState(true);
 
     let navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
@@ -110,6 +116,14 @@ function Register() {
 
         event.preventDefault();
 
+        if (password !== confirmPassword) {
+            toast.error('Le password non corrispondono');
+            setPasswordsMatch(false);
+            return;
+        }
+
+        setPasswordsMatch(true);
+
         const data = {
             nome,
             cognome,
@@ -155,43 +169,59 @@ function Register() {
     return (
             <>
                 <Components.Container>
-                <Components.SignUpContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
+                <Components.AziendaContainer signingIn={signIn}>
                     {isSending ? (
                         <Components.sendingEmail> invio richiesta in corso ... </Components.sendingEmail>
                     ) : (
-                            <Components.Form onSubmit={handleSubmitAzienda}>
-                                <Components.Title>Azienda</Components.Title>
-                                <Components.Input type="ragione_sociale" placeholder="Ragione Sociale" value={ragionesociale} onChange={e => setRagione(e.target.value)} required/>
-                                <Components.Input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required/>
-                                <Components.Input type="telefono" placeholder="Telefono" value={telefono} onChange={e => setTelefono(e.target.value)} required/>
-                                <Components.Input type="indirizzo" placeholder="Indirizzo" value={indirizzo} onChange={e => setIndirizzo(e.target.value)} required/>
-                                <Components.Button type="submit">Richiedi Accesso</Components.Button>
-                                <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
-                            </Components.Form>
+                        <Components.Form onSubmit={handleSubmitAzienda}>
+                            <Components.Title>Azienda</Components.Title>
+                            <label htmlFor="name">Ragione sociale</label>
+                            <Components.Input type="ragione_sociale" placeholder="es. Azienda S.p.A."
+                                              value={ragionesociale} onChange={e => setRagione(e.target.value)}
+                                              required/>
+                            <label htmlFor="name">Email</label>
+                            <Components.Input type="email" placeholder="es. azienda@gmail.com" value={email}
+                                              onChange={e => setEmail(e.target.value)} required/>
+                            <label htmlFor="name">Telefono</label>
+                            <Components.Input type="telefono" placeholder="es. 123 456 7890" value={telefono}
+                                              onChange={e => setTelefono(e.target.value)} required/>
+                            <label htmlFor="name">Indirizzo</label>
+                            <Components.Input type="indirizzo" placeholder="es. Via Rivolta 10" value={indirizzo}
+                                              onChange={e => setIndirizzo(e.target.value)} required/>
+                            <Components.Button type="submit">Richiedi Accesso</Components.Button>
+                            <Components.AlreadyRegistered to="/login"> Hai già un account?
+                                Accedi</Components.AlreadyRegistered>
+                        </Components.Form>
                     )
                     }
 
-                </Components.SignUpContainer>
-                <Components.SignInContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>                    <Components.Form onSubmit={handleSubmitStudente}>
+                </Components.AziendaContainer>
+                <Components.StudenteContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
+                    <Components.Form onSubmit={handleSubmitStudente}>
                         <Components.Title>Studente</Components.Title>
-                        <Components.Input type="name" placeholder="Nome" value={nome} onChange={e => setNome(e.target.value)} required/>
-                        <Components.Input type="surname" placeholder="Cognome" value={cognome} onChange={e => setCognome(e.target.value)} required/>
-                        <Components.Input type="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} required/>
-                        <Components.Input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required/>
-                        <Components.Input type="password" placeholder="Conferma Password" required/>
-                        <Components.Button onClick={() => setRegisterClicked(true)}>Registrati</Components.Button>                        <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
+                        <label htmlFor="name">Nome</label>
+                        <Components.Input type="name" placeholder="es. Mario" value={nome} onChange={e => setNome(e.target.value)} />
+                        <label htmlFor="surname">Cognome</label>
+                        <Components.Input type="surname" placeholder="es. Rossi" value={cognome} onChange={e => setCognome(e.target.value)} />
+                        <label htmlFor="email">Email</label>
+                        <Components.Input type="email" placeholder="es. rssmra04t18d416e@iisbadoni.edu.it" value={email} onChange={e => setEmail(e.target.value)} />
+                        <label htmlFor="Password">Password</label>
+                        <Components.Input type="password" placeholder="es: password" value={password} onChange={e => setPassword(e.target.value)} />
+                        <label htmlFor="Conferma password">Conferma Password</label>
+                        <Components.Input type="password" placeholder="es: password" value={confirmPassword} onChange={e => {setConfirmPassword(e.target.value);setPasswordsMatch(true);}} required style={passwordsMatch ? {} : {border: '1px solid red'}}/>
+                        <Components.Button onClick={() => setRegisterClicked(true)}>Registrati</Components.Button>
+                        <Components.Button onClick={() => setRegisterClicked(false)}>{arrowLeft}</Components.Button>
+                        <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
                     </Components.Form>
-                </Components.SignInContainer>
-                <Components.OverlayContainer signingIn={signIn}>
+                </Components.StudenteContainer>
+                <Components.OverlayContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
                     <Components.Overlay signingIn={signIn}>
                         <Components.LeftOverlayPanel signingIn={signIn}>
                             <Components.Title>Benvenuto!</Components.Title>
                             <Components.Paragraph>
                                 Sei uno studente? Clicca qui sotto!
                             </Components.Paragraph>
-                            <Components.GhostButton onClick={() => {
-                                isSending ? toast.error('Attendi l\'invio della richiesta') : toggle(true);
-                            }}>
+                            <Components.GhostButton onClick={() => {isSending ? toast.error('Attendi l\'invio della richiesta') : toggle(true);}}>
                                 Studente
                             </Components.GhostButton>
                         </Components.LeftOverlayPanel>
