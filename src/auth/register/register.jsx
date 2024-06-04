@@ -108,7 +108,7 @@ const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, 
 
     return (
         <Components.Form onSubmit={handleSubmitStudente}>
-            <Components.Title visible={false}>Studente</Components.Title>
+            <Components.Title visible={!isRegisterClicked}>Studente</Components.Title>
             <label htmlFor="email">Email</label>
             <Components.Input type="email" placeholder="es. rssmra04t18d416e@iisbadoni.edu.it" value={email}
                               onChange={e => setEmail(e.target.value)}/>

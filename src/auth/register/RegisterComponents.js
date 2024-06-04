@@ -100,9 +100,8 @@ export const Title = styled.h1`
   margin: 0;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
-  $props: ${(props) =>
-      props.visible ? `opacity: 1` : `opacity: 0`}
-  `;
+  ${props => props.visible === false && `display: none;`}
+`;
 
 
 export const Input = styled.input`
