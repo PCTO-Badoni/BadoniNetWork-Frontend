@@ -75,10 +75,10 @@ export const StudenteContainer = styled.div`
   height: 100%;
   transition: all 0.6s ease-in-out;
   left: 0;
-  width: 50%;
+  width: ${(props) => (!props.isRegisterClicked ? "50%" : "100%")};
   z-index: 1;
   ${(props) =>
-      props.signingIn !== true ? `transform: translateX(100%);` : null}
+      props.signingIn !== true ? `transform: translateX(100%);` : `transform: translateX(0%)`}
 `;
 
 export const Form = styled.form`
@@ -117,11 +117,7 @@ export const Button = styled.button`
   text-transform: uppercase;
   transition: transform 80ms ease-in;
   margin: 8px 0 0;
-   
-  &:active {
-    transform: scale(0.95);
-  }
-   
+  
   &:focus {
     outline: none;
   }
@@ -136,15 +132,16 @@ export const OverlayContainer = styled.div`
   position: absolute;
   top: 0;
   left: 50%;
-  width: ${(props) => (props.isRegisterClicked ? "0%" : "50%")};
+  width: 50%;
   height: 100%;
   overflow: hidden;
-  transition: transform 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
   z-index: 200;
   transform-origin: right;
-  transform: scaleX(${(props) => (props.isRegisterClicked ? 0 : 1)});
   ${(props) =>
-      props.signingIn !== true ? `transform: translateX(-100%);` : null}
+      props.signingIn !== true ? `transform: translateX(-100%);` : `transform: translateX(0%);`}
+  ${(props) =>
+      props.isRegisterClicked === true ? `transform: translateX(100%);` : null}
 `;
 
 export const Overlay = styled.div`
@@ -159,10 +156,9 @@ export const Overlay = styled.div`
   left: -100%;
   height: 100%;
   width: 200%;
-  transform: scaleX(${(props) => (props.isRegisterClicked ? 0 : 1)});
-  transition: transform 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
   ${(props) =>
-    props.signingIn !== true ? `transform: translateX(50%);` : null}
+    props.signingIn !== true ? `transform: translateX(50%);` : `transform: translateX(0%);`}
 `;
 
 export const OverlayPanel = styled.div`
@@ -177,7 +173,7 @@ export const OverlayPanel = styled.div`
   height: 100%;
   width: 50%;
   transform: translateX(0);
-  transition: transform 0.6s ease-in-out;
+  transition: all 0.6s ease-in-out;
 `;
 
 export const LeftOverlayPanel = styled(OverlayPanel)`

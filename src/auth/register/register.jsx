@@ -167,8 +167,8 @@ function Register() {
     };
 
     return (
-            <>
-                <Components.Container>
+        <>
+            <Components.Container>
                 <Components.AziendaContainer signingIn={signIn}>
                     {isSending ? (
                         <Components.sendingEmail> invio richiesta in corso ... </Components.sendingEmail>
