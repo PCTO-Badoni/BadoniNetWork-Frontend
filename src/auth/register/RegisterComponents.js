@@ -246,12 +246,4 @@ export const AlreadyRegistered = styled(Link)`
 `;
 
 
-export const ProfilePicLoader = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    background-color: #ffffff;
-    border-radius: 100px;
-    `;
+

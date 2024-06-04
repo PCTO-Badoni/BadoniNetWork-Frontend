@@ -174,15 +174,7 @@ const Step2 = () => (
 const Step3 = () => (
     <>
         <Components.Form>
-            <ProfilePicUploader />
-            <label htmlFor="name">Nome</label>
-            <Components.Input type="name" placeholder="es. Mario" required/>
-            <label htmlFor="name">Cognome</label>
-            <Components.Input type="name" placeholder="es. Rossi" required/>
-            <label htmlFor="name">Data di nascita</label>
-            <Components.Input type="date" required/>
-            <label htmlFor="name">Indirizzo</label>
-            <Components.Input type="name" placeholder="es. Via Rivolta 10" required/>
+            :D
         </Components.Form>
     </>);
 
@@ -375,7 +367,9 @@ function Register() {
                     }
 
                 </Components.AziendaContainer>
-                <Components.StudenteContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
+                <Components.StudenteContainer className={isRegisterClicked? "shrinking" : ""}
+                                              isRegisterClicked={isRegisterClicked}
+                                              signingIn={signIn}>
 
                     {isRegisterClicked && (
                         <div className="progress-bar">
@@ -409,7 +403,9 @@ function Register() {
                     </div>
 
                 </Components.StudenteContainer>
-                <Components.OverlayContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
+                <Components.OverlayContainer className={isRegisterClicked? "shrinking" : ""}
+                                             isRegisterClicked={isRegisterClicked}
+                                             signingIn={signIn}>
                     <Components.Overlay signingIn={signIn}>
                         <Components.LeftOverlayPanel signingIn={signIn}>
                             <Components.Title>Benvenutæ!</Components.Title>

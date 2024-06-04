@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 const ProfilePicUploader = () => {
-    const [selectedImage, setSelectedImage] = useState(null);
+    const [selectedImage, setSelectedImage] = useState("https://cdn-icons-png.freepik.com/256/14534/14534508.png?semt=ais_hybrid");
 
     const handleImageChange = (e) => {
         if (e.target.files && e.target.files[0]) {
