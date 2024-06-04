@@ -10,9 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import StrengthMeter from "./StrengthMeter";
-
-// import the progress bar
+import ProfilePicUploader from "./ProfilePicUploader";
+import 'react-tooltip/dist/react-tooltip.css'// import the progress bar
+import { Tooltip as ReactTooltip } from 'react-tooltip'
 
 const arrowLeft = <FontAwesomeIcon icon={faArrowLeft} />
 const arrowRight = <FontAwesomeIcon icon={faArrowRight} />
@@ -55,17 +57,14 @@ const error = () => toast.error(errore, {
     transition: Bounce,
 });
 
-const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, passwordsMatch, setRegisterClicked, setPasswordStrength, handleSubmitStudente, setPasswordMatch, isRegisterClicked}) => {
-    const handlePasswordChange = (e) => {
-        const newPassword = e.target.value;
-        setPassword(newPassword);
-    };
+const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, passwordsMatch, setRegisterClicked, passwordStrength, handleSubmitStudente, setPasswordsMatch, isRegisterClicked, handleNext}) => {
 
     const [pwdInput, initValue] = useState({
         password: "",
     });
-
+    const [showPassword, setShowPassword] = useState(false);
     const [isError, setError] = useState(null);
+
     const onChange = (e) => {
         let password = e.target.value;
         initValue({
@@ -104,6 +103,7 @@ const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, 
 
     const initPwdInput = async (childData) => {
         initRobustPassword(childData);
+        setPasswordStrength(childData); // set passwordStrength based on the strength of the password
     };
 
     return (
@@ -113,29 +113,78 @@ const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, 
             <Components.Input type="email" placeholder="es. rssmra04t18d416e@iisbadoni.edu.it" value={email}
                               onChange={e => setEmail(e.target.value)}/>
             <label htmlFor="Password">Password</label>
-            <Components.Input type="password" placeholder="es: password" value={password} onChange={e => {
-                setPassword(e.target.value);
-                onChange(e)
-                }
-            } />
+            <div style={{position: 'relative', display: 'inline-block'}}>
+                <Components.Input
+                    type={showPassword ? "text" : "password"}
+                    value={password}
+                    onChange={e => {
+                        setPassword(e.target.value);
+                        onChange(e)
+                    }}
+                    style={{paddingRight: '30px'}} // Make room for the icon
+                />
+                <ReactTooltip place="top" type="dark" effect="solid" zIndex="1000">
+                    "La password"
+                </ReactTooltip>
+                <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                        border: 'none',
+                        background: 'transparent',
+                        position: 'absolute',
+                        top: '50%',
+                        right: '10px',
+                        cursor: 'pointer',
+                        zIndex: 200,
+                        transform: 'translateY(-50%)' // This is to vertically center the button
+                    }}
+                >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye}/>
+                </button>
+            </div>
+            <StrengthMeter password={pwdInput.password} actions={initPwdInput}/>
             <label htmlFor="Conferma password">Conferma Password</label>
-            <Components.Input type="password" placeholder="es: password" value={confirmPassword} onChange={e => {
+            <Components.Input type={showPassword ? "text" : "password"} value={confirmPassword} onChange={e => {
                 setConfirmPassword(e.target.value);
                 setPasswordsMatch(true);
             }} required style={passwordsMatch ? {} : {border: '1px solid red'}}/>
-            <StrengthMeter password={pwdInput.password} actions={initPwdInput} />
-            <Components.Button type={"submit"} onClick={() => setRegisterClicked(true)}>Registrati</Components.Button>
+            <Components.Button type={"submit"} onClick={() => handleNext()} /*disabled={!passwordStrength}*/>Continua</Components.Button>
             <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
         </Components.Form>
     );
 };
 
 const Step2 = () => (
-    <Components.Title>:3</Components.Title>);
-const Step3 = () => (
-    <Components.Title>8===D</Components.Title>
-);
+    <>
+        <Components.Form>
+        <ProfilePicUploader />
+        <label htmlFor="name">Nome</label>
+        <Components.Input type="name" placeholder="es. Mario" required/>
+        <label htmlFor="name">Cognome</label>
+        <Components.Input type="name" placeholder="es. Rossi" required/>
+        <label htmlFor="name">Data di nascita</label>
+        <Components.Input type="date" required/>
+        <label htmlFor="name">Indirizzo</label>
+        <Components.Input type="name" placeholder="es. Via Rivolta 10" required/>
 
+        </Components.Form>
+    </>
+)
+const Step3 = () => (
+    <>
+        <Components.Form>
+            <ProfilePicUploader />
+            <label htmlFor="name">Nome</label>
+            <Components.Input type="name" placeholder="es. Mario" required/>
+            <label htmlFor="name">Cognome</label>
+            <Components.Input type="name" placeholder="es. Rossi" required/>
+            <label htmlFor="name">Data di nascita</label>
+            <Components.Input type="date" required/>
+            <label htmlFor="name">Indirizzo</label>
+            <Components.Input type="name" placeholder="es. Via Rivolta 10" required/>
+        </Components.Form>
+    </>);
 
 function Register() {
     const [signIn, toggle] = React.useState(true);
@@ -153,6 +202,7 @@ function Register() {
     const [activeStep, setActiveStep] = useState(0);
     let navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
+
 
 
 
@@ -213,11 +263,6 @@ function Register() {
             return;
         }
 
-        if (!isStrongPassword(password)) {
-            toast.error('La password non è abbastanza sicura');
-            return;
-        }
-
         setPasswordsMatch(true);
 
         const data = {
@@ -264,14 +309,38 @@ function Register() {
 
     const handleNext = () => {
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setRegisterClicked(true);
     };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
+        if(activeStep === 1) {
+            setRegisterClicked(false);
+        }
+
     };
 
     const stepComponents = [
-        <Step1 nome={nome} setNome={setNome} cognome={cognome} setCognome={setCognome} email={email} setEmail={setEmail} password={password} setPassword={setPassword} confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} passwordsMatch={passwordsMatch} setRegisterClicked={setRegisterClicked} setPasswordStrength={setPasswordStrength} handleSubmitStudente={handleSubmitStudente} setPasswordMatch={setPasswordsMatch} isRegisterClicked={isRegisterClicked}/>,
+        <Step1
+            nome={nome}
+            setNome={setNome}
+            cognome={cognome}
+            setCognome={setCognome}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            confirmPassword={confirmPassword}
+            setConfirmPassword={setConfirmPassword}
+            passwordsMatch={passwordsMatch}
+            setRegisterClicked={setRegisterClicked}
+            setPasswordStrength={setPasswordStrength}
+            handleSubmitStudente={handleSubmitStudente}
+            setPasswordMatch={setPasswordsMatch}
+            isRegisterClicked={isRegisterClicked}
+            handleNext={handleNext}
+            passwordStrength={passwordStrength} // pass passwordStrength as a prop
+        />,
         <Step2 />,
         <Step3 />
     ];
@@ -302,18 +371,40 @@ function Register() {
                             <Components.AlreadyRegistered to="/login"> Hai già un account?
                                 Accedi</Components.AlreadyRegistered>
                         </Components.Form>
-                        )
+                    )
                     }
 
                 </Components.AziendaContainer>
                 <Components.StudenteContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
+
+                    {isRegisterClicked && (
+                        <div className="progress-bar">
+                            <div className="progress-bar-fill"
+                                 style={{width: `${(activeStep / (steps.length - 1)) * 100}%`}}>
+                            </div>
+                            <div className="progress-step" style={{opacity: activeStep >= 0 ? 1 : 0.5}}>
+                                <span className="progress-step-text">1</span>
+                            </div>
+                            <div className="progress-step" style={{opacity: activeStep >= 1 ? 1 : 0.5}}>
+                                <span className="progress-step-text">2</span>
+                            </div>
+                            <div className="progress-step" style={{opacity: activeStep >= 2 ? 1 : 0.5}}>
+                                <span className="progress-step-text">3</span>
+                            </div>
+                        </div>
+                    )}
+
                     {stepComponents[activeStep]}
                     <div style={{display: 'flex', justifyContent: 'space-between'}}>
-                        <Components.StepsNavButton isRegisterClicked={isRegisterClicked} onClick={() => { activeStep === 0 ? setRegisterClicked(false) : handleBack() }}>
+                        <Components.StepsNavButton isRegisterClicked={isRegisterClicked} onClick={() => {
+                            activeStep === 0 ? setRegisterClicked(false) : handleBack()
+                        }} disabled={!isRegisterClicked}>
                             Indietro
                         </Components.StepsNavButton>
-                        <Components.StepsNavButton isRegisterClicked={isRegisterClicked} onClick={() => { !isRegisterClicked ? setRegisterClicked(true) : handleNext() }} disabled={activeStep === steps.length - 1}>
-                            {activeStep === steps.length - 1 ? 'Salva' : "Avanti"}
+                        <Components.StepsNavButton isRegisterClicked={isRegisterClicked} onClick={() => {
+                            !isRegisterClicked ? setRegisterClicked(true) : handleNext()
+                        }} disabled={!isRegisterClicked}>
+                        {activeStep === steps.length - 1 ? 'Salva' : "Avanti"}
                         </Components.StepsNavButton>
                     </div>
 
@@ -325,7 +416,9 @@ function Register() {
                             <Components.Paragraph>
                                 Sei unæ student? Clicca qui sotto!
                             </Components.Paragraph>
-                            <Components.GhostButton onClick={() => {isSending ? toast.error('Attendi l\'invio della richiesta') : toggle(true);}}>
+                            <Components.GhostButton onClick={() => {
+                                isSending ? toast.error('Attendi l\'invio della richiesta') : toggle(true);
+                            }}>
                                 Studente
                             </Components.GhostButton>
                         </Components.LeftOverlayPanel>

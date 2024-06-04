@@ -56,10 +56,7 @@ const StrengthMeter = (props) => {
                 <p className="pwd-label">
                     {props.password && (
                         <div>
-                            <p className={`label strength-${initPwdChecker().val}`}>
-                                Sicurezza password:
-                                <strong>{initPwdChecker().val} </strong>
-                            </p>
+                            <p className={`label strength-${initPwdChecker().val}`}></p>
                         </div>
                     )}
                 </p>

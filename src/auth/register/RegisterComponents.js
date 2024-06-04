@@ -124,6 +124,7 @@ export const Button = styled.button`
   text-transform: uppercase;
   transition: transform 80ms ease-in;
   margin: 8px 0 0;
+  
   z-index: 50;
   
   &:focus {
@@ -243,3 +244,14 @@ export const AlreadyRegistered = styled(Link)`
   text-decoration: none; // Add this to remove the underline
   margin: 10px 0 30px;
 `;
+
+
+export const ProfilePicLoader = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 100px;
+    `;

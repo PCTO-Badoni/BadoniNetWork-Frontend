@@ -26,6 +26,7 @@ label {
   color: black;
   width: auto;
   z-index: 60;
+  user-select: none;
   text-shadow: rgb(255, 255, 255) 5px 0px 0px,
   rgb(255, 255, 255) 4.90033px 0.993347px 0px, rgb(255, 255, 255) 4.60531px 1.94709px 0px,
   rgb(255, 255, 255) 4.12668px 2.82321px 0px, rgb(255, 255, 255) 3.48353px 3.58678px 0px,
@@ -43,4 +44,25 @@ label {
   rgb(255, 255, 255) 3.17346px -3.86382px 0px, rgb(255, 255, 255) 3.87783px -3.15633px 0px,
   rgb(255, 255, 255) 4.4276px -2.32301px 0px, rgb(255, 255, 255) 4.80085px -1.39708px 0px,
   rgb(255, 255, 255) 4.98271px -0.415447px 0px;
+}
+
+.progress-bar {
+  width: 100%;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+}
+
+.progress-bar-fill {
+  height: 10px;
+  background-color: #4caf50;
+  border-radius: 5px;
+  width: 0;
+  transition: width 0.4s ease-in-out;
+}
+
+.progress-step {
+  position: relative;
+  float: left;
+  width: 33.33%; /* Adjust this value according to the number of steps */
+  text-align: center;
 }
