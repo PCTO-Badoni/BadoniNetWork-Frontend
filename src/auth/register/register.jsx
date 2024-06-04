@@ -1,7 +1,6 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import * as Components from "./RegisterComponents";
-import "../../styles.css";
 import HomePage from "../../main/homePage";
 import OTP from "../../OTP/indexOTP";
 import {BrowserRouter as Router, Route, Routes, useNavigate} from "react-router-dom";
@@ -10,9 +9,15 @@ import {ToastContainer, toast, Bounce} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons'
+import { faArrowRight } from '@fortawesome/free-solid-svg-icons'
+import StrengthMeter from "./StrengthMeter";
+
+// import the progress bar
 
 const arrowLeft = <FontAwesomeIcon icon={faArrowLeft} />
+const arrowRight = <FontAwesomeIcon icon={faArrowRight} />
 const errore = ""
+const steps = ['Step 1', 'Step 2', 'Step 3']; // Add or remove steps as needed
 
 const sendingEmail = () => toast.info('Invio richiesta in corso...', {
     position: "top-right",
@@ -50,6 +55,88 @@ const error = () => toast.error(errore, {
     transition: Bounce,
 });
 
+const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, passwordsMatch, setRegisterClicked, setPasswordStrength, handleSubmitStudente, setPasswordMatch, isRegisterClicked}) => {
+    const handlePasswordChange = (e) => {
+        const newPassword = e.target.value;
+        setPassword(newPassword);
+    };
+
+    const [pwdInput, initValue] = useState({
+        password: "",
+    });
+
+    const [isError, setError] = useState(null);
+    const onChange = (e) => {
+        let password = e.target.value;
+        initValue({
+            ...pwdInput,
+            password: e.target.value,
+        });
+        setError(null);
+        let caps, small, num, specialSymbol;
+        if (password.length < 4) {
+            setError(
+                "Password should contain minimum 4 characters, with one UPPERCASE, lowercase, number and special character: @$! % * ? &"
+            );
+            return;
+        } else {
+            caps = (password.match(/[A-Z]/g) || []).length;
+            small = (password.match(/[a-z]/g) || []).length;
+            num = (password.match(/[0-9]/g) || []).length;
+            specialSymbol = (password.match(/\W/g) || []).length;
+            if (caps < 1) {
+                setError("Must add one UPPERCASE letter");
+                return;
+            } else if (small < 1) {
+                setError("Must add one lowercase letter");
+                return;
+            } else if (num < 1) {
+                setError("Must add one number");
+                return;
+            } else if (specialSymbol < 1) {
+                setError("Must add one special symbol: @$! % * ? &");
+                return;
+            }
+        }
+    };
+
+    const [isStrong, initRobustPassword] = useState(null);
+
+    const initPwdInput = async (childData) => {
+        initRobustPassword(childData);
+    };
+
+    return (
+        <Components.Form onSubmit={handleSubmitStudente}>
+            <Components.Title visible={false}>Studente</Components.Title>
+            <label htmlFor="email">Email</label>
+            <Components.Input type="email" placeholder="es. rssmra04t18d416e@iisbadoni.edu.it" value={email}
+                              onChange={e => setEmail(e.target.value)}/>
+            <label htmlFor="Password">Password</label>
+            <Components.Input type="password" placeholder="es: password" value={password} onChange={e => {
+                setPassword(e.target.value);
+                onChange(e)
+                }
+            } />
+            <label htmlFor="Conferma password">Conferma Password</label>
+            <Components.Input type="password" placeholder="es: password" value={confirmPassword} onChange={e => {
+                setConfirmPassword(e.target.value);
+                setPasswordsMatch(true);
+            }} required style={passwordsMatch ? {} : {border: '1px solid red'}}/>
+            <StrengthMeter password={pwdInput.password} actions={initPwdInput} />
+            <Components.Button type={"submit"} onClick={() => setRegisterClicked(true)}>Registrati</Components.Button>
+            <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
+        </Components.Form>
+    );
+};
+
+const Step2 = () => (
+    <Components.Title>:3</Components.Title>);
+const Step3 = () => (
+    <Components.Title>8===D</Components.Title>
+);
+
+
 function Register() {
     const [signIn, toggle] = React.useState(true);
     const [ragionesociale, setRagione] = useState("")
@@ -60,11 +147,14 @@ function Register() {
     const [cognome, setCognome] = useState("");
     const [password, setPassword] = useState("");
     const [isRegisterClicked, setRegisterClicked] = useState(false);
+    const [passwordStrength, setPasswordStrength] = useState(false);
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordsMatch, setPasswordsMatch] = useState(true);
-
+    const [activeStep, setActiveStep] = useState(0);
     let navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
+
+
 
     async function handleSubmitAzienda(event) {
         setIsSending(true);
@@ -112,6 +202,7 @@ function Register() {
         }
     };
 
+
     async function handleSubmitStudente(event) {
 
         event.preventDefault();
@@ -119,6 +210,11 @@ function Register() {
         if (password !== confirmPassword) {
             toast.error('Le password non corrispondono');
             setPasswordsMatch(false);
+            return;
+        }
+
+        if (!isStrongPassword(password)) {
+            toast.error('La password non è abbastanza sicura');
             return;
         }
 
@@ -166,6 +262,20 @@ function Register() {
         }
     };
 
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const stepComponents = [
+        <Step1 nome={nome} setNome={setNome} cognome={cognome} setCognome={setCognome} email={email} setEmail={setEmail} password={password} setPassword={setPassword} confirmPassword={confirmPassword} setConfirmPassword={setConfirmPassword} passwordsMatch={passwordsMatch} setRegisterClicked={setRegisterClicked} setPasswordStrength={setPasswordStrength} handleSubmitStudente={handleSubmitStudente} setPasswordMatch={setPasswordsMatch} isRegisterClicked={isRegisterClicked}/>,
+        <Step2 />,
+        <Step3 />
+    ];
+
     return (
         <>
             <Components.Container>
@@ -192,34 +302,28 @@ function Register() {
                             <Components.AlreadyRegistered to="/login"> Hai già un account?
                                 Accedi</Components.AlreadyRegistered>
                         </Components.Form>
-                    )
+                        )
                     }
 
                 </Components.AziendaContainer>
                 <Components.StudenteContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
-                    <Components.Form onSubmit={handleSubmitStudente}>
-                        <Components.Title>Studente</Components.Title>
-                        <label htmlFor="name">Nome</label>
-                        <Components.Input type="name" placeholder="es. Mario" value={nome} onChange={e => setNome(e.target.value)} />
-                        <label htmlFor="surname">Cognome</label>
-                        <Components.Input type="surname" placeholder="es. Rossi" value={cognome} onChange={e => setCognome(e.target.value)} />
-                        <label htmlFor="email">Email</label>
-                        <Components.Input type="email" placeholder="es. rssmra04t18d416e@iisbadoni.edu.it" value={email} onChange={e => setEmail(e.target.value)} />
-                        <label htmlFor="Password">Password</label>
-                        <Components.Input type="password" placeholder="es: password" value={password} onChange={e => setPassword(e.target.value)} />
-                        <label htmlFor="Conferma password">Conferma Password</label>
-                        <Components.Input type="password" placeholder="es: password" value={confirmPassword} onChange={e => {setConfirmPassword(e.target.value);setPasswordsMatch(true);}} required style={passwordsMatch ? {} : {border: '1px solid red'}}/>
-                        <Components.Button onClick={() => setRegisterClicked(true)}>Registrati</Components.Button>
-                        <Components.Button onClick={() => setRegisterClicked(false)}>{arrowLeft}</Components.Button>
-                        <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
-                    </Components.Form>
+                    {stepComponents[activeStep]}
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <Components.StepsNavButton isRegisterClicked={isRegisterClicked} onClick={() => { activeStep === 0 ? setRegisterClicked(false) : handleBack() }}>
+                            Indietro
+                        </Components.StepsNavButton>
+                        <Components.StepsNavButton isRegisterClicked={isRegisterClicked} onClick={() => { !isRegisterClicked ? setRegisterClicked(true) : handleNext() }} disabled={activeStep === steps.length - 1}>
+                            {activeStep === steps.length - 1 ? 'Salva' : "Avanti"}
+                        </Components.StepsNavButton>
+                    </div>
+
                 </Components.StudenteContainer>
                 <Components.OverlayContainer signingIn={signIn} isRegisterClicked={isRegisterClicked}>
                     <Components.Overlay signingIn={signIn}>
                         <Components.LeftOverlayPanel signingIn={signIn}>
-                            <Components.Title>Benvenuto!</Components.Title>
+                            <Components.Title>Benvenutæ!</Components.Title>
                             <Components.Paragraph>
-                                Sei uno studente? Clicca qui sotto!
+                                Sei unæ student? Clicca qui sotto!
                             </Components.Paragraph>
                             <Components.GhostButton onClick={() => {isSending ? toast.error('Attendi l\'invio della richiesta') : toggle(true);}}>
                                 Studente

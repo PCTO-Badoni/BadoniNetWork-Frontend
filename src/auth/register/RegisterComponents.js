@@ -31,9 +31,9 @@ export const Container = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
-  width: 1000px;
+  width: 50em;
   max-width: 100%;
-  min-height: 800px;
+  height: 40em;
   
 `;
 
@@ -75,8 +75,12 @@ export const StudenteContainer = styled.div`
   height: 100%;
   transition: all 0.6s ease-in-out;
   left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: ${(props) => (!props.isRegisterClicked ? "50%" : "100%")};
   z-index: 1;
+    
   ${(props) =>
       props.signingIn !== true ? `transform: translateX(100%);` : `transform: translateX(0%)`}
 `;
@@ -94,7 +98,11 @@ export const Form = styled.form`
 export const Title = styled.h1`
   font-weight: bold;
   margin: 0;
-`;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  $props: ${(props) =>
+      props.visible ? `opacity: 1` : `opacity: 0`}
+  `;
 
 
 export const Input = styled.input`
@@ -117,7 +125,29 @@ export const Button = styled.button`
   text-transform: uppercase;
   transition: transform 80ms ease-in;
   margin: 8px 0 0;
+  z-index: 50;
   
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const StepsNavButton = styled.button`
+  border-radius: 20px;
+  background-color: #5865F2;
+  color: white;
+  font-size: 10px;
+  padding: 6px 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.5s ease-in-out;
+  margin: 8px 20px 20px 20px;
+  z-index: 50;
+  border: 1px solid #5865F2;
+  ${(props) =>
+    props.isRegisterClicked === true ? `opacity: 1` : `opacity: 0`}
+  
+
   &:focus {
     outline: none;
   }
@@ -204,8 +234,6 @@ export const Header = styled.div`
     text-align: center;
     border-radius: 10px 10px 0 0;
 `;
-
-// "sei già registrato?" testo
 
 export const AlreadyRegistered = styled(Link)`
   font-size: 14px;

@@ -25,6 +25,7 @@ label {
   top: 15px;
   color: black;
   width: auto;
+  z-index: 60;
   text-shadow: rgb(255, 255, 255) 5px 0px 0px,
   rgb(255, 255, 255) 4.90033px 0.993347px 0px, rgb(255, 255, 255) 4.60531px 1.94709px 0px,
   rgb(255, 255, 255) 4.12668px 2.82321px 0px, rgb(255, 255, 255) 3.48353px 3.58678px 0px,
