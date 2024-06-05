@@ -14,7 +14,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import StrengthMeter from "./StrengthMeter";
 import ProfilePicUploader from "./ProfilePicUploader";
 import 'react-tooltip/dist/react-tooltip.css'// import the progress bar
-import { Tooltip as ReactTooltip } from 'react-tooltip'
+import PasswordChecklist from "react-password-checklist"
 
 const arrowLeft = <FontAwesomeIcon icon={faArrowLeft} />
 const arrowRight = <FontAwesomeIcon icon={faArrowRight} />
@@ -57,13 +57,21 @@ const error = () => toast.error(errore, {
     transition: Bounce,
 });
 
-const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, passwordsMatch, setRegisterClicked, passwordStrength, handleSubmitStudente, setPasswordsMatch, isRegisterClicked, handleNext}) => {
+const Step1 = ({email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, handleSubmitStudente, isRegisterClicked, handleNext, passwordsMatch, setPasswordStrength}) => {
 
     const [pwdInput, initValue] = useState({
         password: "",
     });
     const [showPassword, setShowPassword] = useState(false);
-    const [isError, setError] = useState(null);
+
+    const [isStrong, initRobustPassword] = useState(null);
+    const [showPasswordChecklist, setShowPasswordChecklist] = useState(false);
+    const [isValid, setIsValid] = useState(false);
+
+    const initPwdInput = async (childData) => {
+        initRobustPassword(childData);
+        setPasswordStrength(childData); // set passwordStrength based on the strength of the password
+    };
 
     const onChange = (e) => {
         let password = e.target.value;
@@ -71,40 +79,7 @@ const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, 
             ...pwdInput,
             password: e.target.value,
         });
-        setError(null);
-        let caps, small, num, specialSymbol;
-        if (password.length < 4) {
-            setError(
-                "Password should contain minimum 4 characters, with one UPPERCASE, lowercase, number and special character: @$! % * ? &"
-            );
-            return;
-        } else {
-            caps = (password.match(/[A-Z]/g) || []).length;
-            small = (password.match(/[a-z]/g) || []).length;
-            num = (password.match(/[0-9]/g) || []).length;
-            specialSymbol = (password.match(/\W/g) || []).length;
-            if (caps < 1) {
-                setError("Must add one UPPERCASE letter");
-                return;
-            } else if (small < 1) {
-                setError("Must add one lowercase letter");
-                return;
-            } else if (num < 1) {
-                setError("Must add one number");
-                return;
-            } else if (specialSymbol < 1) {
-                setError("Must add one special symbol: @$! % * ? &");
-                return;
-            }
-        }
-    };
-
-    const [isStrong, initRobustPassword] = useState(null);
-
-    const initPwdInput = async (childData) => {
-        initRobustPassword(childData);
-        setPasswordStrength(childData); // set passwordStrength based on the strength of the password
-    };
+    }
 
     return (
         <Components.Form onSubmit={handleSubmitStudente}>
@@ -119,13 +94,13 @@ const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, 
                     value={password}
                     onChange={e => {
                         setPassword(e.target.value);
-                        onChange(e)
+                        onChange(e);
+                        setShowPasswordChecklist(e.target.value !== ""); // Show the checklist when the input is not empty
                     }}
+                    onBlur={() => setShowPasswordChecklist(false)} // Hide the checklist when the input loses focus
+                    onInput={e => setShowPasswordChecklist(e.target.value !== "")} // Show the checklist when the input is not empty
                     style={{paddingRight: '30px'}} // Make room for the icon
                 />
-                <ReactTooltip place="top" type="dark" effect="solid" zIndex="1000">
-                    "La password"
-                </ReactTooltip>
                 <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
@@ -144,12 +119,21 @@ const Step1 = ({ nome, setNome, cognome, setCognome, email, setEmail, password, 
                 </button>
             </div>
             <StrengthMeter password={pwdInput.password} actions={initPwdInput}/>
+            {showPasswordChecklist && (
+                <PasswordChecklist
+                    rules={["minLength", "lowercase", "capital","number", "specialChar"]}
+                    minLength={8}
+                    value={password}
+                    valueAgain={confirmPassword}
+                    onChange={setIsValid} // Set isValid to the validity of the password
+                    style={{textAlign: "left", fontSize: "14px"}}
+                />
+            )}
             <label htmlFor="Conferma password">Conferma Password</label>
-            <Components.Input type={showPassword ? "text" : "password"} value={confirmPassword} onChange={e => {
+            <Components.Input type={showPassword ? "text" : "password"} passwordsMatch={passwordsMatch} value={confirmPassword} onChange={e => {
                 setConfirmPassword(e.target.value);
-                setPasswordsMatch(true);
-            }} required style={passwordsMatch ? {} : {border: '1px solid red'}}/>
-            <Components.Button type={"submit"} onClick={() => handleNext()} /*disabled={!passwordStrength}*/>Continua</Components.Button>
+            }} required style={passwordsMatch ? {} : {outline: '2px solid red'}}/>
+            <Components.Button type={"submit"} onClick={() => handleNext(isValid)}>Continua</Components.Button>
             <Components.AlreadyRegistered to="/login"> Hai già un account? Accedi</Components.AlreadyRegistered>
         </Components.Form>
     );
@@ -194,9 +178,6 @@ function Register() {
     const [activeStep, setActiveStep] = useState(0);
     let navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
-
-
-
 
     async function handleSubmitAzienda(event) {
         setIsSending(true);
@@ -249,14 +230,6 @@ function Register() {
 
         event.preventDefault();
 
-        if (password !== confirmPassword) {
-            toast.error('Le password non corrispondono');
-            setPasswordsMatch(false);
-            return;
-        }
-
-        setPasswordsMatch(true);
-
         const data = {
             nome,
             cognome,
@@ -299,9 +272,16 @@ function Register() {
         }
     };
 
-    const handleNext = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-        setRegisterClicked(true);
+    const handleNext = (isValid) => {
+        if ((password === confirmPassword) && isValid) {
+            setActiveStep((prevActiveStep) => prevActiveStep + 1);
+            setRegisterClicked(true);
+        } else if (password !== confirmPassword) {
+            toast.error('Le password non corrispondono');
+            setPasswordsMatch(false);
+        } else {
+            toast.error('Password non sicura');
+        }
     };
 
     const handleBack = () => {
@@ -324,7 +304,7 @@ function Register() {
             setPassword={setPassword}
             confirmPassword={confirmPassword}
             setConfirmPassword={setConfirmPassword}
-            passwordsMatch={passwordsMatch}
+            passwordsMatch={passwordsMatch} // Add this line
             setRegisterClicked={setRegisterClicked}
             setPasswordStrength={setPasswordStrength}
             handleSubmitStudente={handleSubmitStudente}

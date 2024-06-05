@@ -61,7 +61,7 @@ export const AziendaContainer = styled.div`
     top: 0;
     height: 100%;
     transition: all 0.6s ease-in-out;
-    width   : 50%;
+    width: 50%;
     left: 0;
     opacity: 0;
     z-index: 1;
@@ -80,7 +80,6 @@ export const StudenteContainer = styled.div`
   justify-content: space-between;
   width: ${(props) => (!props.isRegisterClicked ? "50%" : "100%")};
   z-index: 1;
-    
   ${(props) =>
       props.signingIn !== true ? `transform: translateX(100%);` : `transform: translateX(0%)`}
 `;
@@ -90,7 +89,7 @@ export const Form = styled.form`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0 50px;
+  padding: 200px 50px;
   height: 100%;
   text-align: center;
 `;
