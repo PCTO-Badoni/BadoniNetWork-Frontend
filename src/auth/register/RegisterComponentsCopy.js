@@ -1,0 +1,264 @@
+import styled from "styled-components";
+import {Link} from "react-router-dom";
+import * as animations from './Animations';
+import {expandLeft, expandRight, shrink} from "./Animations";
+// const show = keyframes`
+//   0%, 49.99% {
+// 		opacity: 0;
+// 		z-index: 1;
+// 	}
+
+// 	50%, 100% {
+// 		opacity: 1;
+// 		z-index: 5;
+// 	}
+// `;
+
+// const hide = keyframes`
+//   0%, 49.99% {
+//     opacity: 1;
+//     z-index: 5;
+//   }
+
+//   50%, 100% {
+//     opacity: 0;
+//     z-index: 1;
+//   }
+// `
+
+export const Container = styled.div`
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 1000px;
+    max-width: 100%;
+    min-height: 600px;
+`;
+
+export const sendingEmail = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    text-align: center; 
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 20px;
+    color: #333;
+    `
+
+
+export const SignUpContainer = styled.div`
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    left: 0;
+    width: 50%;
+    opacity: 0;
+    z-index: 1;
+    ${(props) =>
+    props.signingIn !== true
+      ? `
+    transform: translateX(100%);
+    opacity: 1;
+    z-index: 5;
+    `
+      : null}
+`;
+
+
+export const FileInput = styled.input`
+    display: none; // Nascondi l'input del file originale
+`;
+
+export const FileInputLabel = styled.label`
+    display: inline-block;
+    height: 200px; // Imposta l'altezza del cerchio
+    width: 200px; // Imposta la larghezza del cerchio
+    background-image: url(${(props) => props.imageUrl || 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'}); // Utilizza un'immagine predefinita se non c'è un'immagine caricata
+    background-size: cover; // Assicurati che l'immagine copra l'intero cerchio
+    background-position: center; // Centra l'immagine
+    background-repeat: no-repeat; // Non ripetere l'immagine
+    border-radius: 50%; // Rende il cerchio rotondo
+    line-height: 50px; // Centra il testo verticalmente
+    text-align: center; // Centra il testo orizzontalmente
+    cursor: pointer; // Cambia il cursore a una mano quando si passa il mouse sopra
+    border: 3px solid gray; // Aggiungi un bordo grigio
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+`;
+
+export const LoadProfilePicContainer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 1000;
+    transform: translateX(${(props) => (props.show ? '0' : '-100%')});
+    transition: transform 0.6s ease-in-out;
+`;
+
+export const SignInContainer = styled.div`
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: all 0.6s ease-in-out;
+    left: 0;
+    width: 50%;
+    z-index: 2;
+    ${(props) =>
+    props.signingIn !== true ? `transform: translateX(100%);` : null}
+    `;
+
+export const Form = styled.form`
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 50px;
+    height: 100%;
+    text-align: center;
+    `;
+
+export const Title = styled.h1`
+    font-weight: bold;
+    margin: 0;
+`;
+
+export const Input = styled.input`
+    background-color: #eee;
+    border: none;
+    padding: 12px 15px;
+    margin: 7px 0;
+    width: 100%;
+    border-radius: 15px;
+`;
+
+export const Button = styled.button`
+    border-radius: 20px;
+    border: 1px solid #5865F2;
+    background-color: #5865F2;
+    color: #ffffff;
+    margin: 8px 0 0;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 12px 45px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: transform 80ms ease-in;
+    
+    &:active {
+    transform: scale(0.95);
+    }
+    
+    &:focus {
+    outline: none;
+    }
+`;
+
+export const GhostButton = styled(Button)`
+    background-color: transparent;
+    border-color: #ffffff;
+`;
+
+export const Anchor = styled.a`
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+    margin: 15px 0;
+`;
+
+export const OverlayContainer = styled.div`
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+    ${(props) =>
+        props.signingIn !== true ? `transform: translateX(-100%);` : null}
+`;
+
+export const Overlay = styled.div`
+    background: #ff416c;
+    background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
+    background: linear-gradient(to right, #5865f2, #b258f2);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 0 0;
+    color: #ffffff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+    ${(props) =>
+        props.signingIn !== true ? `transform: translateX(50%);` : null}
+    `;
+
+export const OverlayPanel = styled.div`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+`;
+
+export const LeftOverlayPanel = styled.div`
+    animation: ${props => props.selectedForm === 'studente' ? expandRight : shrink} 1s forwards;
+`;
+
+export const RightOverlayPanel = styled.div`
+    animation: ${props => props.selectedForm === 'azienda' ? expandLeft : shrink} 1s forwards;
+`;
+export const Paragraph = styled.p`
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    margin: 20px 0 30px;
+`;
+
+export const Header = styled.div`
+    background-color: white;
+    color: #ffffff;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px 10px 0 0;
+    `;
+
+// "sei già registrato?" testo
+
+export const AlreadyRegistered = styled(Link)`
+    font-size: 14px;
+    font-weight: 100;
+    line-height: 20px;
+    letter-spacing: 0.5px;
+    color: inherit; // Add this to keep the inherited color
+    text-decoration: none; // Add this to remove the underline
+    margin: 10px 0 30px;
+`;

@@ -7,6 +7,7 @@ import Login from "./auth/login/login";
 import ReactDOM from "react-dom";
 import EmailSent from "./auth/register/email/emailSent";
 import ForgotPassword from "./auth/security/forgotPassword";
+import {PhotoProvider} from "./auth/register/steps/profilePicture/PhotoContext";
 
 function PageController() {
     return (
@@ -22,6 +23,7 @@ export default PageController;
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
+
     <Router>
         <Routes>
             <Route path="/" element={<Register />} />

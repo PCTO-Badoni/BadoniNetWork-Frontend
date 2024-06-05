@@ -33,9 +33,9 @@ export const Container = styled.div`
     0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
-  width: 70em;
+  width: 70dvw;
   max-width: 100%;
-  height: 40em;
+  height: 80dvh;
 `;
 
 export const sendingEmail = styled.div`
@@ -114,6 +114,8 @@ export const Input = styled.input`
   padding: 12px 15px;
   width: 100%;
   border-radius: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 15px;
 `;
 
 export const Button = styled.button`
