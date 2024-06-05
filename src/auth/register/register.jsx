@@ -19,8 +19,7 @@ import { Tooltip as ReactTooltip } from 'react-tooltip'
 const arrowLeft = <FontAwesomeIcon icon={faArrowLeft} />
 const arrowRight = <FontAwesomeIcon icon={faArrowRight} />
 const errore = ""
-const steps = ['Step 1', 'Step 2', 'Step 3']; // Add or remove steps as needed
-
+const steps = ['Step 1', 'Step 2', 'Step 3', 'Step 4', 'Step 5']; // Aggiungi o rimuovi step come necessario
 const sendingEmail = () => toast.info('Invio richiesta in corso...', {
     position: "top-right",
     autoClose: 30000,
@@ -334,7 +333,9 @@ function Register() {
             passwordStrength={passwordStrength} // pass passwordStrength as a prop
         />,
         <Step2 />,
-        <Step3 />
+        <Step3 />,
+        <div>Step 4</div>,
+        <div>Step 5</div>,
     ];
 
     return (
@@ -374,17 +375,24 @@ function Register() {
                     {isRegisterClicked && (
                         <div className="progress-bar">
                             <div className="progress-bar-fill"
-                                 style={{width: `${(activeStep / (steps.length - 1)) * 100}%`}}>
+                                 style={{width: `${((activeStep+1) / (steps.length)) * 100}%`}}>
                             </div>
-                            <div className="progress-step" style={{opacity: activeStep >= 0 ? 1 : 0.5}}>
-                                <span className="progress-step-text">1</span>
+                            <div className="progress-step">
+                                <span className={activeStep >= 0 ? 'progress-step-text-completed' : 'progress-step-text'}>1</span>
                             </div>
-                            <div className="progress-step" style={{opacity: activeStep >= 1 ? 1 : 0.5}}>
-                                <span className="progress-step-text">2</span>
+                            <div className="progress-step">
+                                <span className={activeStep >= 1 ? 'progress-step-text-completed' : 'progress-step-text'}>2</span>
                             </div>
-                            <div className="progress-step" style={{opacity: activeStep >= 2 ? 1 : 0.5}}>
-                                <span className="progress-step-text">3</span>
+                            <div className="progress-step">
+                                <span className={activeStep >= 2 ? 'progress-step-text-completed' : 'progress-step-text'}>3</span>
                             </div>
+                            <div className="progress-step">
+                                <span className={activeStep >= 3 ? 'progress-step-text-completed' : 'progress-step-text'}>4</span>
+                            </div>
+                            <div className="progress-step">
+                                <span className={activeStep >= 4 ? 'progress-step-text-completed' : 'progress-step-text'}>5</span>
+                            </div>
+
                         </div>
                     )}
 

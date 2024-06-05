@@ -93,6 +93,7 @@ export const Form = styled.form`
   padding: 0 50px;
   height: 100%;
   text-align: center;
+  
 `;
 
 export const Title = styled.h1`

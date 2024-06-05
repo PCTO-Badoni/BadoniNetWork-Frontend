@@ -48,22 +48,70 @@ label {
 
 
 .progress-bar {
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 20px;
   width: 100%;
-  background-color: #f3f3f3;
+  background-color: transparent;
   border-radius: 5px;
 }
 
 .progress-bar-fill {
-  height: 10px;
+  height: 15px;
   background-color: #4caf50;
-  border-radius: 5px;
+  border-radius: 50px;
   width: 0;
   transition: width 0.4s ease-in-out;
 }
 
 .progress-step {
+  top: -28px;
   position: relative;
   float: left;
-  width: 33.33%; /* Adjust this value according to the number of steps */
+  width: 20%; /* Adjust this value according to the number of steps */
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.progress-step-text {
+
+  position: relative;
+  color: #4caf50;
+  text-align: center;
+  text-justify: auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: white;
+  border: 2px solid #4caf50;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 20px;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+
+
+}
+
+.progress-step-text-completed {
+  position: relative;
+  color: white;
+  text-align: center;
+  text-justify: auto;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  background-color: #4caf50;
+  border: 2px solid #4caf50;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  line-height: 20px;
+  font-size: 1em;
+  font-weight: bold;
+  font-family: "Montserrat", sans-serif;
+
 }
