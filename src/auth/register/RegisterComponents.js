@@ -259,8 +259,8 @@ export const UploadForm = styled.form`
   justify-content: center; /* Distribuisce equamente gli elementi verticalmente */
   align-items: center; /* Centra gli elementi orizzontalmente */
   border: 2px dashed #1475cf;
-  height: 370px;
-  width: 650px;
+  height: 270px;
+  width: 500px;
   cursor: pointer;
   border-radius: 5px;
 

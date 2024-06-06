@@ -190,9 +190,7 @@ const Step2 = React.memo(({ deadlineDate, setDeadlineDate, nome, setNome, cognom
                         dateFormat: "M d, Y"
                     }}
                 />
-                <label htmlFor="name">Indirizzo</label>
-                <Components.Input type="name" placeholder="es. Via Rivolta 10" value={indirizzo} onChange={(e) => setIndirizzo(e.target.value)} required />
-            </Components.Form>
+                </Components.Form>
         </LocalizationProvider>
     </>
 ));

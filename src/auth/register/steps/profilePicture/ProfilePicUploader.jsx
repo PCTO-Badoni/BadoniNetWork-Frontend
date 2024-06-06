@@ -24,7 +24,7 @@ function ProfilePicUploader({title}) {
 
     return (
         <main>
-            <h1 style={{padding: "180px"}}>{title}</h1>
+            <h1 style={{paddingTop: "180px"}}>{title}</h1>
             <Components.UploadForm
                 onClick={() => document.querySelector(".input-field").click()}
                 onDragOver={handleDragOver}
@@ -46,14 +46,15 @@ function ProfilePicUploader({title}) {
                 {photo ? (
                     <img
                         src={photo}
-                        width={250}
-                        height={250}
+                        width={150}
+                        height={150}
                         alt={fileName}
                         style={{
                             borderRadius: "50%",
                             objectFit: "cover",
                             border: "5px solid rgba(20, 117, 207, 0.5)",
                             marginBottom: "20px",
+                            marginTop: '20px'
                         }}
                     />
                 ) : (
