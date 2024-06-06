@@ -5,7 +5,7 @@ import { AiFillFileImage } from "react-icons/ai";
 import * as Components from "../../RegisterComponents";
 import { usePhoto } from './PhotoContext';
 
-function ProfilePicUploader() {
+function ProfilePicUploader({title}) {
     const [fileName, setFileName] = useState("Nessuna foto selezionata");
     const { photo, setPhoto } = usePhoto();
 
@@ -24,6 +24,7 @@ function ProfilePicUploader() {
 
     return (
         <main>
+            <h1 style={{padding: "180px"}}>{title}</h1>
             <Components.UploadForm
                 onClick={() => document.querySelector(".input-field").click()}
                 onDragOver={handleDragOver}
