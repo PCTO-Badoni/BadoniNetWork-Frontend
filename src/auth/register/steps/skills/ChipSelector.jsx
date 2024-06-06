@@ -44,7 +44,7 @@ const ChipSelector = () => {
     return (
         <Components.chipsBox>
             <Components.Input onChange={handleSearchChange} style={{ marginLeft: '200px', marginRight: '200px', marginBottom: '25px' }} />
-            <Box>
+            <Box style={{padding: "50px", paddingTop: "0px"}}>
                 {selectedFilteredChips.map((chip) => (
                     <Chip
                         key={chip}

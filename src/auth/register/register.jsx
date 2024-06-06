@@ -321,7 +321,7 @@ function Register() {
     const stepTitles = [
         <Components.Title style={{paddingTop: "55px"}}>Informazioni Personali</Components.Title>,
         <Components.Title>Immagine Profilo</Components.Title>,
-        <Components.Title>Titolo 3</Components.Title>,
+        <Components.Title>Competenze</Components.Title>,
         <Components.Title>Titolo 4</Components.Title>,
         <Components.Title>Titolo 5</Components.Title>,
     ];
