@@ -15,6 +15,7 @@ import styled from 'styled-components';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
 import {PhotoProvider, usePhoto} from "./steps/profilePicture/PhotoContext";
+import ChipSelector from "./steps/skills/ChipSelector";
 
 const arrowLeft = <FontAwesomeIcon icon={faChevronLeft} />;
 const arrowRight = <FontAwesomeIcon icon={faChevronRight} />;
@@ -204,6 +205,13 @@ const Step3 = React.memo(() => {
         </>
     );
 });
+
+const Step4 = React.memo(() => {
+    return (
+          <ChipSelector/>
+    );
+
+})
 function Register() {
     const [deadlineDate, setDeadlineDate] = useState(new Date());
     const [signIn, toggle] = useState(true);
@@ -334,14 +342,14 @@ function Register() {
             setIndirizzo={setIndirizzo}
         />,
         <Step3 />,
-        <div>Step 4</div>,
+        <Step4 />,
         <div>Step 5</div>,
     ];
 
     const stepTitles = [
         <Components.Title>Informazioni Personali</Components.Title>,
         <Components.Title>Immagine Profilo</Components.Title>,
-        <Components.Title>Titolo 3</Components.Title>,
+        <Components.Title>Competenze</Components.Title>,
         <Components.Title>Titolo 4</Components.Title>,
         <Components.Title>Titolo 5</Components.Title>,
     ];
@@ -424,7 +432,7 @@ function Register() {
                         </div>
                     )}
                     {activeStep >= 1 ? stepTitles[activeStep - 1] : null}
-                    <Components.Form>{stepComponents[activeStep]}</Components.Form>
+                    {stepComponents[activeStep]}
                     <div style={{ display: "flex", justifyContent: "space-between", paddingBottom: "10px", paddingRight: "50px", paddingLeft: "50px" }}>
                         <Components.StepsNavButton
                             isRegisterClicked={isRegisterClicked}

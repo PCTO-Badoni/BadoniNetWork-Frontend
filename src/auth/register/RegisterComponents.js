@@ -270,3 +270,14 @@ export const UploadForm = styled.form`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
+
+export const chipsBox = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    `;
