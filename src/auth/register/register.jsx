@@ -197,11 +197,10 @@ const Step2 = React.memo(({ deadlineDate, setDeadlineDate, nome, setNome, cognom
     </>
 ));
 
-const Step3 = React.memo(() => {
-
+const Step3 = React.memo((stepTitles) => {
     return (
         <>
-            <ProfilePicUploader />
+            <ProfilePicUploader title={stepTitles[2]} />
         </>
     );
 });
@@ -301,6 +300,8 @@ function Register() {
             if (password === confirmPassword && isValid) {
                 setActiveStep((prevActiveStep) => prevActiveStep + 1);
                 setRegisterClicked(true);
+                setPassword("")
+                setConfirmPassword("")
             } else if (password !== confirmPassword) {
                 toast.error("Le password non corrispondono");
                 setPasswordsMatch(false);
@@ -316,6 +317,14 @@ function Register() {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
         if (activeStep === 1) setRegisterClicked(false);
     };
+
+    const stepTitles = [
+        <Components.Title style={{paddingTop: "55px"}}>Informazioni Personali</Components.Title>,
+        <Components.Title>Immagine Profilo</Components.Title>,
+        <Components.Title>Titolo 3</Components.Title>,
+        <Components.Title>Titolo 4</Components.Title>,
+        <Components.Title>Titolo 5</Components.Title>,
+    ];
 
     const stepComponents = [
         <Step1
@@ -341,17 +350,11 @@ function Register() {
             indirizzo={indirizzo}
             setIndirizzo={setIndirizzo}
         />,
-        <Step3 />,
+        <Step3
+            stepTitles={stepTitles}
+        />,
         <Step4 />,
         <div>Step 5</div>,
-    ];
-
-    const stepTitles = [
-        <Components.Title>Informazioni Personali</Components.Title>,
-        <Components.Title>Immagine Profilo</Components.Title>,
-        <Components.Title>Competenze</Components.Title>,
-        <Components.Title>Titolo 4</Components.Title>,
-        <Components.Title>Titolo 5</Components.Title>,
     ];
 
     return (

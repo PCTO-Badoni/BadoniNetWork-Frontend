@@ -94,7 +94,7 @@ export const Form = styled.form`
   display: flex;
   justify-content: center;
   flex-direction: column;
-  padding: 0 50px;
+  padding: 0 200px;
   height: 100%;
   text-align: center;
 `;
