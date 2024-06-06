@@ -11,7 +11,6 @@ import PasswordChecklist from "react-password-checklist";
 import ProfilePicUploader from "./steps/profilePicture/ProfilePicUploader";
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import styled from 'styled-components';
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
 import {PhotoProvider, usePhoto} from "./steps/profilePicture/PhotoContext";
@@ -23,10 +22,10 @@ const save = <FontAwesomeIcon icon={faSave} />;
 const errore = "";
 const steps = ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
 
-const sendingEmail = () =>
-    toast.info("Invio richiesta in corso...", {
+const responseView = (body) =>
+    toast.success(body, {
         position: "top-right",
-        autoClose: 30000,
+        autoClose: 5000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -49,8 +48,8 @@ const emailSent = () =>
         transition: Bounce,
     });
 
-const error = () =>
-    toast.error(errore, {
+const error = (message) =>
+    toast.error(message, {
         position: "top-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -97,7 +96,7 @@ const Step1 = React.memo(({
     };
 
     return (
-        <Components.Form onSubmit={handleSubmitStudente} style={{ padding: "200px 50px" }}>
+        <Components.Form onSubmit={(event) => handleSubmitStudente(event, isValid)} style={{ padding: "200px 50px" }}>
             <Components.Title visible={!isRegisterClicked}>Studente</Components.Title>
             <label htmlFor="email">Email</label>
             <Components.Input
@@ -159,7 +158,7 @@ const Step1 = React.memo(({
                 required
                 style={passwordsMatch ? {} : { outline: "2px solid red" }}
             />
-            <Components.Button type={"submit"} onClick={() => handleNext(isValid)}>
+            <Components.Button type={"submit"}>
                 Continua
             </Components.Button>
             <Components.AlreadyRegistered to="/login">
@@ -224,8 +223,10 @@ function Register() {
     const [confirmPassword, setConfirmPassword] = useState("");
     const [passwordsMatch, setPasswordsMatch] = useState(true);
     const [activeStep, setActiveStep] = useState(0);
-    let navigate = useNavigate();
     const [isSending, setIsSending] = useState(false);
+
+    let navigate = useNavigate();
+
 
     async function handleSubmitAzienda(event) {
         setIsSending(true);
@@ -244,7 +245,11 @@ function Register() {
                 body: formBody,
             });
 
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                error (errorData.message || "Errore durante la richiesta");
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
@@ -258,11 +263,18 @@ function Register() {
             emailSent();
         } catch (error) {
             console.log("Error:", error);
+            setIsSending(false);
         }
     }
 
-    async function handleSubmitStudente(event) {
+    async function handleSubmitStudente(event, isValid) {
         event.preventDefault();
+
+        // Check if email ends with "@iisbadoni.edu.it"
+        if (!email.endsWith("@iisbadoni.edu.it")) {
+            error("Email is not valid");
+            return;
+        }
 
         const data = { nome, cognome, email, password };
         const formBody = Object.keys(data)
@@ -277,17 +289,25 @@ function Register() {
                 body: formBody,
             });
 
-            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                error(errorData.message || "Errore durante la richiesta");
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
 
+
+            const responseData = await response.json();
+            responseView(responseData.message);
+
+            handleNext(isValid);
+            /*
             const contentType = response.headers.get("content-type");
             if (contentType && contentType.indexOf("application/json") !== -1) {
                 const responseData = await response.json();
                 console.log(responseData);
             } else {
                 console.log("Response is not JSON. It is:", contentType);
-            }
-
-            navigate("/login");
+            } */
         } catch (error) {
             console.log("Error:", error);
         }
