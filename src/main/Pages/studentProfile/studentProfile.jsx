@@ -4,8 +4,26 @@ import {students} from '../../Components/students';
 import {contactContainer} from "./studentProfileComponents";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import { SocialIcon } from 'react-social-icons'
+import {
+    faInstagram,
+    faFacebook,
+    faTwitter,
+    faLinkedin
 
+} from "@fortawesome/free-brands-svg-icons";
+import {
+    faLink
 
+} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import React from "react";
+import {FaCommentDots, FaEnvelope, FaPhone} from "react-icons/fa";
+
+const instagram = <FontAwesomeIcon icon={faInstagram} />
+const facebook = <FontAwesomeIcon icon={faFacebook} />
+const twitter = <FontAwesomeIcon icon={faTwitter} />
+const linkedin = <FontAwesomeIcon icon={faLinkedin} />
 
 function StudentProfile() {
     const { id } = useParams();
@@ -38,10 +56,49 @@ function StudentProfile() {
                 </Components.leftContainer>
                 <Components.rightContainer>
                     <Components.linksContainer>
-                        link (social + portfolio)
+                        <Components.portfolioLinkContainer>
+                            <Components.portfolioLink>
+                                PORTFOLIO
+                                <FontAwesomeIcon icon={faLink} />
+                            </Components.portfolioLink>
+
+                        </Components.portfolioLinkContainer>
+                        <Components.socialLinksContainer>
+                            <Components.SocialIcon icon={instagram}/>
+                            <Components.SocialIcon icon={facebook}/>
+                            <Components.SocialIcon icon={twitter}/>
+                            <Components.SocialIcon icon={linkedin}/>
+                        </Components.socialLinksContainer>
                     </Components.linksContainer>
                     <Components.contactContainer>
-                        contatti (email + cellulare + chat)
+                        <Components.Contacts>
+                            <Components.EmailContainer>
+                                <Components.EmailForm>
+                                    <Components.EmailAziendale
+                                        type="email"
+                                        placeholder="Email Aziendale"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+
+                                    <Components.EmailTitleInput
+                                        type="text"
+                                        placeholder="Nome Azienda"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+
+                                    <Components.EmailContentInput
+                                        type="text"
+                                        placeholder="Messaggio"
+                                        onChange={(e) => setEmail(e.target.value)}
+                                    />
+                                    <Components.ButtonsRow>
+                                        <Components.Iconbutton icon={<FaEnvelope size={20}/>} />
+                                        <Components.Iconbutton icon={<FaPhone size={20} />} />
+                                        <Components.Iconbutton icon={<FaCommentDots size={20} />} />
+                                    </Components.ButtonsRow>
+                                </Components.EmailForm>
+                            </Components.EmailContainer>
+                        </Components.Contacts>
                     </Components.contactContainer>
 
                 </Components.rightContainer>
