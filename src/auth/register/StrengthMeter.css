@@ -62,26 +62,34 @@
 }
 
 .strength-fair::-webkit-progress-value {
-    background-color: #ebbd04;
+    background-color: #eb7804;
 }
 
 .strength-fair::-moz-progress-bar {
-    background-color: #ebbd04;
+    background-color: #eb7804;
 }
 
 .strength-good::-webkit-progress-value {
-    background-color: #0b75ed;
+    background-color: #ebbd04;
 }
 
 .strength-good::-moz-progress-bar {
-    background-color: #0b75ed;
+    background-color: #ebbd04;
 }
 
 .strength-strong::-webkit-progress-value {
-    background-color: #01a917;
+    background-color: #0b75ed;
 }
 
 .strength-strong::-moz-progress-bar {
+    background-color: #0b75ed;
+}
+
+.strength-very-strong::-webkit-progress-value {
+    background-color: #01a917;
+}
+
+.strength-very-strong::-moz-progress-bar {
     background-color: #01a917;
 }
 

@@ -5,12 +5,17 @@ const StrengthMeter = (props) => {
     const pwdValidate = props.password;
     const initPwdChecker = () => {
         let pwdCheck = 0;
-        let validateRegex = ["[A-Z]", "[a-z]", "[0-9]", "\\W"];
-        validateRegex.forEach((regex, i) => {
+        const validateRegex = ["[A-Z]", "[a-z]", "[0-9]", "\\W"];
+
+        // Check for each criteria and increase the pwdCheck count
+        if (pwdValidate.length >= 8) pwdCheck += 1; // Length check
+
+        validateRegex.forEach((regex) => {
             if (new RegExp(regex).test(pwdValidate)) {
                 pwdCheck += 1;
             }
         });
+
         switch (pwdCheck) {
             case 0:
                 return {
@@ -37,26 +42,29 @@ const StrengthMeter = (props) => {
                     strength: 4,
                     val: "strong",
                 };
-            default:
-                return null;
+            case 5:
+                return {
+                    strength: 5,
+                    val: "very-strong",
+                };
         }
     };
-    {
-        props.actions(initPwdChecker().val);
-    }
+
+    // Invoke the password checker function and pass its result to actions
+    const pwdResult = initPwdChecker();
+    props.actions(pwdResult.val);
 
     return (
         <>
             <div className="wrapper">
                 <progress
-                    className={`pwd-checker-bar strength-${initPwdChecker().val}`}
-                    value={initPwdChecker().strength}
-                    max="4"
+                    className={`pwd-checker-bar strength-${pwdResult.val}`}
+                    value={pwdResult.strength}
+                    max="5"
                 />
                 <p className="pwd-label">
                     {props.password && (
                         <div>
-                            <p className={`label strength-${initPwdChecker().val}`}></p>
                         </div>
                     )}
                 </p>

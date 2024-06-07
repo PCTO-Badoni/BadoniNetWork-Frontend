@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import Flatpickr from "react-flatpickr";
 
 // const show = keyframes`
 //   0%, 49.99% {
@@ -116,6 +117,18 @@ export const Input = styled.input`
   border-radius: 15px;
   font-family: "Montserrat", sans-serif;
   font-size: 15px;
+`;
+
+export const NomeInput = styled(Input)`
+  outline: ${(props) => (props.error ? "solid red 2px" : null)};
+`;
+
+export const CognomeInput = styled(Input)`
+  outline: ${(props) => (props.error ? "solid red 2px" : null)};
+`;
+
+export const DataDiNascita = styled(Flatpickr)`
+  outline: ${(props) => (props.error ? "solid red 2px" : null)};
 `;
 
 export const Button = styled.button`
@@ -271,13 +284,12 @@ export const UploadForm = styled.form`
   transform: translate(-50%, -50%);
 `;
 
-
 export const chipsBox = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    `;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+`;

@@ -1,70 +1,91 @@
 // src/ChipSelector.js
-import React, { useState } from 'react';
-import TextField from '@mui/material/TextField';
-import Chip from '@mui/material/Chip';
-import Box from '@mui/material/Box';
+import React, {useEffect, useState} from "react";
+import TextField from "@mui/material/TextField";
+import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
 import * as Components from "../../RegisterComponents";
 
-const ChipSelector = () => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [selectedChips, setSelectedChips] = useState([]);
-    const [chips] = useState([
-        'Java', 'JavaFX', 'JavaScript', 'Python', 'C', 'C++', 'C#', 'MongoDB',
-        'SceneBuilder', 'HTML', 'Packet Tracer', 'Cisco', 'CAD', 'CSS', 'Sistemi',
-        'Arduino', 'PHP', 'Database', 'Labview', 'Impianti civili e industriali',
-        'Excel', 'FlowGorithm', 'Circuiti', 'Sicurezza', 'Assembly', 'React', 'Angular',
-        'Go', 'Gimp', 'Cyber Security', 'Tornio', 'Fresa', 'Word', 'Multisim',
-        'Powerpoint', 'Latex', 'Cablaggio', 'Plc', 'Sensori'
-    ]);
+const ChipSelector = ({ minSelectedChips, setMinSelectedChips }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedChips, setSelectedChips] = useState([]);
+  const [chips, setChips] = useState([]); // Add this line
 
-    const handleSearchChange = (e) => {
-        setSearchTerm(e.target.value);
-    };
+  useEffect(() => {
+    fetch('http://localhost:8080/api/get-all-competenze')
+        .then(response => response.json())
+        .then(data => setChips(data))
+        .catch(error => console.error('Error:', error));
+  }, []);
 
-    const handleChipClick = (chip) => {
-        if (!selectedChips.includes(chip)) {
-            setSelectedChips([...selectedChips, chip]);
-        }
-    };
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
 
-    const handleChipDelete = (chipToDelete) => {
-        setSelectedChips(selectedChips.filter(chip => chip !== chipToDelete));
-    };
+  const handleChipClick = (chip) => {
+    if (!selectedChips.includes(chip)) {
+      const newSelectedChips = [...selectedChips, chip];
+      setSelectedChips(newSelectedChips);
+      if (newSelectedChips.length < minSelectedChips) {
+        setMinSelectedChips(minSelectedChips - newSelectedChips.length);
+      } else {
+        setMinSelectedChips(0);
+      }
+    }
+  };
 
-    const filteredChips = chips.filter((chip) =>
-        chip.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const handleChipDelete = (chipToDelete) => {
+    setSelectedChips(selectedChips.filter((chip) => chip !== chipToDelete));
+    setMinSelectedChips(minSelectedChips + 1);
+  };
 
-    const selectedFilteredChips = selectedChips.filter((chip) =>
-        chip.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+  const filteredChips = chips.filter((chip) =>
+      chip.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
-    const unselectedFilteredChips = filteredChips.filter(chip => !selectedChips.includes(chip));
+  const selectedFilteredChips = selectedChips.filter((chip) =>
+      chip.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
+  );
 
-    return (
-        <Components.chipsBox>
-            <Components.Input onChange={handleSearchChange} style={{ marginLeft: '200px', marginRight: '200px', marginBottom: '25px' }} />
-            <Box style={{padding: "50px", paddingTop: "0px"}}>
-                {selectedFilteredChips.map((chip) => (
-                    <Chip
-                        key={chip}
-                        label={chip}
-                        onDelete={() => handleChipDelete(chip)}
-                        style={{ margin: '4px', backgroundColor: '#4070f4', color: 'white' }}
-                    />
-                ))}
-                {unselectedFilteredChips.map((chip) => (
-                    <Chip
-                        key={chip}
-                        label={chip}
-                        onClick={() => handleChipClick(chip)}
-                        style={{ margin: '4px' }}
-                        clickable
-                    />
-                ))}
-            </Box>
-        </Components.chipsBox>
-    );
+  const unselectedFilteredChips = filteredChips.filter(
+      (chip) => !selectedChips.includes(chip),
+  );
+
+  return (
+    <Components.chipsBox>
+      <p>Seleziona almeno 3 competenze</p>
+      <Components.Input
+        onChange={handleSearchChange}
+        style={{
+          marginLeft: "200px",
+          marginRight: "200px",
+          marginBottom: "25px",
+        }}
+      />
+      <Box style={{ padding: "50px", paddingTop: "0px" }}>
+        {selectedFilteredChips.map((chip) => (
+            <Chip
+                key={chip.id} // Assuming each chip has an id
+                label={chip.descrizione}
+                onDelete={() => handleChipDelete(chip)}
+                style={{
+                  margin: "4px",
+                  backgroundColor: "#4070f4",
+                  color: "white",
+                }}
+            />
+        ))}
+        {unselectedFilteredChips.map((chip) => (
+            <Chip
+                key={chip.id} // Assuming each chip has an id
+                label={chip.descrizione}
+                onClick={() => handleChipClick(chip)}
+                style={{ margin: "4px" }}
+                clickable
+            />
+        ))}
+      </Box>
+    </Components.chipsBox>
+  );
 };
 
 export default ChipSelector;
