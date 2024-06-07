@@ -1,17 +1,9 @@
-import * as HomeComponents from "./HomeComponents.js";
-import ReactDOM from "react-dom";
-import React from "react";
-import "../styles.css";
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom"; // Modifica qui
-import Register from '../auth/register/register';
-import StudentCard from './Components/cards/StudentCard';
-
 function getRandomColor() {
     const colors = ['green', 'orange', 'red'];
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
-const students = [
+export const students = [
     {
         profilePic: 'url della foto del profilo 1',
         firstName: 'Mario',
@@ -20,8 +12,6 @@ const students = [
         skills: ['Java', 'Python', 'C++'],
         bannerImage: 'https://m.media-amazon.com/images/I/513eVMR+cML._AC_UF894,1000_QL80_.jpg',
         dotColor: getRandomColor() // Aggiungi questa linea
-
-
     },
     {
         profilePic: 'url della foto del profilo 2',
@@ -195,26 +185,3 @@ const students = [
         dotColor: getRandomColor() // Aggiungi questa linea
     },
 ];
-
-
-function HomePage() {
-
-
-
-    return (
-        <HomeComponents.Container>
-            <HomeComponents.contentContainer>
-                <HomeComponents.cardsContainer>
-                    {students.map((student, index) => (
-                        <StudentCard
-                            key={index}
-                            student={student}
-                            index={index} // Pass the index to StudentCard
-                        />
-                    ))}
-                </HomeComponents.cardsContainer>
-            </HomeComponents.contentContainer>
-        </HomeComponents.Container>
-    );
-}
-export default HomePage;
