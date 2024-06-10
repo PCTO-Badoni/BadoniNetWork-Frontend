@@ -21,7 +21,8 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/material_blue.css";
 import { PhotoProvider, usePhoto } from "./steps/profilePicture/PhotoContext";
 import ChipSelector from "./steps/skills/ChipSelector";
-import { DataDiNascita } from "./RegisterComponents";
+import { DataDiNascita, Select } from "./RegisterComponents";
+import Step5 from "./steps/addressSelector/Step5";
 
 const arrowLeft = <FontAwesomeIcon icon={faChevronLeft} />;
 const arrowRight = <FontAwesomeIcon icon={faChevronRight} />;
@@ -200,7 +201,7 @@ const Step2 = React.memo(
   }) => (
     <>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Components.Form style={{ justifyContent: "start" }}>
+        <Components.Form>
           <label htmlFor="name">Nome</label>
           <Components.NomeInput
             type="name"
@@ -219,13 +220,22 @@ const Step2 = React.memo(
             error={erroreCognome}
             required
           />
+          <label htmlFor="pronouns">Pronomi</label>
+          <Select name="pronouns" id="pronouns" defaultValue="" required>
+            <option value="" selected disabled hidden>
+              Seleziona
+            </option>
+            <option value="he/him">He/Him</option>
+            <option value="she/her">She/Her</option>
+            <option value="they/them">They/Them</option>
+            <option value="altro">Altro</option>
+          </Select>
           <label htmlFor="name">Data di nascita</label>
           <DataDiNascita
             id="datePicker"
             placeholder="Data di nascita"
             value={deadlineDate}
             onChange={(dates) => setDeadlineDate(dates[0])}
-            style={{ fontSize: "13px" }}
             options={{
               maxDate: new Date(),
               minDate: new Date("1900-01-01"),
@@ -255,6 +265,7 @@ const Step4 = React.memo(({ minSelectedChips, setMinSelectedChips }) => {
     />
   );
 });
+
 function Register() {
   const [deadlineDate, setDeadlineDate] = useState(new Date());
   const [signIn, toggle] = useState(true);
@@ -413,7 +424,10 @@ function Register() {
       }
     }
     setMinSelectedChips(4);
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep < 4) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    } else {
+    }
   };
 
   const handleBack = () => {
@@ -427,7 +441,7 @@ function Register() {
     </Components.Title>,
     <Components.Title>Immagine Profilo</Components.Title>,
     <Components.Title>Competenze</Components.Title>,
-    <Components.Title>Titolo 4</Components.Title>,
+    <Components.Title>Indirizzo</Components.Title>,
     <Components.Title>Titolo 5</Components.Title>,
   ];
 
@@ -465,7 +479,7 @@ function Register() {
       minSelectedChips={minSelectedChips}
       setMinSelectedChips={setMinSelectedChips}
     />,
-    <div>Step 5</div>,
+    <Step5 />,
   ];
 
   return (
