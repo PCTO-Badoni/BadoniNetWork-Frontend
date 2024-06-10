@@ -4,11 +4,12 @@ import React from "react";
 
 export const Container = styled.div`
     background-color: #fff;
-    padding: 30px;
+    padding: 30px 30px 10px;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
     width: 95vw;
     height: 95vh;
+    overflow: clip;
 `;
 
 export const studentName = styled.div`
@@ -129,20 +130,10 @@ export const userInformations = styled.div`
     border-radius: 12px;
 `;
 
-export const CVContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 4em;
-    width: 100%;
-    border-radius: 12px;
-    background-color: rgba(11, 117, 237, 0.38);
-`;
 
 export const contentContainer = styled.div`
     display: flex;
-    padding-top: 20px;
+    padding-top: 5px;
     flex-grow: 1;
     flex-direction: row;
     justify-content: space-between;
@@ -169,10 +160,10 @@ export const leftContainer = styled.div`
     flex: 4;
     flex-direction: column;
     justify-content: space-between;
-    align-items: center;
+    align-items: start;
     height: 100%;
-    background-color: #e20b07;
-    padding: 20px;
+    padding-bottom: 10px;
+    overflow: clip;
 `;
 
 export const contactContainer = styled.div`
@@ -181,16 +172,18 @@ export const contactContainer = styled.div`
     justify-content: center;
     align-items: center;
     width: 100%;
-    flex: 2;
+    height: 100%;
+    flex: 1.5;
     border-radius: 12px;
     padding-top: 20px;
+    padding-bottom: 30px;
 `;
 
 export const linksContainer = styled.div`
     display: flex;
-    flex: 1;
+    flex: 0.5;
     flex-direction: column;
-    
+    padding-top: 20px;
     align-items: center;
     width: 100%;
     border-radius: 12px;
@@ -204,6 +197,7 @@ export const portfolioLinkContainer = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: flex-end;
+    scale: 0.8;
     
     width: 100%;
     border-radius: 12px;
@@ -219,7 +213,9 @@ export const socialLinksContainer = styled.div`
     align-items: flex-start;
     width: 100%;
     border-radius: 12px;
-    padding-top: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    scale: 0.8;
 
 `;
 
@@ -278,7 +274,6 @@ export const portfolioLink = styled.a`
         transition: all 0.6s;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
         cursor: pointer;
-        font-weight: bold;
     }
     
 `;
@@ -375,7 +370,7 @@ export const EmailContentInput = styled.textarea`
     border-radius: 15px;
     font-family: "Montserrat", sans-serif;
     font-size: 0.75rem;
-    height: 200px;
+    height: 100%;
     margin-top: 10px;
     resize: none;
 
@@ -436,4 +431,150 @@ export const ButtonsRow = styled.div`
     align-items: center;
     width: 100%;
     border-radius: 12px;
+`;
+
+
+export const AboutMe = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    font-size: 17px;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background-color: #f2f2f2;
+    padding: 0 20px 20px;
+    overflow: scroll;
+    max-height: 200px;
+
+`;
+
+export const Sectiontitle = styled.h2`
+    font-size: 1.5rem;
+    width: 100%;
+    height: 50px;
+    padding-top: 5px;
+    border-bottom: 1px solid #333;
+    color: #333;
+    top: 0;
+    background-color: #f2f2f2; // Aggiungi un colore di sfondo per evitare sovrapposizioni di testo
+    z-index: 1; // Assicurati che il titolo sia sopra gli altri elementi
+`;
+
+export const AziendeWorked = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    font-size: 17px;
+    width: 100%;
+    height: 40vh;
+    border-radius: 12px;
+    overflow: scroll;
+    gap: 5px;
+
+`;
+
+export const AziendeWorkedContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 44vh;
+`;
+
+export const AziendeWorkedContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    font-size: 17px;
+    width: 100%;
+    height: calc(100% - 49px); // Sottrai l'altezza del titolo
+    border-radius: 12px;
+    overflow: scroll;
+    gap: 5px;
+`;
+
+
+export const CVContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    height: 44vh;
+`;
+
+export const CVContent = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    font-size: 17px;
+    width: 100%;
+    height: calc(100% - 49px); // Sottrai l'altezza del titolo
+    overflow: scroll;
+    gap: 5px;
+`;
+
+
+export const CVDownloader = styled.button`
+    background-color: rgba(20, 117, 207, 0.62);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    width: 85%;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    margin-bottom: 15px;
+    cursor: pointer;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    `;
+
+
+
+
+
+
+export const MapAndAziendeContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 20px;
+    width: 100%;
+    height: 100%;
+    gap: 20px; /* Adds space between the map and AziendeWorked */
+`;
+
+export const AziendaWorked = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 10px;
+    border-bottom: 1px solid #ddd; // Aggiunge una linea sottile tra le aziende
+`;
+
+export const AziendaName = styled.h3`
+    margin: 0;
+    font-size: 1em;
+    color: #333;
+`;
+
+export const AziendaDescription = styled.p`
+    margin: 0;
+    font-size: 0.7em;
+    color: #666;
+`;
+
+export const MapTitle = styled.h2`
+    font-size: 1.5rem;
+    width: 100%;
+    height: 40px;
+    margin-top: 25px;
+    border-bottom: 1px solid #333;
+    color: #333;
+    position: sticky;
+    top: 0;
+    z-index: 1; // Assicurati che il titolo sia sopra gli altri elementi
+
 `;

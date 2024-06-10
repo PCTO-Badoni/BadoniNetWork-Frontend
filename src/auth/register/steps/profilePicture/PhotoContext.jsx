@@ -1,14 +1,14 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, {createContext, useContext, useState} from 'react';
 
 // Creare un nuovo contesto
 const PhotoContext = createContext();
 
 // Creare un provider personalizzato
-export function PhotoProvider({ children }) {
+export function PhotoProvider({children}) {
     const [photo, setPhoto] = useState(null);
 
     return (
-        <PhotoContext.Provider value={{ photo, setPhoto }}>
+        <PhotoContext.Provider value={{photo, setPhoto}}>
             {children}
         </PhotoContext.Provider>
     );

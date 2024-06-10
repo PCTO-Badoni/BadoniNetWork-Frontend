@@ -1,31 +1,88 @@
+import React, {useEffect, useState} from "react";
 import { useParams } from 'react-router-dom';
 import * as Components from './studentProfileComponents';
-import {students} from '../../Components/students';
-import {contactContainer} from "./studentProfileComponents";
-import Carousel from "react-multi-carousel";
+import { students } from '../../Components/students';
 import "react-multi-carousel/lib/styles.css";
-import { SocialIcon } from 'react-social-icons'
+import "leaflet/dist/leaflet.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Document, Page } from 'react-pdf';
+import { pdfjs } from 'react-pdf';
+import exampleCV from './CV/exampleCV.pdf';
+import { FaCommentDots, FaEnvelope, FaPhoneAlt } from "react-icons/fa";
+
 import {
     faInstagram,
     faFacebook,
-    faTwitter,
-    faLinkedin
+    faXTwitter,
+    faLinkedin,
 
 } from "@fortawesome/free-brands-svg-icons";
-import {
-    faLink
+import "@tomtom-international/web-sdk-maps/dist/maps.css";
+import tt from '@tomtom-international/web-sdk-maps';
+import ttServices from '@tomtom-international/web-sdk-services';
+import {faLink} from "@fortawesome/free-solid-svg-icons";
 
-} from "@fortawesome/free-solid-svg-icons";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import React from "react";
-import {FaCommentDots, FaEnvelope, FaPhone} from "react-icons/fa";
+const instagram = <FontAwesomeIcon icon={faInstagram} />;
+const facebook = <FontAwesomeIcon icon={faFacebook} />;
+const twitter = <FontAwesomeIcon icon={faXTwitter} />;
+const linkedin = <FontAwesomeIcon icon={faLinkedin} />;
 
-const instagram = <FontAwesomeIcon icon={faInstagram} />
-const facebook = <FontAwesomeIcon icon={faFacebook} />
-const twitter = <FontAwesomeIcon icon={faTwitter} />
-const linkedin = <FontAwesomeIcon icon={faLinkedin} />
+function PDFPreview() {
+    const [numPages, setNumPages] = useState(null);
+    const [pageNumber, setPageNumber] = useState(1);
+
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
+
+    return (
+        <div>
+            <Document
+                file='./CV/exampleCV.pdf'
+                onLoadSuccess={onDocumentLoadSuccess}
+            >
+                <Page pageNumber={pageNumber} />
+            </Document>
+            <p>Page {pageNumber} of {numPages}</p>
+        </div>
+    );
+}
+
+
 
 function StudentProfile() {
+
+    useEffect(() => {
+        const city = 'Lecco, Italy';
+
+        ttServices.services
+            .fuzzySearch({
+                key: 'GKKdaSewOQJ1qLgzHcWa1mJxy3z9JzRg',
+                query: city
+            })
+            .then(function(response) {
+                if (response.results && response.results.length > 0) {
+                    const coordinates = response.results[0].position;
+
+                    const map = tt.map({
+                        key: 'GKKdaSewOQJ1qLgzHcWa1mJxy3z9JzRg',
+                        container: 'map',
+                        center: [coordinates.lng, coordinates.lat],
+                        zoom: 14
+                    });
+
+                    return () => {
+                        map.remove();
+                    };
+                } else {
+                    console.error('No results found for the city:', city);
+                }
+            })
+            .catch(function(error) {
+                console.error('Error during fuzzySearch:', error);
+            });
+    }, []);
+
     const { id } = useParams();
     const student = students[parseInt(id)];
 
@@ -48,26 +105,77 @@ function StudentProfile() {
             </Components.customBanner>
             <Components.contentContainer>
                 <Components.leftContainer>
+                    <Components.AboutMe>
+                        <Components.Sectiontitle>About Me</Components.Sectiontitle>
+                        Hello! I'm a passionate developer with a love for coding and problem-solving. I have experience in various programming languages and frameworks, and I'm always eager to learn more. I believe in the power of teamwork and enjoy collaborating with others to create amazing projects. In my spare time, I enjoy reading about new technologies and exploring innovative solutions in the tech world. I'm excited to bring my skills and enthusiasm to your team!
+                    </Components.AboutMe>
 
-                    <Components.CVContainer>
-                        CV
-                    </Components.CVContainer>
+                    <Components.MapAndAziendeContainer>
+
+                        <div style={{height: '100%', display: 'flex', flexDirection: 'column', width: "45%"}}>
+                            <Components.MapTitle>Residenza</Components.MapTitle>
+                            <div id="map" style={{borderRadius: '12px', flex: '1'}}></div>
+
+                        </div>
+                        <Components.AziendeWorkedContainer>
+                            <Components.Sectiontitle style={{backgroundColor:'#fff'}}>Esperienze</Components.Sectiontitle>
+                            <Components.AziendeWorkedContent>
+                                <Components.AziendaWorked>
+                                    <Components.AziendaName>Ferrari</Components.AziendaName>
+                                    <Components.AziendaDescription>ciao</Components.AziendaDescription>
+                                </Components.AziendaWorked>
+                            <Components.AziendaWorked>
+                                <Components.AziendaName>ciao</Components.AziendaName>
+                                <Components.AziendaDescription>ciao</Components.AziendaDescription>
+                            </Components.AziendaWorked>
+                            <Components.AziendaWorked>
+                                <Components.AziendaName>ciao</Components.AziendaName>
+                                <Components.AziendaDescription>ciao</Components.AziendaDescription>
+                            </Components.AziendaWorked>
+                            <Components.AziendaWorked>
+                                <Components.AziendaName>ciao</Components.AziendaName>
+                                <Components.AziendaDescription>ciao</Components.AziendaDescription>
+                            </Components.AziendaWorked><Components.AziendaWorked>
+                            <Components.AziendaName>ciao</Components.AziendaName>
+                            <Components.AziendaDescription>ciao</Components.AziendaDescription>
+                        </Components.AziendaWorked><Components.AziendaWorked>
+                            <Components.AziendaName>ciao</Components.AziendaName>
+                            <Components.AziendaDescription>ciao</Components.AziendaDescription>
+                        </Components.AziendaWorked>
+                            <Components.AziendaWorked>
+                                <Components.AziendaName>ciao</Components.AziendaName>
+                                <Components.AziendaDescription>ciao</Components.AziendaDescription>
+                            </Components.AziendaWorked>
+
+
+                            </Components.AziendeWorkedContent>
+
+                    </Components.AziendeWorkedContainer>
+
+                        <Components.CVContainer>
+                            <Components.Sectiontitle style={{backgroundColor:'#fff'}}>Curriculum Vitae</Components.Sectiontitle>
+                            <Components.CVContent>
+                                <Components.CVDownloader>Scarica il CV</Components.CVDownloader>
+                                <PDFPreview />
+                            </Components.CVContent>
+                        </Components.CVContainer>
+
+                    </Components.MapAndAziendeContainer>
 
                 </Components.leftContainer>
                 <Components.rightContainer>
                     <Components.linksContainer>
                         <Components.portfolioLinkContainer>
-                            <Components.portfolioLink>
-                                PORTFOLIO
-                                <FontAwesomeIcon icon={faLink} />
+                            <Components.portfolioLink href={student.portfolioLink}>
+                            PORTFOLIO
+                                <FontAwesomeIcon icon={faLink} style={{ paddingLeft: '10px' }} />
                             </Components.portfolioLink>
-
                         </Components.portfolioLinkContainer>
                         <Components.socialLinksContainer>
-                            <Components.SocialIcon icon={instagram}/>
-                            <Components.SocialIcon icon={facebook}/>
-                            <Components.SocialIcon icon={twitter}/>
-                            <Components.SocialIcon icon={linkedin}/>
+                            <Components.SocialIcon icon={instagram} />
+                            <Components.SocialIcon icon={facebook} />
+                            <Components.SocialIcon icon={twitter} />
+                            <Components.SocialIcon icon={linkedin} />
                         </Components.socialLinksContainer>
                     </Components.linksContainer>
                     <Components.contactContainer>
@@ -79,31 +187,26 @@ function StudentProfile() {
                                         placeholder="Email Aziendale"
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
-
                                     <Components.EmailTitleInput
                                         type="text"
                                         placeholder="Nome Azienda"
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
-
                                     <Components.EmailContentInput
                                         type="text"
                                         placeholder="Messaggio"
                                         onChange={(e) => setEmail(e.target.value)}
                                     />
                                     <Components.ButtonsRow>
-                                        <Components.Iconbutton icon={<FaEnvelope size={20}/>} />
-                                        <Components.Iconbutton icon={<FaPhone size={20} />} />
+                                        <Components.Iconbutton icon={<FaEnvelope size={20} />} />
+                                        <Components.Iconbutton icon={<FaPhoneAlt size={20} />} />
                                         <Components.Iconbutton icon={<FaCommentDots size={20} />} />
                                     </Components.ButtonsRow>
                                 </Components.EmailForm>
                             </Components.EmailContainer>
                         </Components.Contacts>
                     </Components.contactContainer>
-
                 </Components.rightContainer>
-
-
             </Components.contentContainer>
         </Components.Container>
     );
