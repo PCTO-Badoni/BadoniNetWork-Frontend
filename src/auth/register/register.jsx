@@ -15,6 +15,8 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import "flatpickr/dist/themes/material_blue.css";
 import {PhotoProvider} from "./steps/profilePicture/PhotoContext";
 import ChipSelector from "./steps/skills/ChipSelector";
+import { DataDiNascita, Select } from "./RegisterComponents";
+import Step5 from "./steps/addressSelector/Step5";
 
 const arrowLeft = <FontAwesomeIcon icon={faChevronLeft}/>;
 const arrowRight = <FontAwesomeIcon icon={faChevronRight}/>;
@@ -180,56 +182,65 @@ const Step1 = React.memo(
 );
 
 const Step2 = React.memo(
-    ({
-         deadlineDate,
-         setDeadlineDate,
-         nome,
-         setNome,
-         cognome,
-         setCognome,
-         erroreNome,
-         erroreCognome,
-         erroreData,
-     }) => (
-        <>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <Components.Form style={{justifyContent: "start"}}>
-                    <label htmlFor="name">Nome</label>
-                    <Components.NomeInput
-                        type="name"
-                        placeholder="es. Mario"
-                        value={nome}
-                        onChange={(e) => setNome(e.target.value)}
-                        error={erroreNome}
-                        required
-                    />
-                    <label htmlFor="name">Cognome</label>
-                    <Components.CognomeInput
-                        type="name"
-                        placeholder="es. Rossi"
-                        value={cognome}
-                        onChange={(e) => setCognome(e.target.value)}
-                        error={erroreCognome}
-                        required
-                    />
-                    <label htmlFor="name">Data di nascita</label>
-                    <DataDiNascita
-                        id="datePicker"
-                        placeholder="Data di nascita"
-                        value={deadlineDate}
-                        onChange={(dates) => setDeadlineDate(dates[0])}
-                        style={{fontSize: "13px"}}
-                        options={{
-                            maxDate: new Date(),
-                            minDate: new Date("1900-01-01"),
-                            dateFormat: "M d, Y",
-                        }}
-                        error={erroreData}
-                    />
-                </Components.Form>
-            </LocalizationProvider>
-        </>
-    ),
+  ({
+    deadlineDate,
+    setDeadlineDate,
+    nome,
+    setNome,
+    cognome,
+    setCognome,
+    erroreNome,
+    erroreCognome,
+    erroreData,
+  }) => (
+    <>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Components.Form>
+          <label htmlFor="name">Nome</label>
+          <Components.NomeInput
+            type="name"
+            placeholder="es. Mario"
+            value={nome}
+            onChange={(e) => setNome(e.target.value)}
+            error={erroreNome}
+            required
+          />
+          <label htmlFor="name">Cognome</label>
+          <Components.CognomeInput
+            type="name"
+            placeholder="es. Rossi"
+            value={cognome}
+            onChange={(e) => setCognome(e.target.value)}
+            error={erroreCognome}
+            required
+          />
+          <label htmlFor="pronouns">Pronomi</label>
+          <Select name="pronouns" id="pronouns" defaultValue="" required>
+            <option value="" selected disabled hidden>
+              Seleziona
+            </option>
+            <option value="he/him">He/Him</option>
+            <option value="she/her">She/Her</option>
+            <option value="they/them">They/Them</option>
+            <option value="altro">Altro</option>
+          </Select>
+          <label htmlFor="name">Data di nascita</label>
+          <DataDiNascita
+            id="datePicker"
+            placeholder="Data di nascita"
+            value={deadlineDate}
+            onChange={(dates) => setDeadlineDate(dates[0])}
+            options={{
+              maxDate: new Date(),
+              minDate: new Date("1900-01-01"),
+              dateFormat: "M d, Y",
+            }}
+            error={erroreData}
+          />
+        </Components.Form>
+      </LocalizationProvider>
+    </>
+  ),
 );
 
 const Step3 = React.memo((stepTitles) => {
@@ -248,7 +259,6 @@ const Step4 = React.memo(({minSelectedChips, setMinSelectedChips}) => {
         />
     );
 });
-
 function Register() {
     const [deadlineDate, setDeadlineDate] = useState(new Date());
     const [signIn, toggle] = useState(true);
@@ -359,108 +369,111 @@ function Register() {
         }
     }
 
-    const handleNext = (isValid) => {
-        if (activeStep === 0) {
-            if (password === confirmPassword && isValid) {
-                setRegisterClicked(true);
-                setPassword("");
-                setConfirmPassword("");
-            } else if (password !== confirmPassword) {
-                toast.error("Le password non corrispondono");
-                setPasswordsMatch(false);
-                return;
-            } else {
-                toast.error("Password non sicura");
-                return;
-            }
-        } else if (activeStep === 1) {
-            // check if nome and cognome are not empty
-            if (nome.split(" ").join("") === "") {
-                error("Nome non può essere vuoto");
-                setErroreNome(true);
-                setActiveStep(1);
-                return;
-            } else {
-                setErroreNome(false);
-            }
-            if (cognome.split(" ").join("") === "") {
-                error("Cognome non può essere vuoto");
-                setErroreCognome(true);
-                setActiveStep(1);
-                return;
-            } else {
-                setErroreCognome(false);
-            }
-            // check if deadlineDate is not less 16 years old
-            if (Date.now() - deadlineDate < 16 * 365 * 24 * 60 * 60 * 1000) {
-                error("Devi avere almeno 16 anni");
-                setErroreData(true);
-                setActiveStep(1);
-                return;
-            } else {
-                setErroreData(false);
-            }
-        } else if (activeStep === 3) {
-            if (minSelectedChips > 0) {
-                toast.error("Seleziona almeno 3 competenze");
-                return;
-            }
-        }
-        setMinSelectedChips(4);
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    };
+  const handleNext = (isValid) => {
+    if (activeStep === 0) {
+      if (password === confirmPassword && isValid) {
+        setRegisterClicked(true);
+        setPassword("");
+        setConfirmPassword("");
+      } else if (password !== confirmPassword) {
+        toast.error("Le password non corrispondono");
+        setPasswordsMatch(false);
+        return;
+      } else {
+        toast.error("Password non sicura");
+        return;
+      }
+    } else if (activeStep === 1) {
+      // check if nome and cognome are not empty
+      if (nome.split(" ").join("") === "") {
+        error("Nome non può essere vuoto");
+        setErroreNome(true);
+        setActiveStep(1);
+        return;
+      } else {
+        setErroreNome(false);
+      }
+      if (cognome.split(" ").join("") === "") {
+        error("Cognome non può essere vuoto");
+        setErroreCognome(true);
+        setActiveStep(1);
+        return;
+      } else {
+        setErroreCognome(false);
+      }
+      // check if deadlineDate is not less 16 years old
+      if (Date.now() - deadlineDate < 16 * 365 * 24 * 60 * 60 * 1000) {
+        error("Devi avere almeno 16 anni");
+        setErroreData(true);
+        setActiveStep(1);
+        return;
+      } else {
+        setErroreData(false);
+      }
+    } else if (activeStep === 3) {
+      if (minSelectedChips > 0) {
+        toast.error("Seleziona almeno 3 competenze");
+        return;
+      }
+    }
+    setMinSelectedChips(4);
+    if (activeStep < 4) {
+      setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    } else {
+    }
+  };
 
     const handleBack = () => {
         setActiveStep((prevActiveStep) => prevActiveStep - 1);
         if (activeStep === 1) setRegisterClicked(false);
     };
 
-    const stepTitles = [
-        <Components.Title style={{paddingTop: "55px"}}>
-            Informazioni Personali
-        </Components.Title>,
-        <Components.Title>Immagine Profilo</Components.Title>,
-        <Components.Title>Competenze</Components.Title>,
-        <Components.Title>Titolo 4</Components.Title>,
-        <Components.Title>Titolo 5</Components.Title>,
-    ];
+  const stepTitles = [
+    <Components.Title style={{ paddingTop: "55px" }}>
+      Informazioni Personali
+    </Components.Title>,
+    <Components.Title>Immagine Profilo</Components.Title>,
+    <Components.Title>Competenze</Components.Title>,
+    <Components.Title>Indirizzo</Components.Title>,
+    <Components.Title>Titolo 5</Components.Title>,
+  ];
 
-    const stepComponents = [
-        <Step1
-            email={email}
-            setEmail={setEmail}
-            password={password}
-            setPassword={setPassword}
-            confirmPassword={confirmPassword}
-            setConfirmPassword={setConfirmPassword}
-            passwordsMatch={passwordsMatch}
-            handleSubmitStudente={handleSubmitStudente}
-            setPasswordStrength={setPasswordStrength}
-            isRegisterClicked={isRegisterClicked}
-            handleNext={handleNext}
-            erroreNome={erroreNome}
-            erroreCognome={erroreCognome}
-        />,
-        <Step2
-            deadlineDate={deadlineDate}
-            setDeadlineDate={setDeadlineDate}
-            nome={nome}
-            setNome={setNome}
-            cognome={cognome}
-            setCognome={setCognome}
-            indirizzo={indirizzo}
-            setIndirizzo={setIndirizzo}
-            erroreNome={erroreNome}
-            erroreCognome={erroreCognome}
-            erroreData={erroreData}
-        />,
-        <Step3 stepTitles={stepTitles}/>,
-        <Step4
-            minSelectedChips={minSelectedChips}
-            setMinSelectedChips={setMinSelectedChips}
-        />,
-        <div>Step 5</div>,
-    ];
+  const stepComponents = [
+    <Step1
+      email={email}
+      setEmail={setEmail}
+      password={password}
+      setPassword={setPassword}
+      confirmPassword={confirmPassword}
+      setConfirmPassword={setConfirmPassword}
+      passwordsMatch={passwordsMatch}
+      handleSubmitStudente={handleSubmitStudente}
+      setPasswordStrength={setPasswordStrength}
+      isRegisterClicked={isRegisterClicked}
+      handleNext={handleNext}
+      erroreNome={erroreNome}
+      erroreCognome={erroreCognome}
+    />,
+    <Step2
+      deadlineDate={deadlineDate}
+      setDeadlineDate={setDeadlineDate}
+      nome={nome}
+      setNome={setNome}
+      cognome={cognome}
+      setCognome={setCognome}
+      indirizzo={indirizzo}
+      setIndirizzo={setIndirizzo}
+      erroreNome={erroreNome}
+      erroreCognome={erroreCognome}
+      erroreData={erroreData}
+    />,
+    <Step3 stepTitles={stepTitles} />,
+    <Step4
+      minSelectedChips={minSelectedChips}
+      setMinSelectedChips={setMinSelectedChips}
+    />,
+    <Step5 />,
+  ];
 
     return (
         <>

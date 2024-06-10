@@ -30,8 +30,8 @@ export const Container = styled.div`
   background-color: #fff;
   border-radius: 10px;
   box-shadow:
-      0 14px 28px rgba(0, 0, 0, 0.25),
-      0 10px 10px rgba(0, 0, 0, 0.22);
+    0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
   position: relative;
   overflow: hidden;
   width: 70vw;
@@ -68,9 +68,9 @@ export const AziendaContainer = styled.div`
   opacity: 0;
   z-index: 1;
   ${(props) =>
-      props.signingIn !== true
-          ? `transform: translateX(100%); opacity: 1; z-index: 5;`
-          : null}
+    props.signingIn !== true
+      ? `transform: translateX(100%); opacity: 1; z-index: 5;`
+      : null}
 `;
 
 export const StudenteContainer = styled.div`
@@ -85,15 +85,15 @@ export const StudenteContainer = styled.div`
   width: ${(props) => (!props.isRegisterClicked ? "50%" : "100%")};
   z-index: 1;
   ${(props) =>
-      props.signingIn !== true
-          ? `transform: translateX(100%);`
-          : `transform: translateX(0%)`}
+    props.signingIn !== true
+      ? `transform: translateX(100%);`
+      : `transform: translateX(0%)`}
 `;
 
 export const Form = styled.form`
   background-color: #ffffff;
   display: flex;
-  justify-content: center;
+  justify-content: start;
   flex-direction: column;
   padding: 0 12.5rem;
   height: 100%;
@@ -129,6 +129,18 @@ export const CognomeInput = styled(Input)`
 
 export const DataDiNascita = styled(Flatpickr)`
   outline: ${(props) => (props.error ? "solid red 2px" : null)};
+  font-size: 1rem;
+`;
+
+export const Select = styled.select`
+  background-color: #ffffff;
+  border: 3px solid #eee;
+  padding: 0.75rem;
+  width: 100%;
+  border-radius: 15px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1rem;
+  text-align: left;
 `;
 
 export const Button = styled.button`
@@ -186,11 +198,11 @@ export const OverlayContainer = styled.div`
   z-index: 200;
   transform-origin: right;
   ${(props) =>
-      props.signingIn !== true
-          ? `transform: translateX(-100%);`
-          : `transform: translateX(0%);`}
+    props.signingIn !== true
+      ? `transform: translateX(-100%);`
+      : `transform: translateX(0%);`}
   ${(props) =>
-      props.isRegisterClicked === true ? `transform: translateX(100%);` : null}
+    props.isRegisterClicked === true ? `transform: translateX(100%);` : null}
 `;
 
 export const Overlay = styled.div`
@@ -207,9 +219,9 @@ export const Overlay = styled.div`
   width: 200%;
   transition: all 0.6s ease-in-out;
   ${(props) =>
-      props.signingIn !== true
-          ? `transform: translateX(50%);`
-          : `transform: translateX(0%);`}
+    props.signingIn !== true
+      ? `transform: translateX(50%);`
+      : `transform: translateX(0%);`}
 `;
 
 export const OverlayPanel = styled.div`
@@ -236,7 +248,7 @@ export const RightOverlayPanel = styled(OverlayPanel)`
   right: 0;
   transform: translateX(0);
   ${(props) =>
-      props.signingIn !== true ? `transform: translateX(20%);` : null}
+    props.signingIn !== true ? `transform: translateX(20%);` : null}
 `;
 
 export const Paragraph = styled.p`
@@ -292,4 +304,34 @@ export const chipsBox = styled.div`
   padding-bottom: 1.25rem;
   padding-left: 1.25rem;
   padding-right: 1.25rem;
+`;
+
+export const AddressSelector = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10em;
+  padding-right: 10em;
+  height: 50%;
+`;
+
+export const MapButton = styled.button`
+  border-radius: 20px;
+  border: 1px solid #5865f2;
+  background-color: #5865f2;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  width: 60px;
+
+  z-index: 50;
+
+  &:focus {
+    outline: none;
+  }
 `;
