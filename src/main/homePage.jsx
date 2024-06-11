@@ -2,9 +2,16 @@ import * as HomeComponents from "./HomeComponents.js";
 import ReactDOM from "react-dom";
 import React from "react";
 import "../styles.css";
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom"; // Modifica qui
 import Register from '../auth/register/register';
 import StudentCard from './Components/cards/StudentCard';
+import * as Components from "./HomeComponents.js";
+
+import "././sideBar/homeStyle.css";
+import { BrowserRouter as Router, Route} from 'react-router-dom';
+import {Sidebar, Menu, MenuItem, SubMenu} from 'react-pro-sidebar';
+import { Link } from 'react-router-dom';
+import MaterialMenuItem from './sideBar/MaterialMenuItem';
+
 
 function getRandomColor() {
     const colors = ['green', 'orange', 'red'];
@@ -163,7 +170,7 @@ const students = [
         firstName: 'Elisa',
         lastName: 'Azzurri',
         description: 'Appassionata di sviluppo web',
-        skills: ['HTML', 'CSS', 'JavaScript'],
+        skills: ['HTML', 'CSS', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
         dotColor: getRandomColor() // Aggiungi questa linea
     },
@@ -202,8 +209,30 @@ function HomePage() {
 
 
     return (
+        <>
+
         <HomeComponents.Container>
+            <Components.Sidebar>
+                <div style={{display: 'flex', alignItems: 'center'}}>
+                    <Components.Logo/>
+                    <h3 style={{paddingLeft: '0.9em'}}>Badoni NetWork</h3>
+                </div>
+                <Menu iconShape="square">
+                    <MaterialMenuItem text="ciao"/>
+                    <MenuItem>
+                        <Link to="/register">Register</Link>
+                    </MenuItem>
+                    <MenuItem>
+                        <Link to="/login">Login</Link>
+                    </MenuItem>
+                </Menu>
+                <Components.Button>
+
+                    <Link to="/">Logout</Link>
+                </Components.Button>
+            </Components.Sidebar>
             <HomeComponents.contentContainer>
+
                 <HomeComponents.cardsContainer>
                     {students.map((student, index) => (
                         <StudentCard
@@ -215,6 +244,9 @@ function HomePage() {
                 </HomeComponents.cardsContainer>
             </HomeComponents.contentContainer>
         </HomeComponents.Container>
+        </>
     );
+
+
 }
 export default HomePage;

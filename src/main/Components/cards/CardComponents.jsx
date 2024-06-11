@@ -49,13 +49,16 @@ export const studentSkills = styled.div`
     justify-content: center;
     flex-wrap: wrap; // Aggiungi questa linea
     margin-top: 0px;
+    height: 55px;
     padding-right: 20px;
     padding-left: 20px;
+    overflow: scroll;
 `;
 export const studentSkill = styled.span`
     font-size: 10px; // Modifica qui
     font-family: "Montserrat", sans-serif;
     padding: 5px 10px;
+    height: 20px;
     margin-left: 5px;
     margin-top: 5px;
     border-radius: 10px;
