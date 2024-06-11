@@ -15,7 +15,7 @@ import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import "flatpickr/dist/themes/material_blue.css";
 import {PhotoProvider} from "./steps/profilePicture/PhotoContext";
 import ChipSelector from "./steps/skills/ChipSelector";
-import { DataDiNascita, Select } from "./RegisterComponents";
+import { Select } from "./RegisterComponents";
 import Step5 from "./steps/addressSelector/Step5";
 
 const arrowLeft = <FontAwesomeIcon icon={faChevronLeft}/>;
