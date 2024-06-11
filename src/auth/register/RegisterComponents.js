@@ -93,9 +93,10 @@ export const StudenteContainer = styled.div`
 export const Form = styled.form`
   background-color: #ffffff;
   display: flex;
-  justify-content: start;
+  justify-content: center;
   flex-direction: column;
   padding: 0 12.5rem;
+  margin: auto 0;
   height: 100%;
   text-align: center;
 `;
@@ -117,13 +118,6 @@ export const Input = styled.input`
   border-radius: 15px;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-`;
-
-export const NomeInput = styled(Input)`
-  outline: ${(props) => (props.error ? "solid red 2px" : null)};
-`;
-
-export const CognomeInput = styled(Input)`
   outline: ${(props) => (props.error ? "solid red 2px" : null)};
 `;
 
@@ -298,12 +292,14 @@ export const UploadForm = styled.form`
 
 export const chipsBox = styled.div`
   display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  margin-top: -4rem;
   padding-bottom: 1.25rem;
-  padding-left: 1.25rem;
-  padding-right: 1.25rem;
+  padding-left: 4rem;
+  padding-right: 4rem;
 `;
 
 export const AddressSelector = styled.div`

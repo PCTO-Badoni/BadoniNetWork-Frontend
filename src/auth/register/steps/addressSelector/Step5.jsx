@@ -56,14 +56,14 @@ const AutocompleteSearch = ({ onSelect }) => {
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
+    <div style={{ display: "flex", flexDirection: "row", marginTop: "-2rem" }}>
       <Input
         list="suggestions"
         type="text"
         value={query}
         onChange={handleInputChange}
         onBlur={handleSelect}
-        placeholder="Search for an address"
+        placeholder="es: Via Rivolta 10, 23900 Lecco"
         style={{ marginBottom: "1rem" }}
       />
       <datalist id="suggestions">
@@ -77,7 +77,7 @@ const AutocompleteSearch = ({ onSelect }) => {
         ))}
       </datalist>
       <MapButton type="submit" onClick={handleSelect}>
-        <FontAwesomeIcon icon={faMapPin} />
+        <FontAwesomeIcon icon={faMapPin} size="xl" />
       </MapButton>
     </div>
   );
@@ -106,7 +106,10 @@ const Map = ({ position }) => {
   }, [position]);
 
   return (
-    <div ref={mapContainerRef} style={{ width: "100%", height: "100%" }}></div>
+    <div
+      ref={mapContainerRef}
+      style={{ width: "100%", height: "100%", borderRadius: "15px" }}
+    ></div>
   );
 };
 
