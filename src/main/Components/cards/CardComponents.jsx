@@ -28,6 +28,8 @@ export const cardProfilePic = styled.div`
         background-color: ${props => props.dotColor}; // Modifica qui
         border: 2px solid #fff;
     }
+    
+        
 `;
 
 export const studentName = styled.h2`

@@ -447,7 +447,6 @@ export const AboutMe = styled.div`
     padding: 0 20px 20px;
     overflow: scroll;
     max-height: 200px;
-
 `;
 
 export const Sectiontitle = styled.h2`
@@ -460,6 +459,7 @@ export const Sectiontitle = styled.h2`
     top: 0;
     background-color: #f2f2f2; // Aggiungi un colore di sfondo per evitare sovrapposizioni di testo
     z-index: 1; // Assicurati che il titolo sia sopra gli altri elementi
+    position: sticky;
 `;
 
 export const AziendeWorked = styled.div`
