@@ -65,31 +65,41 @@ const error = (message) =>
   });
 
 function Register() {
-  const [deadlineDate, setDeadlineDate] = useState(new Date());
   const [signIn, toggle] = useState(true);
-  const [ragionesociale, setRagione] = useState("");
-  const [email, setEmail] = useState("");
-  const [telefono, setTelefono] = useState("");
-  const [indirizzo, setIndirizzo] = useState("");
-  const [nome, setNome] = useState("");
-  const [cognome, setCognome] = useState("");
-  const [password, setPassword] = useState("");
-  const [selectedChips, setSelectedChips] = useState([]);
-  const [isRegisterClicked, setRegisterClicked] = useState(false);
-  const [passwordStrength, setPasswordStrength] = useState(false);
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [activeStep, setActiveStep] = useState(0);
+  const [isRegisterClicked, setRegisterClicked] = useState(true);
+  const [activeStep, setActiveStep] = useState(3);
   const [isSending, setIsSending] = useState(false);
-  const [erroreNome, setErroreNome] = useState(false);
-  const [erroreCognome, setErroreCognome] = useState(false);
-  const [erroreData, setErroreData] = useState(false);
-  const [erroreTelefono, setErroreTelefono] = useState(false);
-  const [minSelectedChips, setMinSelectedChips] = useState(4);
-  const [articolazione, setArticolazione] = useState("");
-  const [pronomi, setPronomi] = useState("");
-
   let navigate = useNavigate();
+
+  // variabili registrazione generale
+  const [email, setEmail] = useState("");
+
+  // variabili studente
+  // step 1
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [passwordStrength, setPasswordStrength] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  // step 2
+  const [nome, setNome] = useState("");
+  const [erroreNome, setErroreNome] = useState(false);
+  const [cognome, setCognome] = useState("");
+  const [erroreCognome, setErroreCognome] = useState(false);
+  const [pronomi, setPronomi] = useState("");
+  const [deadlineDate, setDeadlineDate] = useState(new Date());
+  const [erroreData, setErroreData] = useState(false);
+  const [telefono, setTelefono] = useState("");
+  const [erroreTelefono, setErroreTelefono] = useState(false);
+  // step 3
+  const [articolazione, setArticolazione] = useState("");
+  const [selectedChips, setSelectedChips] = useState([]);
+  const [minSelectedChips, setMinSelectedChips] = useState(4);
+  // step 4
+  const [indirizzo, setIndirizzo] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState(null); // Add this state
+
+  // variabili azienda
+  const [ragionesociale, setRagione] = useState("");
 
   async function handleSubmitAzienda(event) {
     setIsSending(true);
@@ -227,18 +237,20 @@ function Register() {
     } else if (activeStep === 3) {
       console.log(articolazione);
       if (articolazione === "") {
-        error("Selezione l'articolazione");
+        error("Seleziona l'articolazione");
         return;
       }
-      if (minSelectedChips > 0) {
+      if (minSelectedChips !== 0) {
         error("Seleziona almeno 3 competenze");
         return;
       }
+    } else if (activeStep === 4) {
+      if (selectedAddress === null) {
+        error("Inserisci il tuo indirizzo di residenza");
+        return;
+      }
     }
-    setMinSelectedChips(4);
     if (activeStep < 5) {
-      setArticolazione("");
-      setPronomi("");
       setActiveStep((prevActiveStep) => prevActiveStep + 1);
     } else {
     }
@@ -290,6 +302,7 @@ function Register() {
       erroreCognome={erroreCognome}
       erroreData={erroreData}
       erroreTelefono={erroreTelefono}
+      pronomi={setPronomi}
       setPronomi={setPronomi}
     />,
     <Step3 stepTitles={stepTitles} />,
@@ -300,8 +313,21 @@ function Register() {
       selectedChips={selectedChips}
       setSelectedChips={setSelectedChips}
     />,
-    <Step5 />,
-    <Step6 />,
+    <Step5
+      selectedAddress={selectedAddress}
+      setSelectedAddress={setSelectedAddress}
+    />,
+    <Step6
+      nome={nome}
+      cognome={cognome}
+      pronomi={pronomi}
+      dataDiNascita={deadlineDate}
+      email={email}
+      telefono={telefono}
+      indirizzo={selectedAddress ? selectedAddress.label : ""}
+      articolazione={articolazione}
+      competenze={selectedChips}
+    />,
   ];
 
   return (
@@ -457,7 +483,7 @@ function Register() {
                 }}
                 disabled={!isRegisterClicked}
               >
-                {activeStep === steps.length - 1 ? save : arrowRight}
+                {activeStep === steps.length ? save : arrowRight}
               </Components.StepsNavButton>
             </div>
           </Components.StudenteContainer>

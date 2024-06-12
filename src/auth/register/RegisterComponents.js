@@ -311,23 +311,3 @@ export const AddressSelector = styled.div`
   padding-right: 10em;
   height: 50%;
 `;
-
-export const MapButton = styled.button`
-  border-radius: 20px;
-  border: 1px solid #5865f2;
-  background-color: #5865f2;
-  color: #ffffff;
-  font-size: 0.75rem;
-  font-weight: bold;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  margin-bottom: 1rem;
-  margin-left: 1rem;
-  width: 60px;
-
-  z-index: 50;
-
-  &:focus {
-    outline: none;
-  }
-`;
