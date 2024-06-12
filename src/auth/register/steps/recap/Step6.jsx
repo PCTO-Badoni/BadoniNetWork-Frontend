@@ -1,6 +1,5 @@
 import React from "react";
-import ChipSelector from "./ChipSelector";
-import { PhotoProvider } from "../profilePicture/PhotoContext";
+import { PhotoProvider, usePhoto } from "../profilePicture/PhotoContext";
 
 const Step6 = React.memo(
   ({ nome, cognome, pronomi, deadlineDate, articolazione, selectedChips }) => {
