@@ -24,7 +24,6 @@ export default PageController;
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
-
     <Router>
         <Routes>
             <Route path="/" element={<Register />} />

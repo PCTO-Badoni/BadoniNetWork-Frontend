@@ -5,17 +5,36 @@ import { Link } from 'react-router-dom';
 const StyledStudentCard = styled.div`
     background-color: #fff;
     border-radius: 12px;
-    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
-    width: 220px;
+    box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
+    width: 200px;
     height: 300px;
     margin: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    overflow: clip;
+    
+    ${Components.customBanner} {
+        filter: brightness(0.9);
+    }
 
     &:hover {
         scale: 1.05; // Aggiungi l'effetto desiderato qui
         transition: 0.2s;
+
+        ${Components.studentButton} {
+            background-color: rgba(20, 117, 207, 0.9);
+
+        }
+        
+        box-shadow: 0 0 20px -3px rgba(0, 0, 0, 0.4);
+        
+        
+        ${Components.customBanner} {
+            filter: brightness(1);
+            transition: 0.6s;
+        }
+        
     }
 `;
 

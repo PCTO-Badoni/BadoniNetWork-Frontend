@@ -6,7 +6,7 @@
 }
 
 body {
-  background: #4070f4;
+  background: #f0f0f0;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -124,4 +124,11 @@ label {
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
 
+}
+
+.menuItem {
+  cursor: pointer;
+  &:hover {
+    background-color: blue;
+  }
 }
