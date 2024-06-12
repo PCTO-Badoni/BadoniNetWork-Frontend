@@ -495,11 +495,6 @@ function Register() {
             </Components.Overlay>
           </Components.OverlayContainer>
         </Components.Container>
-        <Components.FooterContainer>
-          <Components.FooterButton>a</Components.FooterButton>
-
-        </Components.FooterContainer>
-
           <ToastContainer newestOnTop={true} />
       </PhotoProvider>
       </div>

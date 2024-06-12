@@ -37,6 +37,7 @@ export const Container = styled.div`
   width: 70vw;
   max-width: 100%;
   height: 80vh;
+  margin-top: 13em;
 `;
 
 export const sendingEmail = styled.div`

@@ -15,10 +15,10 @@ function useBodyScroll() {
     const location = useLocation();
 
     useEffect(() => {
-        if (location.pathname === '/homepage/') {
-            document.body.style.overflow = 'auto';
-        } else {
+        if (location.pathname === '/' || location.pathname.includes('/otp') || location.pathname.includes('/forgotPassword')) {
             document.body.style.overflow = 'clip';
+        } else {
+            document.body.style.overflow = 'auto';
         }
     }, [location]);
 }
@@ -27,6 +27,7 @@ function PageController() {
     useBodyScroll();
     return null;
 }
+
 const rootElement = document.getElementById("root");
 
 ReactDOM.render(
@@ -49,7 +50,6 @@ ReactDOM.render(
             justifyContent: 'center',
             alignItems: 'center',
             height: 'calc(100vh - 6em)', // sottrai l'altezza dell'header
-            marginLeft: '5%'
         }}>
             <Routes>
                 <Route path="/" element={<Register />} />

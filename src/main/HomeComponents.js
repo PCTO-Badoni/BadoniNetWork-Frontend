@@ -2,11 +2,10 @@ import styled from "styled-components";
 import batmanLogo from '../../assets/logo.png';
 
 export const Container = styled.div`
-    margin-top: 12em;
     display: flex;
     flex-direction: row;
-    width: 95dvw;
-    height: 88dvh;
+    width: 100%;
+    height: 100vh;
     overflow: scroll;
 `;
 
@@ -73,7 +72,6 @@ export const Sidebar = styled.div`
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    
 `;
 
 export const Button = styled.button`
@@ -175,7 +173,7 @@ export const cardsContainer = styled.div`
     width: 100%;
     border-radius: 12px;
     background-color: #fff;
-    overflow: auto;
+    overflow: scroll;
 `;
 
 export const listContainer = styled.div`
@@ -188,7 +186,7 @@ export const listContainer = styled.div`
     height: 100%;
     border-radius: 12px;
     background-color: #fff;
-    overflow: auto;
+    overflow: scroll;
 `;
 
 export const listItem = styled.div`
@@ -217,7 +215,7 @@ export const listItemProfilePic = styled.div`
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: ${props => props.dotColor}; // Modifica qui
+        background-color: ${props => props.dotColor};
         border: 2px solid #fff;
     }
 `;
@@ -271,7 +269,6 @@ export const LogoutButton = styled.button`
     font-size: 1.4em;
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
-    
 `;
 
 export const ViewModeButton = styled.button`

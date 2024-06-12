@@ -208,7 +208,6 @@ const students = [
     },
 ];
 
-
 function HomePage() {
 
     const [searchTerm, setSearchTerm] = useState("");
@@ -225,7 +224,6 @@ function HomePage() {
         { id: 8, descrizione: 'Elettronica' },
         { id: 9, descrizione: 'Energia' }
     ]);
-
     const [competenze, setCompetenze] = useState([
         { id: 1, descrizione: 'Java' },
         { id: 2, descrizione: 'JavaFX' },
@@ -267,7 +265,6 @@ function HomePage() {
         { id: 38, descrizione: 'Sensori' },
         { id: 39, descrizione: 'Cablaggio' }
     ]);
-
     const [selectedCompetenze, setSelectedCompetenze] = useState([]);
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [viewMode, setViewMode] = useState('cards');
@@ -286,7 +283,6 @@ function HomePage() {
     const handleChipDelete = (chipToDelete) => {
         setSelectedChips(selectedChips.filter((chip) => chip !== chipToDelete));
     };
-
 
     const selectedFilteredChips = selectedChips.filter((chip) =>
         chip.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -315,7 +311,6 @@ function HomePage() {
         setSelectedCompetenze(selectedCompetenze.filter((competenza) => competenza !== competenzaToDelete));
     };
 
-
     const selectedFilteredCompetenze = selectedCompetenze.filter((competenza) =>
         competenza.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
     );
@@ -324,11 +319,9 @@ function HomePage() {
         (competenza) => !selectedCompetenze.includes(competenza),
     );
 
-
-
     return (
         <>
-            <div style={{display: 'flex', flexDirection: 'column', overflow: 'scroll'}}>
+            <div style={{display: 'flex', flexDirection: 'column', overflow: 'scroll', marginTop: 'auto'}}>
             <Components.Container style={{scale:'0.9'}}>
                 <Components.Sidebar>
                     <Components.MenuContainer>
