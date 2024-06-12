@@ -325,11 +325,11 @@ function HomePage() {
             <Components.Container style={{scale:'0.9'}}>
                 <Components.Sidebar>
                     <Components.MenuContainer>
-                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo1</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo2</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo3</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo4</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo5</Components.MenuItem>
                     </Components.MenuContainer>
                     <div style={{marginTop: 'auto'}}>
                         <Components.LogoutButton>
