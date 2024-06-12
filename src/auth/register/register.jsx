@@ -188,6 +188,40 @@ function Register() {
     }
   }
 
+  async function sendStudentToDB() {
+    const data = {
+      email: "csdvhjbvbiao@iisbadoni.edu.it",
+      telefono: telefono,
+      nome: nome,
+      cognome: cognome,
+      password: password,
+      idarticolazione: articolazione.id, // Assuming articolazione is an object with an id property
+      indirizzo: selectedAddress.label, // Assuming selectedAddress is the address you want to send
+    };
+
+    try {
+      const response = await fetch("http://localhost:8080/register/utente", {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        error(errorData.message || "Errore durante la richiesta");
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      if (responseData.message !== "Email valida") {
+        responseView(responseData.message);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  }
+
   const handleNext = (isValid) => {
     if (activeStep === 0) {
       if (password === confirmPassword && isValid) {
@@ -250,10 +284,11 @@ function Register() {
         return;
       }
     }
-    if (activeStep < 5) {
-      setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    } else {
+    if (activeStep === 5) {
+      sendStudentToDB();
+      return;
     }
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
 
   const handleBack = () => {

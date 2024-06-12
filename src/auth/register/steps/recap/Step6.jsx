@@ -42,8 +42,8 @@ const Step6 = React.memo(
                 ? photo
                 : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
             }
-            width={150}
-            height={150}
+            width={250}
+            height={250}
             style={{
               borderRadius: "50%",
               objectFit: "cover",
