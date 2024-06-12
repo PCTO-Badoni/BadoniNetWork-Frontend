@@ -2,12 +2,12 @@ import styled from "styled-components";
 import batmanLogo from '../../assets/logo.png';
 
 export const Container = styled.div`
+    margin-top: 12em;
     display: flex;
     flex-direction: row;
-    width: 95vw;
-    height: 95vh;
-    overflow: clip;
-    
+    width: 95dvw;
+    height: 88dvh;
+    overflow: scroll;
 `;
 
 export const contentContainer = styled.div`
@@ -32,13 +32,8 @@ export const Header = styled.div`
     border-radius: 12px;
     padding-left: 2em;
     padding-top: 1.5em;
+    padding-bottom: 1.5em;
     margin-bottom: 15px;
-`;
-
-export const Logo = styled.img.attrs(props => ({src: batmanLogo}))`
-    width: 60px;
-    height: 60px;
-    background-size: cover;
 `;
 
 export const SearchBar = styled.input.attrs({type: 'search', placeholder: 'Cerca'})`
@@ -60,7 +55,6 @@ export const FilterButton = styled.button`
     border: none;
     font-size: 0.7em;
     font-family: "Montserrat", sans-serif;
-    padding-left: 20px;
     cursor: pointer;
 `;
 
@@ -96,7 +90,6 @@ export const Button = styled.button`
     margin: 8px 0 0;
     text-decoration: none;
     width: 100%;
-    
     z-index: 50;
     
     &:focus {
@@ -111,7 +104,6 @@ export const MenuContainer = styled.div`
     align-items: center;
     height: 40%;
     margin-top: 80px;
-
 `;
 
 export const MenuItem = styled.div`
@@ -124,7 +116,6 @@ export const MenuItem = styled.div`
     align-content: center;
     text-align: center;
     
-
     &:hover {
         opacity: 0.8;
     }
@@ -182,10 +173,9 @@ export const cardsContainer = styled.div`
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    height: 100%;
     border-radius: 12px;
-    overflow: auto;
     background-color: #fff;
+    overflow: auto;
 `;
 
 export const listContainer = styled.div`
@@ -197,8 +187,8 @@ export const listContainer = styled.div`
     width: 100%;
     height: 100%;
     border-radius: 12px;
-    overflow: auto;
     background-color: #fff;
+    overflow: auto;
 `;
 
 export const listItem = styled.div`
@@ -275,22 +265,29 @@ export const ListItemSkill = styled.div`
     }
 `;
 
-
-
+export const LogoutButton = styled.button`
+    background: none;
+    border: none;
+    font-size: 1.4em;
+    font-family: "Montserrat", sans-serif;
+    cursor: pointer;
+    
+`;
 
 export const ViewModeButton = styled.button`
     border-radius: 20px;
     background: none;
     border: none;
-    font-size: 25px;
+    font-size: 20px;
     color: #0b75ed;
-    margin-right: 30px;
-    padding-top: 10px;
     letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration: none;
-    
     z-index: 50;
-    
-    
+`;
+
+export const NotificationButton = styled.button` 
+    background: none;
+    border: none;
+    font-size: 20px;
 `;

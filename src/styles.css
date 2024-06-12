@@ -13,7 +13,7 @@ body {
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
   height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 #datePicker {
@@ -84,8 +84,8 @@ label {
   justify-content: center;
   align-items: center;
 }
-.progress-step-text {
 
+.progress-step-text {
   position: relative;
   color: #4caf50;
   text-align: center;
@@ -102,8 +102,6 @@ label {
   font-size: 1em;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
-
-
 }
 
 .progress-step-text-completed {
@@ -123,7 +121,6 @@ label {
   font-size: 1em;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
-
 }
 
 .menuItem {
@@ -131,4 +128,10 @@ label {
   &:hover {
     background-color: blue;
   }
+}
+
+footer {
+  width: 100%;
+  background-color: blue;
+  height: 6em;
 }

@@ -331,3 +331,27 @@ export const MapButton = styled.button`
     outline: none;
   }
 `;
+
+export const FooterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+`;
+
+
+export const FooterButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.25rem;
+
+  background-color: #f0f0f0;  
+  width: 30px;
+  border: none;
+  
+  &:hover {
+    cursor: pointer;
+    background-color: #f9f9f9;
+  }
+`;

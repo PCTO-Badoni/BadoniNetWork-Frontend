@@ -2,24 +2,21 @@ import * as Components from "./HomeComponents.js";
 import ReactDOM from "react-dom";
 import React, {useEffect, useState} from "react";
 import "../styles.css";
-import Register from '../auth/register/register';
 import StudentCard from './Components/cards/StudentCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList } from '@fortawesome/free-solid-svg-icons';
-import { faTh } from '@fortawesome/free-solid-svg-icons';
+import { faTh, faInbox, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
-
-
 import "././sideBar/homeStyle.css";
-import { BrowserRouter as Router, Route} from 'react-router-dom';
-import {Sidebar, Menu, MenuItem, SubMenu} from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
-import MaterialMenuItem from './sideBar/MaterialMenuItem';
 import Chip from "@mui/material/Chip";
+import Footer from "../footer";
 
 const listIcon = <FontAwesomeIcon icon={faList} />;
 const cardIcon = <FontAwesomeIcon icon={faTh} />;
 const filterIcon = <FontAwesomeIcon icon={faFilter} />;
+const bellIcon = <FontAwesomeIcon icon={faInbox} />
+const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />
 
 function getRandomColor() {
     const colors = ['green', 'orange', 'red'];
@@ -126,7 +123,7 @@ const students = [
         description: 'Appassionato di sviluppo mobile',
         skills: ['Swift', 'Kotlin', 'React Native'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 12',
@@ -135,7 +132,7 @@ const students = [
         description: 'Mi piace il backend development',
         skills: ['Java', 'Spring Boot', 'SQL'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 13',
@@ -144,7 +141,7 @@ const students = [
         description: 'Appassionato di sviluppo web',
         skills: ['HTML', 'CSS', 'JavaScript'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 14',
@@ -153,7 +150,7 @@ const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 15',
@@ -162,7 +159,7 @@ const students = [
         description: 'Appassionato di sviluppo mobile',
         skills: ['Swift', 'Kotlin', 'React Native'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 16',
@@ -171,7 +168,7 @@ const students = [
         description: 'Mi piace il backend development',
         skills: ['Java', 'Spring Boot', 'SQL'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 17',
@@ -180,7 +177,7 @@ const students = [
         description: 'Appassionata di sviluppo web',
         skills: ['HTML', 'CSS', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript', 'JavaScript'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 18',
@@ -189,7 +186,7 @@ const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor()
     },
     {
         profilePic: 'url della foto del profilo 18',
@@ -331,131 +328,133 @@ function HomePage() {
 
     return (
         <>
-        <Components.Container>
-            <Components.Sidebar>
-                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', paddingLeft: '50%', paddingRight: '50%', borderBottom: '1px solid #ccc'}}>
-                    <Components.Logo/>
-                    <h3>Badoni NetWork</h3>
-                </div>
-                <Components.MenuContainer>
-                    <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                    <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                    <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                    <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                    <Components.MenuItem to='/'>Campo</Components.MenuItem>
-                </Components.MenuContainer>
-                <div style={{marginTop: 'auto'}}>
-                    <Components.Button>
-                        <Link to='/' style={{color:'black', textDecoration: 'none'}}>Logout</Link>
-                    </Components.Button>
-                </div>
-            </Components.Sidebar>
-            <Components.contentContainer>
-
-                <Components.Header style={{ height: isFilterOpen ? '350px' : '100px', transition: 'height 0.3s' }}>
-                    <div style={{position: 'sticky'}}>
-                        <Components.SearchBar onChange={handleSearchChange} />
-                        <Components.FilterButton onClick={() => setFilterOpen(!isFilterOpen)}>
-                            {filterIcon} Filtra
-                        </Components.FilterButton>
-                        <Components.ViewModeButton
-                            onClick={() => setViewMode(viewMode === 'cards' ? 'list' : 'cards')}
-                        >
-                            {viewMode === 'cards' ? listIcon : cardIcon}
-                        </Components.ViewModeButton>
+            <div style={{display: 'flex', flexDirection: 'column', overflow: 'scroll'}}>
+            <Components.Container style={{scale:'0.9'}}>
+                <Components.Sidebar>
+                    <Components.MenuContainer>
+                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
+                        <Components.MenuItem to='/'>Campo</Components.MenuItem>
+                    </Components.MenuContainer>
+                    <div style={{marginTop: 'auto'}}>
+                        <Components.LogoutButton>
+                            <Link to='/' style={{textDecoration: 'none', color:'black'}}>{logoutIcon}</Link>
+                        </Components.LogoutButton>
                     </div>
-                    {isFilterOpen ?
-                        <Components.FilterContainer style={{transition: 'all 0.3s'}}>
-                            <div style={{flexDirection: 'column', justifyContent:'flex-start', alignContent: 'flex-start', alignItems: 'flex-start'}}>
+                </Components.Sidebar>
+                <Components.contentContainer>
 
-                                <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Indirizzi</h5>
-                                <div style={{width: '400px'}}>
-                                    {selectedFilteredChips.map((chip) => (
-                                        <Chip
-                                            key={chip.id}
-                                            label={chip.descrizione}
-                                            onDelete={() => handleChipDelete(chip)}
-                                            style={{
-                                                margin: "4px",
-                                                backgroundColor: "rgba(20, 117, 207, 0.7)",
-                                                color: "white",
-                                            }}
-                                        />
-                                    ))}
-                                    {unselectedFilteredChips.map((chip) => (
-                                        <Chip
-                                            key={chip.id}
-                                            label={chip.descrizione}
-                                            onClick={() => handleChipClick(chip)}
-                                            style={{margin: "4px"}}
-                                            clickable
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                            <div style={{flexDirection: 'column'}}>
-                                <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Competenze</h5>
-                                <div style={{width: '100%'}}>
-                                    {selectedFilteredCompetenze.map((competenza) => (
-                                        <Chip
-                                            key={competenza.id}
-                                            label={competenza.descrizione}
-                                            onDelete={() => handleCompetenzaDelete(competenza)}
-                                            style={{
-                                                margin: "4px",
-                                                backgroundColor: "rgba(20, 117, 207, 0.7)",
-                                                color: "white",
-                                            }}
-                                        />
-                                    ))}
-                                    {unselectedFilteredCompetenze.map((competenza) => (
-                                        <Chip
-                                            key={competenza.id}
-                                            label={competenza.descrizione}
-                                            onClick={() => handleCompetenzaClick(competenza)}
-                                            style={{margin: "4px"}}
-                                            clickable
-                                        />
-                                    ))}
-                                </div>
-                            </div>
-                        </Components.FilterContainer>
-                        :
-                        null
-                    }
+                    <Components.Header style={{ height: isFilterOpen ? '350px' : '100px', transition: 'height 0.3s' }}>
+                        <div style={{position: 'sticky', display:'flex', flexDirection:'row', columnGap:'20px'}}>
+                            <Components.SearchBar onChange={handleSearchChange} />
+                            <Components.FilterButton onClick={() => setFilterOpen(!isFilterOpen)}>
+                                {filterIcon} Filtra
+                            </Components.FilterButton>
 
-                </Components.Header>
+                            {/*<Components.ViewModeButton
+                                onClick={() => setViewMode(viewMode === 'cards' ? 'list' : 'cards')}
+                            >
+                                {viewMode === 'cards' ? listIcon : cardIcon}
+                            </Components.ViewModeButton>*/}
+                            <Components.NotificationButton>
 
+                                {bellIcon}
 
-                {viewMode === 'cards' ? (
-                    <Components.cardsContainer>
-                        {students.map((student, index) => (
-                            <StudentCard
-                                key={index}
-                                student={student}
-                                index={index}
-                            />
-                        ))}
-                    </Components.cardsContainer>
-                ) : (
-                    <Components.listContainer>
-                        {students.map((student, index) => (
-                            <Components.listItem>
-                                <Components.listItemProfilePic dotColor={student.dotColor}/>
-                                <Components.listItemInfo>
-                                    <Components.listItemName>{student.firstName} {student.lastName}</Components.listItemName>
-                                    <Components.ListItemSkills>
-                                        {student.skills.map(skill => (
-                                            <Components.ListItemSkill key={skill}>{skill}</Components.ListItemSkill>
+                            </Components.NotificationButton>
+                        </div>
+                        {isFilterOpen ?
+                            <Components.FilterContainer style={{transition: 'all 0.3s'}}>
+                                <div style={{flexDirection: 'column', justifyContent:'flex-start', alignContent: 'flex-start', alignItems: 'flex-start'}}>
+
+                                    <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Indirizzi</h5>
+                                    <div style={{width: '400px'}}>
+                                        {selectedFilteredChips.map((chip) => (
+                                            <Chip
+                                                key={chip.id}
+                                                label={chip.descrizione}
+                                                onDelete={() => handleChipDelete(chip)}
+                                                style={{
+                                                    margin: "4px",
+                                                    backgroundColor: "rgba(20, 117, 207, 0.7)",
+                                                    color: "white",
+                                                }}
+                                            />
                                         ))}
-                                    </Components.ListItemSkills>
-                                </Components.listItemInfo>
-                            </Components.listItem>
-                        ))}
-                    </Components.listContainer>
-                )}
-            </Components.contentContainer>
-        </Components.Container>
+                                        {unselectedFilteredChips.map((chip) => (
+                                            <Chip
+                                                key={chip.id}
+                                                label={chip.descrizione}
+                                                onClick={() => handleChipClick(chip)}
+                                                style={{margin: "4px"}}
+                                                clickable
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                                <div style={{flexDirection: 'column'}}>
+                                    <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Competenze</h5>
+                                    <div style={{width: '100%'}}>
+                                        {selectedFilteredCompetenze.map((competenza) => (
+                                            <Chip
+                                                key={competenza.id}
+                                                label={competenza.descrizione}
+                                                onDelete={() => handleCompetenzaDelete(competenza)}
+                                                style={{
+                                                    margin: "4px",
+                                                    backgroundColor: "rgba(20, 117, 207, 0.7)",
+                                                    color: "white",
+                                                }}
+                                            />
+                                        ))}
+                                        {unselectedFilteredCompetenze.map((competenza) => (
+                                            <Chip
+                                                key={competenza.id}
+                                                label={competenza.descrizione}
+                                                onClick={() => handleCompetenzaClick(competenza)}
+                                                style={{margin: "4px"}}
+                                                clickable
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            </Components.FilterContainer>
+                            :
+                            null
+                        }
+                    </Components.Header>
+                    {viewMode === 'cards' ? (
+                        <Components.cardsContainer>
+                            {students.map((student, index) => (
+                                <StudentCard
+                                    key={index}
+                                    student={student}
+                                    index={index}
+                                />
+                            ))}
+                        </Components.cardsContainer>
+                    ) : (
+                        <Components.listContainer>
+                            {students.map((student, index) => (
+                                <Components.listItem>
+                                    <Components.listItemProfilePic dotColor={student.dotColor}/>
+                                    <Components.listItemInfo>
+                                        <Components.listItemName>{student.firstName} {student.lastName}</Components.listItemName>
+                                        <Components.ListItemSkills>
+                                            {student.skills.map(skill => (
+                                                <Components.ListItemSkill key={skill}>{skill}</Components.ListItemSkill>
+                                            ))}
+                                        </Components.ListItemSkills>
+                                    </Components.listItemInfo>
+                                </Components.listItem>
+                            ))}
+                        </Components.listContainer>
+                    )}
+                </Components.contentContainer>
+            </Components.Container>
+            <Footer/>
+            </div>
         </>
     );
 
