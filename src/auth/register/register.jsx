@@ -190,7 +190,7 @@ function Register() {
 
   async function sendStudentToDB() {
     const data = {
-      email: "csdvhjbvbiao@iisbadoni.edu.it",
+      email: email,
       telefono: telefono,
       nome: nome,
       cognome: cognome,
