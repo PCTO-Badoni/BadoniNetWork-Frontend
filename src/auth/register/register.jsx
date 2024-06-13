@@ -617,7 +617,6 @@ function Register() {
               {activeStep === steps.length ? save : arrowRight}
             </Components.StepsNavButton>
           </div>
-          <ToastContainer newestOnTop={true} />
         </PhotoProvider>
       </div>
     </>
