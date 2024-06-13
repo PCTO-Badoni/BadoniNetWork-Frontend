@@ -31,7 +31,7 @@ export const studentSkills = styled.div`
     flex: 1;
     justify-content: center;
     flex-wrap: wrap;
-    margin-top: 0px;
+    margin-top: 0;
 `;
 
 export const studentSkill = styled.span`

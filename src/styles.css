@@ -83,6 +83,22 @@ label {
   align-items: center;
 }
 
+@keyframes slideDown {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+.popup {
+  position: absolute;
+  top: 0;
+  animation: slideDown 0.5s forwards;
+  /* altre proprietà del popup... */
+}
+
 .progress-step-text {
   position: relative;
   color: #4caf50;
@@ -133,3 +149,4 @@ footer {
   background-color: blue;
   height: 6em;
 }
+

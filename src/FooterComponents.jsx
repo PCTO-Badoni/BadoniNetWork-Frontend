@@ -5,7 +5,7 @@ export const Box = styled.div`
     background: black;
     bottom: 0;
     width: 100%;
-    border-top: 2px solid #e5e5e5
+    border-top: 2px solid #e5e5e5;
 `;
 
 export const FooterContainer = styled.div`
