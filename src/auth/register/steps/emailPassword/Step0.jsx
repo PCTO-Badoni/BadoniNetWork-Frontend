@@ -15,7 +15,6 @@ const Step0 = React.memo(
     setConfirmPassword,
     handleSubmitStudente,
     isRegisterClicked,
-    handleNext,
     passwordsMatch,
     setPasswordStrength,
   }) => {
