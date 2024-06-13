@@ -52,11 +52,16 @@ const ListaStudenti = ({
         (competenza) => !selectedCompetenze.includes(competenza),
     );
 
-    const [activeButton, setActiveButton] = useState(null);
-    const handleButtonClick = (buttonName) => {
-        setActiveButton(buttonName);
-    };
 
+    const [activeButtons, setActiveButtons] = useState([]);
+
+    const handleButtonClick = (buttonName) => {
+        if (activeButtons.includes(buttonName)) {
+            setActiveButtons(activeButtons.filter(button => button !== buttonName));
+        } else {
+            setActiveButtons([...activeButtons, buttonName]);
+        }
+    };
 
     return (
         <Components.contentContainer>
@@ -72,13 +77,11 @@ const ListaStudenti = ({
                     </div>
 
                     <Components.DisponibilityContainer>
-                        <Components.DisponibilityButton active={activeButton === 'verde'} onClick={() => handleButtonClick('verde')} style={{borderLeft: activeButton === 'verde' ? '2px solid green' : null}}>Disponibile</Components.DisponibilityButton>
+                        <Components.DisponibilityButton onClick={() => handleButtonClick('verde')} style={{borderBottom: activeButtons.includes('verde') ? '2px solid blue' : null}}>Disponibile</Components.DisponibilityButton>
                         <Components.VerticalSeparator/>
-                        <Components.DisponibilityButton active={activeButton === 'arancione'} onClick={() => handleButtonClick('arancione')} style={{borderLeft: activeButton === 'arancione' ? '2px solid orange' : null}}>Accetta Proposte</Components.DisponibilityButton>
+                        <Components.DisponibilityButton onClick={() => handleButtonClick('arancione')} style={{borderBottom: activeButtons.includes('arancione') ? '2px solid blue' : null}}>Accetta Proposte</Components.DisponibilityButton>
                         <Components.VerticalSeparator/>
-                        <Components.DisponibilityButton active={activeButton === 'rosso'} onClick={() => handleButtonClick('rosso')} style={{borderLeft: activeButton === 'rosso' ? '2px solid red' : null}}>Non Accetta Proposte</Components.DisponibilityButton>
-                    </Components.DisponibilityContainer>
-
+                        <Components.DisponibilityButton onClick={() => handleButtonClick('rosso')} style={{borderBottom: activeButtons.includes('rosso') ? '2px solid blue' : null}}>Non Accetta Proposte</Components.DisponibilityButton></Components.DisponibilityContainer>
                     <Components.ViewModeButton
                         onClick={() => setViewMode(viewMode === 'cards' ? 'list' : 'cards')}
                     >

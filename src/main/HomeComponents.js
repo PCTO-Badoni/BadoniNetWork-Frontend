@@ -259,16 +259,6 @@ export const DisponibilityButton = styled.button`
     &:hover {
         cursor: pointer;
     }
-
-    &::after {
-        content: '${props => (props.active ? '' : '')}';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        height: 1.5px;
-        background-color: blue;
-    }
 `;
 
 export const VerticalSeparator = styled.div`
