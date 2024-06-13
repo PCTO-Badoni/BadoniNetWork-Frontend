@@ -63,9 +63,9 @@ const AutocompleteSearch = ({
       style={{
         display: "flex",
         flexDirection: "column",
-        marginTop: "-4rem",
-        marginBottom: "1rem",
         width: "70%",
+        height: "auto",
+        paddingBottom: "2em",
       }}
     >
       <label htmlFor="select">Indirizzo</label>
@@ -88,7 +88,7 @@ const AutocompleteSearch = ({
           ...theme,
           backgroundColor: "#ffffff",
           border: "3px solid #eee",
-          padding: "0.75rem",
+          paddingBottom: "1rem",
           width: "150em",
           borderRadius: "15px",
           fontFamily: "Montserrat sans-serif",

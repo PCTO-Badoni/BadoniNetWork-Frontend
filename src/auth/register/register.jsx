@@ -12,18 +12,18 @@ import {
 import "react-tooltip/dist/react-tooltip.css";
 import "flatpickr/dist/themes/material_blue.css";
 import { PhotoProvider } from "./steps/profilePicture/PhotoContext";
-import Step1 from "./steps/emailPassword/Step1";
+import Step0 from "./steps/emailPassword/Step0";
 import Step2 from "./steps/personalInfo/Step2";
 import Step3 from "./steps/profilePicture/Step3";
 import Step4 from "./steps/skills/Step4";
 import Step5 from "./steps/addressSelector/Step5";
 import Step6 from "./steps/recap/Step6";
+import Step1 from "./steps/verifyEmail/Step1";
 
 const arrowLeft = <FontAwesomeIcon icon={faChevronLeft} />;
 const arrowRight = <FontAwesomeIcon icon={faChevronRight} />;
 const save = <FontAwesomeIcon icon={faSave} />;
-const errore = "";
-const steps = ["Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
+const steps = ["Step0", "Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
 
 const responseView = (body) =>
   toast.success(body, {
@@ -66,8 +66,8 @@ const error = (message) =>
 
 function Register() {
   const [signIn, toggle] = useState(true);
-  const [isRegisterClicked, setRegisterClicked] = useState(true);
-  const [activeStep, setActiveStep] = useState(3);
+  const [isRegisterClicked, setRegisterClicked] = useState(false);
+  const [activeStep, setActiveStep] = useState(0);
   const [isSending, setIsSending] = useState(false);
   let navigate = useNavigate();
 
@@ -75,11 +75,13 @@ function Register() {
   const [email, setEmail] = useState("");
 
   // variabili studente
-  // step 1
+  // step 0
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [passwordStrength, setPasswordStrength] = useState(false);
   const [passwordsMatch, setPasswordsMatch] = useState(true);
+  // step 1
+  const [isCodeVerified, setCodeVerified] = useState(false);
   // step 2
   const [nome, setNome] = useState("");
   const [erroreNome, setErroreNome] = useState(false);
@@ -188,16 +190,49 @@ function Register() {
     }
   }
 
+  function toLocalISOString(date) {
+    const tzo = -date.getTimezoneOffset(),
+      dif = tzo >= 0 ? "+" : "-",
+      pad = function (num) {
+        const norm = Math.floor(Math.abs(num));
+        return (norm < 10 ? "0" : "") + norm;
+      };
+    const localTimeStamp =
+      date.getFullYear() +
+      "-" +
+      pad(date.getMonth() + 1) +
+      "-" +
+      pad(date.getDate()) +
+      "T" +
+      pad(date.getHours()) +
+      ":" +
+      pad(date.getMinutes()) +
+      ":" +
+      pad(date.getSeconds());
+
+    return localTimeStamp;
+  }
+
   async function sendStudentToDB() {
     const data = {
       email: email,
       telefono: telefono,
       nome: nome,
       cognome: cognome,
+      pronomi: pronomi.toString(),
       password: password,
-      idarticolazione: articolazione.id, // Assuming articolazione is an object with an id property
-      indirizzo: selectedAddress.label, // Assuming selectedAddress is the address you want to send
+      idarticolazione: articolazione.id,
+      dataregistrazione: toLocalISOString(new Date()),
+      datanascita:
+        deadlineDate.getFullYear() +
+        "-" +
+        deadlineDate.getMonth().toString().padStart(2, "0") +
+        "-" +
+        deadlineDate.getDate().toString().padStart(2, "0"),
+      indirizzo: selectedAddress.label,
     };
+
+    console.log(data.datanascita);
 
     try {
       const response = await fetch("http://localhost:8080/register/utente", {
@@ -237,6 +272,11 @@ function Register() {
         return;
       }
     } else if (activeStep === 1) {
+      if (!isCodeVerified) {
+        error("Prima di continuare verifica la tua email");
+        return;
+      }
+    } else if (activeStep === 2) {
       // check if nome and cognome are not empty
       if (nome.split(" ").join("") === "") {
         error("Nome non può essere vuoto");
@@ -252,9 +292,9 @@ function Register() {
       } else {
         setErroreCognome(false);
       }
-      // check if deadlineDate is not less 16 years old
-      if (Date.now() - deadlineDate < 16 * 365 * 24 * 60 * 60 * 1000) {
-        error("Devi avere almeno 16 anni");
+      // check if deadlineDate is not less than 18 years old
+      if (Date.now() - deadlineDate < 18 * 365 * 24 * 60 * 60 * 1000) {
+        error("Devi avere almeno 18 anni");
         setErroreData(true);
         return;
       } else {
@@ -268,7 +308,7 @@ function Register() {
       } else {
         setErroreTelefono(false);
       }
-    } else if (activeStep === 3) {
+    } else if (activeStep === 4) {
       console.log(articolazione);
       if (articolazione === "") {
         error("Seleziona l'articolazione");
@@ -278,13 +318,13 @@ function Register() {
         error("Seleziona almeno 3 competenze");
         return;
       }
-    } else if (activeStep === 4) {
+    } else if (activeStep === 5) {
       if (selectedAddress === null) {
         error("Inserisci il tuo indirizzo di residenza");
         return;
       }
     }
-    if (activeStep === 5) {
+    if (activeStep === 6) {
       sendStudentToDB();
       return;
     }
@@ -297,17 +337,16 @@ function Register() {
   };
 
   const stepTitles = [
-    <Components.Title style={{ paddingTop: "55px" }}>
-      Informazioni Personali
-    </Components.Title>,
+    <Components.Title>Verifica Email</Components.Title>,
+    <Components.Title>Informazioni Personali</Components.Title>,
     <Components.Title>Immagine Profilo</Components.Title>,
     <Components.Title>Competenze</Components.Title>,
     <Components.Title>Indirizzo</Components.Title>,
-    <Components.Title>Titolo 5</Components.Title>,
+    <Components.Title>Recap</Components.Title>,
   ];
 
   const stepComponents = [
-    <Step1
+    <Step0
       email={email}
       setEmail={setEmail}
       password={password}
@@ -322,6 +361,7 @@ function Register() {
       erroreNome={erroreNome}
       erroreCognome={erroreCognome}
     />,
+    <Step1 email={email} setCodeVerified={setCodeVerified} />,
     <Step2
       deadlineDate={deadlineDate}
       setDeadlineDate={setDeadlineDate}
@@ -344,6 +384,7 @@ function Register() {
     <Step4
       minSelectedChips={minSelectedChips}
       setMinSelectedChips={setMinSelectedChips}
+      articolazione={articolazione}
       setArticolazione={setArticolazione}
       selectedChips={selectedChips}
       setSelectedChips={setSelectedChips}
@@ -367,200 +408,219 @@ function Register() {
 
   return (
     <>
-      <div style={{scale:'0.9', marginTop:'-10em'}}>
-      <PhotoProvider>
-        <Components.Container>
-          <Components.AziendaContainer signingIn={signIn}>
-            {isSending ? (
-              <Components.sendingEmail>
-                invio richiesta in corso...
-              </Components.sendingEmail>
-            ) : (
-              <Components.Form
-                onSubmit={handleSubmitAzienda}
-                style={{ padding: "200px 50px" }}
-              >
-                <Components.Title>Azienda</Components.Title>
-                <label htmlFor="name">Ragione sociale</label>
-                <Components.Input
-                  type="ragione_sociale"
-                  placeholder="es. Azienda S.p.A."
-                  value={ragionesociale}
-                  onChange={(e) => setRagione(e.target.value)}
-                  required
-                />
-                <label htmlFor="name">Email</label>
-                <Components.Input
-                  type="email"
-                  placeholder="es. azienda@gmail.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-                <label htmlFor="name">Telefono</label>
-                <Components.Input
-                  type="telefono"
-                  placeholder="es. 123 456 7890"
-                  value={telefono}
-                  onChange={(e) => setTelefono(e.target.value)}
-                  required
-                />
-                <label htmlFor="name">Indirizzo</label>
-                <Components.Input
-                  type="indirizzo"
-                  placeholder="es. Via Rivolta 10"
-                  value={indirizzo}
-                  onChange={(e) => setIndirizzo(e.target.value)}
-                  required
-                />
-                <Components.Button type="submit">
-                  Richiedi Accesso
-                </Components.Button>
-                <Components.AlreadyRegistered to="/login">
-                  Hai già un account? Accedi
-                </Components.AlreadyRegistered>
-              </Components.Form>
-            )}
-          </Components.AziendaContainer>
-          <Components.StudenteContainer
-            className={isRegisterClicked ? "shrinking" : ""}
-            isRegisterClicked={isRegisterClicked}
-            signingIn={signIn}
+      <div style={{ scale: "0.9", marginTop: "-10em" }}>
+        <PhotoProvider>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "center",
+            }}
           >
-            {isRegisterClicked && (
-              <div className="progress-bar">
+            <Components.StepsNavButton
+              isRegisterClicked={isRegisterClicked}
+              onClick={() => {
+                activeStep === 0 ? setRegisterClicked(false) : handleBack();
+              }}
+              disabled={!isRegisterClicked}
+            >
+              {arrowLeft}
+            </Components.StepsNavButton>
+            <Components.Container>
+              <Components.AziendaContainer signingIn={signIn}>
+                {isSending ? (
+                  <Components.sendingEmail>
+                    invio richiesta in corso...
+                  </Components.sendingEmail>
+                ) : (
+                  <Components.Form
+                    onSubmit={handleSubmitAzienda}
+                    style={{ padding: "200px 50px" }}
+                  >
+                    <Components.Title>Azienda</Components.Title>
+                    <label htmlFor="name">Ragione sociale</label>
+                    <Components.Input
+                      type="ragione_sociale"
+                      placeholder="es. Azienda S.p.A."
+                      value={ragionesociale}
+                      onChange={(e) => setRagione(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="name">Email</label>
+                    <Components.Input
+                      type="email"
+                      placeholder="es. azienda@gmail.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="name">Telefono</label>
+                    <Components.Input
+                      type="telefono"
+                      placeholder="es. 123 456 7890"
+                      value={telefono}
+                      onChange={(e) => setTelefono(e.target.value)}
+                      required
+                    />
+                    <label htmlFor="name">Indirizzo</label>
+                    <Components.Input
+                      type="indirizzo"
+                      placeholder="es. Via Rivolta 10"
+                      value={indirizzo}
+                      onChange={(e) => setIndirizzo(e.target.value)}
+                      required
+                    />
+                    <Components.Button type="submit">
+                      Richiedi Accesso
+                    </Components.Button>
+                    <Components.AlreadyRegistered to="/login">
+                      Hai già un account? Accedi
+                    </Components.AlreadyRegistered>
+                  </Components.Form>
+                )}
+              </Components.AziendaContainer>
+              <Components.StudenteContainer
+                className={isRegisterClicked ? "shrinking" : ""}
+                isRegisterClicked={isRegisterClicked}
+                signingIn={signIn}
+              >
+                {isRegisterClicked && (
+                  <div className="progress-bar" style={{ paddingTop: "2em" }}>
+                    <div
+                      className="progress-bar-fill"
+                      style={{
+                        width: `${(activeStep / steps.length) * 100}%`,
+                      }}
+                    ></div>
+                    <div className="progress-step">
+                      <span
+                        className={
+                          activeStep >= 1
+                            ? "progress-step-text-completed"
+                            : "progress-step-text"
+                        }
+                      >
+                        1
+                      </span>
+                    </div>
+                    <div className="progress-step">
+                      <span
+                        className={
+                          activeStep >= 2
+                            ? "progress-step-text-completed"
+                            : "progress-step-text"
+                        }
+                      >
+                        2
+                      </span>
+                    </div>
+                    <div className="progress-step">
+                      <span
+                        className={
+                          activeStep >= 3
+                            ? "progress-step-text-completed"
+                            : "progress-step-text"
+                        }
+                      >
+                        3
+                      </span>
+                    </div>
+                    <div className="progress-step">
+                      <span
+                        className={
+                          activeStep >= 4
+                            ? "progress-step-text-completed"
+                            : "progress-step-text"
+                        }
+                      >
+                        4
+                      </span>
+                    </div>
+                    <div className="progress-step">
+                      <span
+                        className={
+                          activeStep >= 5
+                            ? "progress-step-text-completed"
+                            : "progress-step-text"
+                        }
+                      >
+                        5
+                      </span>
+                    </div>
+                    <div className="progress-step">
+                      <span
+                        className={
+                          activeStep >= 6
+                            ? "progress-step-text-completed"
+                            : "progress-step-text"
+                        }
+                      >
+                        6
+                      </span>
+                    </div>
+                  </div>
+                )}
+                <Components.Heading>
+                  {activeStep >= 1 ? stepTitles[activeStep - 1] : null}
+                </Components.Heading>
+                {stepComponents[activeStep]}
                 <div
-                  className="progress-bar-fill"
                   style={{
-                    width: `${(activeStep / steps.length) * 100}%`,
+                    display: "flex",
+                    justifyContent: "space-between",
+                    paddingBottom: "10px",
+                    paddingRight: "50px",
+                    paddingLeft: "50px",
                   }}
                 ></div>
-                <div className="progress-step">
-                  <span
-                    className={
-                      activeStep >= 1
-                        ? "progress-step-text-completed"
-                        : "progress-step-text"
-                    }
-                  >
-                    1
-                  </span>
-                </div>
-                <div className="progress-step">
-                  <span
-                    className={
-                      activeStep >= 2
-                        ? "progress-step-text-completed"
-                        : "progress-step-text"
-                    }
-                  >
-                    2
-                  </span>
-                </div>
-                <div className="progress-step">
-                  <span
-                    className={
-                      activeStep >= 3
-                        ? "progress-step-text-completed"
-                        : "progress-step-text"
-                    }
-                  >
-                    3
-                  </span>
-                </div>
-                <div className="progress-step">
-                  <span
-                    className={
-                      activeStep >= 4
-                        ? "progress-step-text-completed"
-                        : "progress-step-text"
-                    }
-                  >
-                    4
-                  </span>
-                </div>
-                <div className="progress-step">
-                  <span
-                    className={
-                      activeStep >= 5
-                        ? "progress-step-text-completed"
-                        : "progress-step-text"
-                    }
-                  >
-                    5
-                  </span>
-                </div>
-              </div>
-            )}
-            {activeStep >= 1 ? stepTitles[activeStep - 1] : null}
-            {stepComponents[activeStep]}
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                paddingBottom: "10px",
-                paddingRight: "50px",
-                paddingLeft: "50px",
+              </Components.StudenteContainer>
+              <Components.OverlayContainer
+                className={isRegisterClicked ? "shrinking" : ""}
+                isRegisterClicked={isRegisterClicked}
+                signingIn={signIn}
+              >
+                <Components.Overlay signingIn={signIn}>
+                  <Components.LeftOverlayPanel signingIn={signIn}>
+                    <Components.Title>Benvenuto!</Components.Title>
+                    <Components.Paragraph>
+                      Sei uno studente? Clicca qui sotto!
+                    </Components.Paragraph>
+                    <Components.GhostButton
+                      onClick={() => {
+                        isSending
+                          ? toast.error("Attendi l'invio della richiesta")
+                          : toggle(true);
+                      }}
+                    >
+                      Studente
+                    </Components.GhostButton>
+                  </Components.LeftOverlayPanel>
+                  <Components.RightOverlayPanel signingIn={signIn}>
+                    <Components.Title>Benvenuto!</Components.Title>
+                    <Components.Paragraph>
+                      Sei un'azienda? Clicca qui sotto!
+                    </Components.Paragraph>
+                    <Components.GhostButton onClick={() => toggle(false)}>
+                      Azienda
+                    </Components.GhostButton>
+                  </Components.RightOverlayPanel>
+                </Components.Overlay>
+              </Components.OverlayContainer>
+            </Components.Container>
+            <Components.StepsNavButton
+              isRegisterClicked={isRegisterClicked}
+              onClick={() => {
+                !isRegisterClicked ? setRegisterClicked(true) : handleNext();
               }}
+              disabled={!isRegisterClicked}
             >
-              <Components.StepsNavButton
-                isRegisterClicked={isRegisterClicked}
-                onClick={() => {
-                  activeStep === 0 ? setRegisterClicked(false) : handleBack();
-                }}
-                disabled={!isRegisterClicked}
-              >
-                {arrowLeft}
-              </Components.StepsNavButton>
-              <Components.StepsNavButton
-                isRegisterClicked={isRegisterClicked}
-                onClick={() => {
-                  !isRegisterClicked ? setRegisterClicked(true) : handleNext();
-                }}
-                disabled={!isRegisterClicked}
-              >
-                {activeStep === steps.length ? save : arrowRight}
-              </Components.StepsNavButton>
-            </div>
-          </Components.StudenteContainer>
-          <Components.OverlayContainer
-            className={isRegisterClicked ? "shrinking" : ""}
-            isRegisterClicked={isRegisterClicked}
-            signingIn={signIn}
-          >
-            <Components.Overlay signingIn={signIn}>
-              <Components.LeftOverlayPanel signingIn={signIn}>
-                <Components.Title>Benvenuto!</Components.Title>
-                <Components.Paragraph>
-                  Sei uno studente? Clicca qui sotto!
-                </Components.Paragraph>
-                <Components.GhostButton
-                  onClick={() => {
-                    isSending
-                      ? toast.error("Attendi l'invio della richiesta")
-                      : toggle(true);
-                  }}
-                >
-                  Studente
-                </Components.GhostButton>
-              </Components.LeftOverlayPanel>
-              <Components.RightOverlayPanel signingIn={signIn}>
-                <Components.Title>Benvenuto!</Components.Title>
-                <Components.Paragraph>
-                  Sei un'azienda? Clicca qui sotto!
-                </Components.Paragraph>
-                <Components.GhostButton onClick={() => toggle(false)}>
-                  Azienda
-                </Components.GhostButton>
-              </Components.RightOverlayPanel>
-            </Components.Overlay>
-          </Components.OverlayContainer>
-        </Components.Container>
+              {activeStep === steps.length ? save : arrowRight}
+            </Components.StepsNavButton>
+          </div>
           <ToastContainer newestOnTop={true} />
-      </PhotoProvider>
+        </PhotoProvider>
       </div>
     </>
-
   );
 }
 

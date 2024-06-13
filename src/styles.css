@@ -76,7 +76,7 @@ label {
   top: -28px;
   position: relative;
   float: left;
-  width: 20%; /* Adjust this value according to the number of steps */
+  width: 16.6666%; /* Adjust this value according to the number of steps */
   text-align: center;
   display: flex;
   justify-content: center;

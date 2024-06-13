@@ -5,18 +5,22 @@ const Step4 = React.memo(
   ({
     minSelectedChips,
     setMinSelectedChips,
+    articolazione,
     setArticolazione,
     selectedChips,
     setSelectedChips,
   }) => {
     return (
-      <ChipSelector
-        minSelectedChips={minSelectedChips}
-        setMinSelectedChips={setMinSelectedChips}
-        setArticolazione={setArticolazione}
-        selectedChips={selectedChips}
-        setSelectedChips={setSelectedChips}
-      />
+      <div style={{ paddingTop: "4em" }}>
+        <ChipSelector
+          minSelectedChips={minSelectedChips}
+          setMinSelectedChips={setMinSelectedChips}
+          articolazione={articolazione}
+          setArticolazione={setArticolazione}
+          selectedChips={selectedChips}
+          setSelectedChips={setSelectedChips}
+        />
+      </div>
     );
   },
 );

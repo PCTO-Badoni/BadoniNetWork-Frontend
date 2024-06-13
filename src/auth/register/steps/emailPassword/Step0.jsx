@@ -5,7 +5,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import StrengthMeter from "../../StrengthMeter";
 import PasswordChecklist from "react-password-checklist";
 
-const Step1 = React.memo(
+const Step0 = React.memo(
   ({
     email,
     setEmail,
@@ -54,6 +54,7 @@ const Step1 = React.memo(
           placeholder="es. rssmra04t18d416e@iisbadoni.edu.it"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
         />
         <label htmlFor="Password">Password</label>
         <div style={{ position: "relative", display: "inline-block" }}>
@@ -68,6 +69,7 @@ const Step1 = React.memo(
             onBlur={() => setShowPasswordChecklist(false)}
             onInput={(e) => setShowPasswordChecklist(e.target.value !== "")}
             style={{ paddingRight: "30px" }}
+            required
           />
           <button
             type="button"
@@ -111,8 +113,8 @@ const Step1 = React.memo(
           onChange={(e) => {
             setConfirmPassword(e.target.value);
           }}
-          required
           style={passwordsMatch ? {} : { outline: "2px solid red" }}
+          required
         />
         <Components.Button type={"submit"}>Continua</Components.Button>
         <Components.AlreadyRegistered to="/login">
@@ -123,4 +125,4 @@ const Step1 = React.memo(
   },
 );
 
-export default Step1;
+export default Step0;

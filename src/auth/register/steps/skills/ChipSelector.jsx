@@ -9,6 +9,7 @@ import { Select } from "../../RegisterComponents";
 const ChipSelector = ({
   minSelectedChips,
   setMinSelectedChips,
+  articolazione,
   setArticolazione,
   selectedChips,
   setSelectedChips,
@@ -96,12 +97,12 @@ const ChipSelector = ({
             <Select
               name="articolazione"
               id="articolazione"
-              defaultValue=""
+              defaultValue={articolazione ? articolazione : ""}
               style={{ width: "90%" }}
               onChange={(e) => setArticolazione(e.target.value)}
               required
             >
-              <option value="" selected disabled hidden>
+              <option value="" disabled hidden>
                 Seleziona
               </option>
               {
