@@ -1,19 +1,16 @@
 import styled from "styled-components";
-import batmanLogo from '../../assets/logo.png';
 
 export const Container = styled.div`
-    margin-top: 12em;
     display: flex;
     flex-direction: row;
-    width: 95dvw;
-    height: 88dvh;
+    width: 100%;
+    max-height: 200vh;
     overflow: scroll;
 `;
 
 export const contentContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
     width: 100%;
     height: 100%;
@@ -21,18 +18,15 @@ export const contentContainer = styled.div`
     padding-left: 15px;
 `;
 
-export const Header = styled.div`
+export const TopBar = styled.div`
     background: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: start;
     width: 100%;
     height: 7em;
     border-radius: 12px;
-    padding-left: 2em;
-    padding-top: 1.5em;
-    padding-bottom: 1.5em;
+    padding: 2em 2em 1.5em;
     margin-bottom: 15px;
 `;
 
@@ -68,7 +62,7 @@ export const FilterContainer = styled.div`
 export const Sidebar = styled.div`
     background-color: #fff;
     width: 18dvw;
-    height: 100%;
+    height: 80dvh;
     padding: 15px;
     border-radius: 12px;
     display: flex;
@@ -100,10 +94,11 @@ export const Button = styled.button`
 export const MenuContainer = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+    align-items: start;
+    justify-content: start;
+    margin-top: 20px;
     height: 40%;
-    margin-top: 80px;
+    gap: 20px;
 `;
 
 export const MenuItem = styled.div`
@@ -111,59 +106,17 @@ export const MenuItem = styled.div`
     color: black;
     text-decoration: none;
     width: 100%;
-    height: 30px;
-    border-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
     align-content: center;
-    text-align: center;
-    
-    &:hover {
-        opacity: 0.8;
-    }
-
-    &:active {
-        background-color: #3945c8;
-        color: white
-    }
-`;
-
-export const MainPageContainer = styled.div`
-    display: flex;
-    flex-direction: column;    
-    flex: 1;
-    border-radius: 12px;
-    padding-right: 20px;
-`;
-
-export const PageContentContainer = styled.div `
-    margin-bottom: 20px;
-    background: rgba(64, 112, 244, 0.48);
-    border-radius: 12px;
-    width: 100%;
-    height: 100%;
-    padding: 20px;
-`;
-
-export const StudentCard = styled.div `
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    text-align: left;
     justify-content: start;
-    padding: 20px;
-    background: #fff;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    width: 300px;
-    height: 400px;
+    align-items: center;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
 `;
-
-export const StudentCardImage = styled.img`
-    width: 250px; // You can adjust this
-    height: 250px; // You can adjust this
-    border-radius: 50%; // This will make the image round
-    object-fit: cover; // This will ensure the image covers the whole area
-    margin-bottom: 20px;
-`;
-
 
 export const cardsContainer = styled.div`
     display: flex;
@@ -173,22 +126,25 @@ export const cardsContainer = styled.div`
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
+    height: 150vh;
     border-radius: 12px;
     background-color: #fff;
-    overflow: auto;
+    overflow: scroll;
 `;
 
 export const listContainer = styled.div`
     display: flex;
     padding: 20px;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
+    flex-wrap: wrap;
     width: 100%;
-    height: 100%;
+    height: 150vh;
+
     border-radius: 12px;
     background-color: #fff;
-    overflow: auto;
+    overflow: scroll;
 `;
 
 export const listItem = styled.div`
@@ -217,7 +173,7 @@ export const listItemProfilePic = styled.div`
         width: 10px;
         height: 10px;
         border-radius: 50%;
-        background-color: ${props => props.dotColor}; // Modifica qui
+        background-color: ${props => props.dotColor};
         border: 2px solid #fff;
     }
 `;
@@ -268,10 +224,9 @@ export const ListItemSkill = styled.div`
 export const LogoutButton = styled.button`
     background: none;
     border: none;
-    font-size: 1.4em;
+    font-size: 1em;
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
-    
 `;
 
 export const ViewModeButton = styled.button`
@@ -279,15 +234,46 @@ export const ViewModeButton = styled.button`
     background: none;
     border: none;
     font-size: 20px;
-    color: #0b75ed;
+    color: black;
     letter-spacing: 1px;
     text-transform: uppercase;
     text-decoration: none;
-    z-index: 50;
 `;
 
-export const NotificationButton = styled.button` 
+export const DisponibilityContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    gap: 3px;
+`;
+
+export const DisponibilityButton = styled.button`
+    position: relative;
     background: none;
     border: none;
-    font-size: 20px;
+    font-size: 15px;
+    color: black;
+    text-decoration: none;
+    font-family: "Montserrat", sans-serif;
+    padding-bottom: 3px;
+    
+    &:hover {
+        cursor: pointer;
+    }
+
+    &::after {
+        content: '${props => (props.active ? '' : '')}';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 1.5px;
+        background-color: blue;
+    }
+`;
+
+export const VerticalSeparator = styled.div`
+    height: 20px;
+    border-left: 1px solid black;
+    margin-left: 10px;
+    margin-right: 10px;
 `;

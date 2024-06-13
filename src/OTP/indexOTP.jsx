@@ -4,6 +4,7 @@ import "../styles.css";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import Footer from "../footer";
 
 const error = (message) => toast.error( message, {
     position: "top-right",
@@ -73,22 +74,27 @@ function OTP() {
 
     return (
         <>
-        <OTPComponents.Container>
-            <OTPComponents.form>
-                <OTPComponents.Logo />
-                <OTPComponents.h4>Inserisci il codice ricevuto</OTPComponents.h4>
-                <div>
-                    <OTPComponents.otpInput value={num1} onChange={e => setNum1(e.target.value)} type="text" placeholder=""/>
-                    <OTPComponents.otpInput value={num2} onChange={e => setNum2(e.target.value)} type="text" placeholder=""/>
-                    <OTPComponents.otpInput value={num3} onChange={e => setNum3(e.target.value)} type="text" placeholder=""/>
-                    <OTPComponents.otpInput value={num4} onChange={e => setNum4(e.target.value)} type="text" placeholder=""/>
-                    <OTPComponents.otpInput value={num5} onChange={e => setNum5(e.target.value)} type="text" placeholder=""/>
-                    <OTPComponents.otpInput value={num6} onChange={e => setNum6(e.target.value)} type="text" placeholder=""/>
-                </div>
-                <OTPComponents.verifyButton id="verifyButton" onClick={handleOnClick}>Verifica</OTPComponents.verifyButton>
-            </OTPComponents.form>
-        </OTPComponents.Container>
-        <ToastContainer newestOnTop={true}/>
+            <OTPComponents.Container>
+                <OTPComponents.form>
+                    <OTPComponents.h4>Inserisci il codice ricevuto</OTPComponents.h4>
+                    <div>
+                        <OTPComponents.otpInput value={num1} onChange={e => setNum1(e.target.value)} type="text"
+                                                placeholder=""/>
+                        <OTPComponents.otpInput value={num2} onChange={e => setNum2(e.target.value)} type="text"
+                                                placeholder=""/>
+                        <OTPComponents.otpInput value={num3} onChange={e => setNum3(e.target.value)} type="text"
+                                                placeholder=""/>
+                        <OTPComponents.otpInput value={num4} onChange={e => setNum4(e.target.value)} type="text"
+                                                placeholder=""/>
+                        <OTPComponents.otpInput value={num5} onChange={e => setNum5(e.target.value)} type="text"
+                                                placeholder=""/>
+                        <OTPComponents.otpInput value={num6} onChange={e => setNum6(e.target.value)} type="text"
+                                                placeholder=""/>
+                    </div>
+                    <OTPComponents.verifyButton id="verifyButton" onClick={handleOnClick}>Verifica</OTPComponents.verifyButton>
+                </OTPComponents.form>
+            </OTPComponents.Container>
+            <ToastContainer newestOnTop={true}/>
         </>
     );
 }

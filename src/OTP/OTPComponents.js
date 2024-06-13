@@ -6,13 +6,8 @@ export const Container = styled.div`
     padding: 30px 65px;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-`;
-
-export const Logo = styled.img.attrs(props => ({
-    src: batmanLogo
-}))`
-    width: 100px;
-    height: 100px;
+    height: 20em;
+    width: 30em;
 `;
 
 export const h4 = styled.h4`
@@ -81,10 +76,12 @@ export const verifyButton = styled.button`
     &:active {
         transform: scale(0.95);
     }
+    
+    &:hover {
+        cursor: pointer;
+    }
 
     &:focus {
         outline: none;
     }
-    
-    
 `;

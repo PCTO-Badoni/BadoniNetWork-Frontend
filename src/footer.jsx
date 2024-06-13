@@ -1,3 +1,5 @@
+// Filename - components/Footer.js
+
 import React from "react";
 import {
     Box,
@@ -5,6 +7,7 @@ import {
     Row,
     Column,
     FooterLink,
+    Heading,
 } from "./FooterComponents";
 
 const Footer = () => {
@@ -13,9 +16,19 @@ const Footer = () => {
             <FooterContainer>
                 <Row>
                     <Column>
-                        <h5>ciao</h5>
+                        <Heading>About Us</Heading>
+                        <FooterLink href="#">
+                            Aim
+                        </FooterLink>
+                        <FooterLink href="#">
+                            Vision
+                        </FooterLink>
+                        <FooterLink href="#">
+                            Testimonials
+                        </FooterLink>
                     </Column>
                     <Column>
+                        <Heading>Services</Heading>
                         <FooterLink href="#">
                             Writing
                         </FooterLink>
@@ -30,6 +43,7 @@ const Footer = () => {
                         </FooterLink>
                     </Column>
                     <Column>
+                        <Heading>Contact Us</Heading>
                         <FooterLink href="#">
                             Uttar Pradesh
                         </FooterLink>
@@ -44,48 +58,49 @@ const Footer = () => {
                         </FooterLink>
                     </Column>
                     <Column>
+                        <Heading>Social Media</Heading>
                         <FooterLink href="#">
                             <i className="fab fa-facebook-f">
-                                <span
+								<span
                                     style={{
                                         marginLeft: "10px",
                                     }}
                                 >
-                                    Facebook
-                                </span>
+									Facebook
+								</span>
                             </i>
                         </FooterLink>
-                        <FooterLink href="#">
+                        <FooterLink href="https://www.instagram.com/iisbadoni/">
                             <i className="fab fa-instagram">
-                                <span
+								<span
                                     style={{
                                         marginLeft: "10px",
                                     }}
                                 >
-                                    Instagram
-                                </span>
+									Instagram
+								</span>
                             </i>
                         </FooterLink>
                         <FooterLink href="#">
                             <i className="fab fa-twitter">
-                                <span
+								<span
                                     style={{
                                         marginLeft: "10px",
                                     }}
                                 >
-                                    Twitter
-                                </span>
+									Twitter
+								</span>
                             </i>
                         </FooterLink>
                         <FooterLink href="#">
                             <i className="fab fa-youtube">
-                                <span
+								<span
                                     style={{
                                         marginLeft: "10px",
                                     }}
                                 >
-                                    Youtube
-                                </span>
+									Youtube
+								</span>
                             </i>
                         </FooterLink>
                     </Column>
@@ -94,5 +109,4 @@ const Footer = () => {
         </Box>
     );
 };
-
 export default Footer;

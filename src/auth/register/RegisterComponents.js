@@ -37,6 +37,7 @@ export const Container = styled.div`
   width: 70vw;
   max-width: 100%;
   height: 80vh;
+  margin-top: 13em;
 `;
 
 export const sendingEmail = styled.div`
@@ -81,7 +82,6 @@ export const StudenteContainer = styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: ${(props) => (!props.isRegisterClicked ? "50%" : "100%")};
   z-index: 1;
   ${(props) =>
@@ -104,10 +104,18 @@ export const Form = styled.form`
 export const Title = styled.h1`
   text-align: center;
   font-weight: bold;
-  padding-top: 1.25rem;
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
   ${(props) => props.visible === false && `display: none;`}
+  top: 0;
+`;
+
+export const Heading = styled.div`
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  overflow: hidden;
+  top: 0;
 `;
 
 export const Input = styled.input`
@@ -309,5 +317,50 @@ export const AddressSelector = styled.div`
   align-items: center;
   padding-left: 10em;
   padding-right: 10em;
-  height: 50%;
+  padding-bottom: 5em;
+  height: 100%;
+`;
+
+export const MapButton = styled.button`
+  border-radius: 20px;
+  border: 1px solid #5865f2;
+  background-color: #5865f2;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: bold;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  width: 60px;
+
+  z-index: 50;
+
+  &:focus {
+    outline: none;
+  }
+`;
+
+export const FooterContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 0 auto;
+`;
+
+
+export const FooterButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 1.25rem;
+
+  background-color: #f0f0f0;  
+  width: 30px;
+  border: none;
+  
+  &:hover {
+    cursor: pointer;
+    background-color: #f9f9f9;
+  }
 `;
