@@ -13,6 +13,7 @@ import * as Components from './MainComponents';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInbox} from "@fortawesome/free-solid-svg-icons";
 import {students} from "./main/Components/students";
+import {ToastContainer} from "react-toastify";
 
 function useBodyScroll() {
     const location = useLocation();
@@ -38,7 +39,7 @@ function PageController() {
         setPopupOpen(!isPopupOpen);
     };
 
-    return (
+    return (<>
         <Components.Header>
             <div style={{
                 display: 'flex',
@@ -69,7 +70,9 @@ function PageController() {
                 <Components.HeaderProfilePic dotColor={students[0].dotColor} style={{scale: '0.8'}}/>
             </div>
         </Components.Header>
-    );
+    <ToastContainer newestOnTop={true} />
+        </>
+);
 }
 
 const rootElement = document.getElementById("root");
@@ -95,4 +98,5 @@ ReactDOM.render(
         </div>
     </Router>,
     rootElement
+
 );
