@@ -44,10 +44,9 @@ export const SearchBar = styled.input.attrs({type: 'search', placeholder: 'Cerca
 
 export const FilterButton = styled.button`
     opacity: 1;
-    scale: 1.5;
     background: none;
     border: none;
-    font-size: 0.7em;
+    font-size: 1em;
     font-family: "Montserrat", sans-serif;
     cursor: pointer;
 `;
@@ -246,6 +245,7 @@ export const DisponibilityContainer = styled.div`
     display: flex;
     flex-direction: row;
     gap: 3px;
+    justify-content: center;
 `;
 
 export const DisponibilityButton = styled.button`
@@ -256,7 +256,6 @@ export const DisponibilityButton = styled.button`
     color: black;
     text-decoration: none;
     font-family: "Montserrat", sans-serif;
-    padding-bottom: 3px;
     
     &:hover {
         cursor: pointer;

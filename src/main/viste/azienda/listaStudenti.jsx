@@ -97,7 +97,8 @@ const ListaStudenti = ({
                         <Components.VerticalSeparator/>
                         <Components.DisponibilityButton onClick={() => handleButtonClick('arancione')} style={{borderBottom: activeButtons.includes('arancione') ? '2px solid blue' : null}}>Accetta Proposte</Components.DisponibilityButton>
                         <Components.VerticalSeparator/>
-                        <Components.DisponibilityButton onClick={() => handleButtonClick('rosso')} style={{borderBottom: activeButtons.includes('rosso') ? '2px solid blue' : null}}>Non Accetta Proposte</Components.DisponibilityButton></Components.DisponibilityContainer>
+                        <Components.DisponibilityButton onClick={() => handleButtonClick('rosso')} style={{borderBottom: activeButtons.includes('rosso') ? '2px solid blue' : null}}>Non Accetta Proposte</Components.DisponibilityButton>
+                    </Components.DisponibilityContainer>
                     <Components.ViewModeButton
                         onClick={() => setViewMode(viewMode === 'cards' ? 'list' : 'cards')}
                     >
