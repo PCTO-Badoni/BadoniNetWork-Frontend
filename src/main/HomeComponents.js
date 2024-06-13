@@ -287,4 +287,5 @@ export const NotificationButton = styled.button`
     background: none;
     border: none;
     font-size: 20px;
+    align-self: flex-end;
 `;

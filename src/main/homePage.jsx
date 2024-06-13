@@ -338,7 +338,6 @@ function HomePage() {
                     </div>
                 </Components.Sidebar>
                 <Components.contentContainer>
-
                     <Components.Header style={{ height: isFilterOpen ? '350px' : '100px', transition: 'height 0.3s' }}>
                         <div style={{position: 'sticky', display:'flex', flexDirection:'row', columnGap:'20px'}}>
                             <Components.SearchBar onChange={handleSearchChange} />
@@ -351,11 +350,7 @@ function HomePage() {
                             >
                                 {viewMode === 'cards' ? listIcon : cardIcon}
                             </Components.ViewModeButton>*/}
-                            <Components.NotificationButton>
-
-                                {bellIcon}
-
-                            </Components.NotificationButton>
+                            <Components.NotificationButton>{bellIcon}</Components.NotificationButton>
                         </div>
                         {isFilterOpen ?
                             <Components.FilterContainer style={{transition: 'all 0.3s'}}>
