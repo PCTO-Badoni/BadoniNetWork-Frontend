@@ -18,6 +18,7 @@ const Step2 = React.memo(
     erroreCognome,
     erroreData,
     erroreTelefono,
+    pronomi,
     setPronomi,
   }) => (
     <>
@@ -45,17 +46,17 @@ const Step2 = React.memo(
           <Select
             name="pronouns"
             id="pronouns"
-            defaultValue=""
+            defaultValue={pronomi}
             onChange={(e) => setPronomi(e.target.value)}
             required
           >
             <option value="" selected disabled hidden>
               Seleziona
             </option>
-            <option value="he_him">He/Him</option>
-            <option value="she_her">She/Her</option>
-            <option value="they_them">They/Them</option>
-            <option value="altro">Altro</option>
+            <option value="he_him">he/him</option>
+            <option value="she_her">she/her</option>
+            <option value="they_them">they/them</option>
+            <option value="altro">altro</option>
           </Select>
           <label htmlFor="name">Data di nascita</label>
           <DataDiNascita

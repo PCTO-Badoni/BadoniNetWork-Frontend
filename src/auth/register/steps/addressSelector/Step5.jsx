@@ -1,29 +1,29 @@
 import React, { useState, useRef, useEffect } from "react";
-import tt, { Marker } from "@tomtom-international/web-sdk-maps";
+import tt from "@tomtom-international/web-sdk-maps";
 import axios from "axios";
-import {
-  Input,
-  AddressSelector,
-  Button,
-  MapButton,
-} from "../../RegisterComponents";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMapPin } from "@fortawesome/free-solid-svg-icons";
+import { AddressSelector } from "../../RegisterComponents";
+import Select from "react-select";
 
-const AutocompleteSearch = ({ onSelect }) => {
+const AutocompleteSearch = ({
+  onSelect,
+  selectedAddress,
+  setSelectedAddress,
+}) => {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = async (e) => {
-    const value = e.target.value;
-    setQuery(value);
+  const options = suggestions.map((suggestion) => ({
+    value: suggestion.id, // or any unique identifier
+    label: suggestion.address.freeformAddress,
+  }));
 
-    if (value.length > 2) {
+  const fetchSuggestions = async (inputValue) => {
+    if (inputValue.length > 2) {
       setIsLoading(true);
       try {
         const response = await axios.get(
-          `https://api.tomtom.com/search/2/search/${value}.json`,
+          `https://api.tomtom.com/search/2/search/${inputValue}.json`,
           {
             params: {
               key: "GKKdaSewOQJ1qLgzHcWa1mJxy3z9JzRg",
@@ -32,7 +32,6 @@ const AutocompleteSearch = ({ onSelect }) => {
             },
           },
         );
-        console.log("Autocomplete Response:", response.data);
         setSuggestions(response.data.results);
       } catch (error) {
         console.error("Error fetching autocomplete suggestions:", error);
@@ -44,41 +43,58 @@ const AutocompleteSearch = ({ onSelect }) => {
     }
   };
 
-  const handleSelect = (e) => {
+  const handleInputChange = (inputValue) => {
+    setQuery(inputValue);
+    fetchSuggestions(inputValue);
+  };
+
+  const handleSelect = (selectedOption) => {
+    setSelectedAddress(selectedOption); // Update the selected option
     const selectedSuggestion = suggestions.find(
-      (suggestion) => suggestion.address.freeformAddress === e.target.value,
+      (suggestion) => suggestion.id === selectedOption.value,
     );
     if (selectedSuggestion) {
-      setQuery(selectedSuggestion.address.freeformAddress);
-      setSuggestions([]);
       onSelect(selectedSuggestion);
     }
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "row", marginTop: "-2rem" }}>
-      <Input
-        list="suggestions"
-        type="text"
-        value={query}
-        onChange={handleInputChange}
-        onBlur={handleSelect}
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        marginTop: "-4rem",
+        marginBottom: "1rem",
+        width: "70%",
+      }}
+    >
+      <label htmlFor="select">Indirizzo</label>
+      <Select
+        id="select"
+        className="basic-single"
+        classNamePrefix="select"
+        defaultValue={null}
+        isLoading={isLoading}
+        isClearable={true}
+        isRtl={false}
+        isSearchable={true}
+        name="suggestions"
+        options={options}
+        value={selectedAddress} // Use the selected option here
+        onInputChange={handleInputChange}
+        onChange={handleSelect}
         placeholder="es: Via Rivolta 10, 23900 Lecco"
-        style={{ marginBottom: "1rem" }}
+        theme={(theme) => ({
+          ...theme,
+          backgroundColor: "#ffffff",
+          border: "3px solid #eee",
+          padding: "0.75rem",
+          width: "150em",
+          borderRadius: "15px",
+          fontFamily: "Montserrat sans-serif",
+          fontSize: "1rem",
+        })}
       />
-      <datalist id="suggestions">
-        {suggestions.map((suggestion) => (
-          <option
-            key={suggestion.id}
-            value={suggestion.address.freeformAddress}
-          >
-            {suggestion.address.freeformAddress}
-          </option>
-        ))}
-      </datalist>
-      <MapButton type="submit" onClick={handleSelect}>
-        <FontAwesomeIcon icon={faMapPin} size="xl" />
-      </MapButton>
     </div>
   );
 };
@@ -98,8 +114,6 @@ const Map = ({ position }) => {
       zoom: 17,
     });
 
-    console.log("Marker position:", position); // Add this line
-
     return () => {
       map.remove();
     };
@@ -113,7 +127,7 @@ const Map = ({ position }) => {
   );
 };
 
-const Step5 = () => {
+const Step5 = ({ selectedAddress, setSelectedAddress }) => {
   const [position, setPosition] = useState([
     9.401288797167298, 45.852706081676224,
   ]);
@@ -125,7 +139,12 @@ const Step5 = () => {
 
   return (
     <AddressSelector>
-      <AutocompleteSearch onSelect={handleSelect} onSubmit={handleSelect} />
+      <AutocompleteSearch
+        onSelect={handleSelect}
+        onSubmit={handleSelect}
+        selectedAddress={selectedAddress}
+        setSelectedAddress={setSelectedAddress}
+      />
       <Map position={position} />
     </AddressSelector>
   );
