@@ -56,7 +56,9 @@ export const FilterContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    margin-top: 2em;
     padding-bottom: 20px;
+    border-top: 1px solid #ccc
 `;
 
 export const Sidebar = styled.div`

@@ -16,8 +16,11 @@ const ListaStudenti = ({
                            setSelectedChips,
                            selectedCompetenze,
                            setSelectedCompetenze,
+                           selectedLingue,
+                           setSelectedLingue,
                            chips,
                            competenze,
+                           lingue,
                            isFilterOpen,
                            setFilterOpen,
                            viewMode,
@@ -25,7 +28,9 @@ const ListaStudenti = ({
                            handleChipClick,
                            handleChipDelete,
                            handleCompetenzaClick,
-                           handleCompetenzaDelete
+                           handleCompetenzaDelete,
+                           handleLinguaClick,
+                           handleLinguaDelete
                        }) => {
 
     const selectedFilteredChips = selectedChips.filter((chip) =>
@@ -36,10 +41,6 @@ const ListaStudenti = ({
         chip.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
-    const filteredCompetenze = competenze.filter((competenza) =>
-        competenza.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
     const unselectedFilteredChips = filteredChips.filter(
         (chip) => !selectedChips.includes(chip),
     );
@@ -48,10 +49,25 @@ const ListaStudenti = ({
         competenza.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
     );
 
+    const filteredCompetenze = competenze.filter((competenza) =>
+        competenza.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
     const unselectedFilteredCompetenze = filteredCompetenze.filter(
         (competenza) => !selectedCompetenze.includes(competenza),
     );
 
+    const selectedFilteredLingue = selectedLingue.filter((lingua) =>
+        lingua.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const filteredLingue = lingue.filter((lingua) =>
+        lingua.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
+    );
+
+    const unselectedFilteredLingue = filteredLingue.filter(
+        (lingua) => !selectedLingue.includes(lingua),
+    );
 
     const [activeButtons, setActiveButtons] = useState([]);
 
@@ -65,7 +81,7 @@ const ListaStudenti = ({
 
     return (
         <Components.contentContainer>
-            <Components.TopBar style={{ height: isFilterOpen ? '250px' : '100px', transition: 'height 0.3s' }}>
+            <Components.TopBar style={{ height: isFilterOpen ? '285px' : '100px', transition: 'height 0.3s' }}>
                 <div style={{position: 'sticky', display:'flex', flexDirection:'row', columnGap:'20px', width:'100%', justifyContent:'space-between', alignItems: 'center'}}>
                     <div style={{display:'flex', flexDirection: 'row', gap: '20px'}}>
                         <Components.SearchBar onChange={(e) => setSearchTerm(e.target.value)} onClick={() => {
@@ -90,7 +106,12 @@ const ListaStudenti = ({
                 </div>
                 {isFilterOpen ?
                     <Components.FilterContainer style={{transition: 'all 0.3s'}}>
-                        <div style={{flexDirection: 'column', justifyContent:'flex-start', alignContent: 'flex-start', alignItems: 'flex-start'}}>
+                        <div style={{
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            alignContent: 'flex-start',
+                            alignItems: 'flex-start'
+                        }}>
                             <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Indirizzi</h5>
                             <div style={{width: '400px'}}>
                                 {selectedFilteredChips.map((chip) => (
@@ -118,7 +139,7 @@ const ListaStudenti = ({
                         </div>
                         <div style={{flexDirection: 'column'}}>
                             <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Competenze</h5>
-                            <div style={{width: '50%', overflowY: 'scroll', height: '7.5em'}}>
+                            <div style={{width: '100%', overflowY: 'scroll', height: '7.5em'}}>
                                 {selectedFilteredCompetenze.map((competenza) => (
                                     <Chip
                                         key={competenza.id}
@@ -136,6 +157,32 @@ const ListaStudenti = ({
                                         key={competenza.id}
                                         label={competenza.descrizione}
                                         onClick={() => handleCompetenzaClick(competenza)}
+                                        style={{margin: "4px"}}
+                                        clickable
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                        <div style={{flexDirection: 'column'}}>
+                            <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Lingue</h5>
+                            <div style={{width: '100%', overflowY: 'scroll', height: '7.5em'}}>
+                                {selectedFilteredLingue.map((lingua) => (
+                                    <Chip
+                                        key={lingua.id}
+                                        label={lingua.descrizione}
+                                        onDelete={() => handleLinguaDelete(lingua)}
+                                        style={{
+                                            margin: "4px",
+                                            backgroundColor: "rgba(20, 117, 207, 0.7)",
+                                            color: "white",
+                                        }}
+                                    />
+                                ))}
+                                {unselectedFilteredLingue.map((lingua) => (
+                                    <Chip
+                                        key={lingua.id}
+                                        label={lingua.descrizione}
+                                        onClick={() => handleLinguaClick(lingua)}
                                         style={{margin: "4px"}}
                                         clickable
                                     />

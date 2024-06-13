@@ -20,6 +20,7 @@ function HomePage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedChips, setSelectedChips] = useState([]);
     const [selectedCompetenze, setSelectedCompetenze] = useState([]);
+    const [selectedLingue, setSelectedLingue] = useState([]);
     const [chips] = useState([
         { id: 1, descrizione: 'Informatica' },
         { id: 2, descrizione: 'Scientifico' },
@@ -72,6 +73,17 @@ function HomePage() {
         { id: 38, descrizione: 'Sensori' },
         { id: 39, descrizione: 'Cablaggio' }
     ]);
+    const [lingue] = useState([
+        { id: 1, descrizione: 'Inglese' },
+        { id: 2, descrizione: 'Francese' },
+        { id: 3, descrizione: 'Tedesco' },
+        { id: 4, descrizione: 'Giapponese' },
+        { id: 5, descrizione: 'Spagnolo' },
+        { id: 6, descrizione: 'Serbo' },
+        { id: 7, descrizione: 'Arabo' },
+        { id: 8, descrizione: 'Cinese' },
+        { id: 9, descrizione: 'Portoghese' }
+    ]);
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [viewMode, setViewMode] = useState('cards');
     const [activeButton, setActiveButton] = useState(null);
@@ -100,6 +112,17 @@ function HomePage() {
 
     const handleCompetenzaDelete = (competenzaToDelete) => {
         setSelectedCompetenze(selectedCompetenze.filter((competenza) => competenza !== competenzaToDelete));
+    };
+
+    const handleLinguaClick = (lingua) => {
+        if (!selectedLingue.includes(lingua)) {
+            const newSelectedLingue = [...selectedLingue, lingua];
+            setSelectedLingue(newSelectedLingue);
+        }
+    };
+
+    const handleLinguaDelete = (linguaToDelete) => {
+        setSelectedLingue(selectedLingue.filter((lingua) => lingua !== linguaToDelete));
     };
 
     return (
@@ -137,8 +160,11 @@ function HomePage() {
                         setSelectedChips={setSelectedChips}
                         selectedCompetenze={selectedCompetenze}
                         setSelectedCompetenze={setSelectedCompetenze}
+                        selectedLingue={selectedLingue}
+                        setSelectedLingue={setSelectedLingue}
                         chips={chips}
                         competenze={competenze}
+                        lingue={lingue}
                         isFilterOpen={isFilterOpen}
                         setFilterOpen={setFilterOpen}
                         viewMode={viewMode}
@@ -147,6 +173,8 @@ function HomePage() {
                         handleChipDelete={handleChipDelete}
                         handleCompetenzaClick={handleCompetenzaClick}
                         handleCompetenzaDelete={handleCompetenzaDelete}
+                        handleLinguaClick={handleLinguaClick}
+                        handleLinguaDelete={handleLinguaDelete}
                     />
                 </Components.Container>
                 <Footer/>
