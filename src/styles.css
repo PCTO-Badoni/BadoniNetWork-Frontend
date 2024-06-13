@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,800");
 
-
 * {
   box-sizing: border-box;
 }
@@ -12,8 +11,7 @@ body {
   align-items: center;
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
-  height: 100vh;
-  overflow: hidden;
+  overflow: scroll;
 }
 
 #datePicker {
@@ -84,8 +82,24 @@ label {
   justify-content: center;
   align-items: center;
 }
-.progress-step-text {
 
+@keyframes slideDown {
+  0% {
+    top: -100%;
+  }
+  100% {
+    top: 0;
+  }
+}
+
+.popup {
+  position: absolute;
+  top: 0;
+  animation: slideDown 0.5s forwards;
+  /* altre proprietà del popup... */
+}
+
+.progress-step-text {
   position: relative;
   color: #4caf50;
   text-align: center;
@@ -102,8 +116,6 @@ label {
   font-size: 1em;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
-
-
 }
 
 .progress-step-text-completed {
@@ -123,7 +135,6 @@ label {
   font-size: 1em;
   font-weight: bold;
   font-family: "Montserrat", sans-serif;
-
 }
 
 .menuItem {
@@ -132,3 +143,10 @@ label {
     background-color: blue;
   }
 }
+
+footer {
+  width: 100%;
+  background-color: blue;
+  height: 6em;
+}
+

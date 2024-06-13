@@ -367,6 +367,7 @@ function Register() {
 
   return (
     <>
+      <div style={{scale:'0.9', marginTop:'-10em'}}>
       <PhotoProvider>
         <Components.Container>
           <Components.AziendaContainer signingIn={signIn}>
@@ -555,9 +556,11 @@ function Register() {
             </Components.Overlay>
           </Components.OverlayContainer>
         </Components.Container>
-        <ToastContainer newestOnTop={true} />
+          <ToastContainer newestOnTop={true} />
       </PhotoProvider>
+      </div>
     </>
+
   );
 }
 

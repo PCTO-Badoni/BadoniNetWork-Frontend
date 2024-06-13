@@ -1,5 +1,5 @@
 function getRandomColor() {
-    const colors = ['green', 'orange', 'red'];
+    const colors = ['#4daa57', 'orange', 'red'];
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
@@ -11,7 +11,7 @@ export const students = [
         description: 'Mi piacciono i cani',
         skills: ['Java', 'Python', 'C++'],
         bannerImage: 'https://m.media-amazon.com/images/I/513eVMR+cML._AC_UF894,1000_QL80_.jpg',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 2',
@@ -20,7 +20,7 @@ export const students = [
         description: 'Amo la programmazione',
         skills: ['JavaScript', 'React', 'Node.js'],
         bannerImage: 'https://media-assets.wired.it/photos/637b4e79e8ddcc5a60de780c/3:2/w_2400,h_1600,c_limit/Hot-To-Find-Discord-Servers-Gear-1398472119.jpg',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 3',
@@ -29,7 +29,7 @@ export const students = [
         description: 'Appassionata di data science',
         skills: ['Python', 'R', 'SQL'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9lrqSclqKltnERsJczgFPdIVJBHL1fROxUQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 4',
@@ -38,7 +38,7 @@ export const students = [
         description: 'Mi piace lo sviluppo web',
         skills: ['HTML', 'CSS', 'JavaScript'],
         bannerImage: 'https://static.vecteezy.com/system/resources/thumbnails/002/949/141/small/programming-code-coding-or-hacker-background-vector.jpg',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 5',
@@ -47,7 +47,7 @@ export const students = [
         description: 'Interessata all\'Intelligenza Artificiale',
         skills: ['Python', 'TensorFlow', 'PyTorch'],
         bannerImage: 'https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8Y29kaW5nfGVufDB8fDB8fHww',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 6',
@@ -56,7 +56,7 @@ export const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://png.pngtree.com/thumb_back/fh260/background/20201104/pngtree-technology-background-binary-computer-code-vector-design-image_458702.jpg',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 7',
@@ -65,7 +65,7 @@ export const students = [
         description: 'Appassionata di sviluppo mobile',
         skills: ['Swift', 'Kotlin', 'React Native'],
         bannerImage: 'https://as2.ftcdn.net/v2/jpg/02/50/89/79/1000_F_250897949_pTzxDTqVxz42hgZ8t6HqbYKHGCLvX9yD.jpg',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 8',
@@ -74,7 +74,7 @@ export const students = [
         description: 'Mi piace il backend development',
         skills: ['Java', 'Spring Boot', 'SQL'],
         bannerImage: 'https://images.pond5.com/blue-programming-code-background-abstract-footage-090894338_iconl.jpeg',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 9',
@@ -83,7 +83,7 @@ export const students = [
         description: 'Appassionata di sviluppo web',
         skills: ['HTML', 'CSS', 'JavaScript'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQVr8h4t3V9Q9z1eRb9X6y1X2O4V5G5qFQ5YQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 10',
@@ -92,7 +92,7 @@ export const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 11',
@@ -101,7 +101,7 @@ export const students = [
         description: 'Appassionato di sviluppo mobile',
         skills: ['Swift', 'Kotlin', 'React Native'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 12',
@@ -110,7 +110,7 @@ export const students = [
         description: 'Mi piace il backend development',
         skills: ['Java', 'Spring Boot', 'SQL'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 13',
@@ -119,7 +119,7 @@ export const students = [
         description: 'Appassionato di sviluppo web',
         skills: ['HTML', 'CSS', 'JavaScript'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 14',
@@ -128,7 +128,7 @@ export const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 15',
@@ -137,7 +137,7 @@ export const students = [
         description: 'Appassionato di sviluppo mobile',
         skills: ['Swift', 'Kotlin', 'React Native'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 16',
@@ -146,7 +146,7 @@ export const students = [
         description: 'Mi piace il backend development',
         skills: ['Java', 'Spring Boot', 'SQL'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 17',
@@ -155,7 +155,7 @@ export const students = [
         description: 'Appassionata di sviluppo web',
         skills: ['HTML', 'CSS', 'JavaScript'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3t4v4Z9OvKj1X1w2F0fU9vUjQ&s',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 18',
@@ -164,7 +164,7 @@ export const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 18',
@@ -173,7 +173,7 @@ export const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
     {
         profilePic: 'url della foto del profilo 18',
@@ -182,6 +182,6 @@ export const students = [
         description: 'Mi piace il machine learning',
         skills: ['Python', 'Scikit-learn', 'Pandas'],
         bannerImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRv2Jv9gQI3m3',
-        dotColor: getRandomColor() // Aggiungi questa linea
+        dotColor: getRandomColor() 
     },
 ];
