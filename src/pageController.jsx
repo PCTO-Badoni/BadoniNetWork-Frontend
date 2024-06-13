@@ -15,6 +15,29 @@ import {faInbox} from "@fortawesome/free-solid-svg-icons";
 import {students} from "./main/Components/students";
 import {ToastContainer} from "react-toastify";
 
+
+async function fetchNotifications() {
+    // Qui dovresti fare la chiamata alla tua API o al tuo servizio per ottenere le notifiche
+    // Per ora, restituisco un array di notifiche fittizio
+    return [
+        { id: 1, text: 'Notifica 1' },
+        { id: 2, text: 'Notifica 2' },
+        { id: 3, text: 'Notifica 3' },
+        { id: 4, text: 'Notifica 1' },
+        { id: 5, text: 'Notifica 2' },
+        { id: 6, text: 'Notifica 3' },
+        { id: 7, text: 'Notifica 1' },
+        { id: 8, text: 'Notifica 2' },
+        { id: 9, text: 'Notifica 3' },
+    ];
+}
+
+
+async function deleteNotification(id) {
+    // Qui dovresti fare la chiamata alla tua API o al tuo servizio per eliminare la notifica
+    console.log(`Notifica ${id} eliminata`);
+}
+
 function useBodyScroll() {
     const location = useLocation();
 
@@ -30,6 +53,17 @@ function useBodyScroll() {
 function PageController() {
 
 
+    const [notifications, setNotifications] = useState([]);
+
+    useEffect(() => {
+        fetchNotifications().then(setNotifications);
+    }, []);
+
+    const handleDeleteClick = (id) => {
+        deleteNotification(id).then(() => {
+            setNotifications(notifications.filter(notification => notification.id !== id));
+        });
+    };
 
     useBodyScroll();
     const [isPopupOpen, setPopupOpen] = useState(false);
@@ -59,19 +93,26 @@ function PageController() {
                 justifyContent: 'center',
                 paddingRight: '1%',
             }}>
-                <Components.NotificationButton onClick={handleNotificationClick}>
+                <Components.NotificationButton onClick={handleNotificationClick} notificationNumber={notifications.length}>
                     {bellIcon}
                 </Components.NotificationButton>
                 {isPopupOpen && (
-                    <div className="popup">
-                        ciao
-                    </div>
-                )}
+                    notifications.length > 0 ? (
+                    <Components.NotificationsContainer>
+                        notifiche non lette: {notifications.length}
+                        {notifications.map(notification => (
+                            <Components.NotificationItem key={notification.id}>
+                                <p>{notification.text}</p>
+                                <button onClick={() => handleDeleteClick(notification.id)}>Elimina</button>
+                            </Components.NotificationItem>
+                        ))}
+                    </Components.NotificationsContainer>
+                    ) : null)}
                 <Components.HeaderProfilePic dotColor={students[0].dotColor} style={{scale: '0.8'}}/>
             </div>
         </Components.Header>
     <ToastContainer newestOnTop={true} />
-        </>
+</>
 );
 }
 

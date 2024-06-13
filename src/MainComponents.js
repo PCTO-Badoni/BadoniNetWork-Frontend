@@ -21,18 +21,24 @@ export const Logo = styled.img.attrs(props => ({src: logo}))`
     background-size: cover;
 `;
 
-export const NotificationButton = styled.button` 
+export const NotificationButton = styled.button`
     background: none;
+
     position: relative;
     border: none;
-    font-size: 20px;
+    font-size: 30px;
     &::after {
-        content: "";
+        content: "${props => props.notificationNumber < 99 ? String(props.notificationNumber) : '99+'}";
         position: absolute;
+        font-size: 8px;
+        text-align: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
         bottom: 0;
         right: 0;
-        width: 5px;
-        height: 5px;
+        width: 10px;
+        height: 10px;
         border-radius: 50%;
         background-color: red;
         border: 2px solid white;
@@ -71,4 +77,32 @@ export const HeaderProfilePic = styled.div`
     background-size: cover;
     background-position: center;
     margin: 10px auto 10px;
+`;
+
+export const NotificationsContainer = styled.div`
+    position: absolute;
+    top: 4em;
+    right: 3em;
+    width: 12em;
+    max-height: 20em;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 19px 15px -22px #C2C2C2;
+    z-index: 1000;
+    border: 1px solid #C2C2C2;
+    overflow-y: scroll;
+
+    &:last-child {
+        border-bottom: none;
+    }
+    
+`;
+
+export const NotificationItem = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 1em;
+    border-bottom: 1px solid #C2C2C2;
+    
 `;
