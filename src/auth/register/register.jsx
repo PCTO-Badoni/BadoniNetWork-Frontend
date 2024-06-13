@@ -107,19 +107,21 @@ function Register() {
     setIsSending(true);
     event.preventDefault();
 
-    const data = { ragionesociale, email, telefono, indirizzo };
-    const formBody = Object.keys(data)
-      .map(
-        (key) => encodeURIComponent(key) + "=" + encodeURIComponent(data[key]),
-      )
-      .join("&");
+    const data = {
+      ragionesociale: ragionesociale,
+      email: email,
+      telefono: telefono,
+      indirizzo: indirizzo,
+    };
+
+    console.log(data);
 
     try {
       const response = await fetch("http://localhost:8080/register/azienda", {
         method: "POST",
         mode: "cors",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: formBody,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
       });
 
       if (!response.ok) {
@@ -234,6 +236,7 @@ function Register() {
 
     console.log(data.datanascita);
     console.log(articolazione.id);
+    console.log(password);
 
     try {
       const response = await fetch("http://localhost:8080/register/utente", {
@@ -262,7 +265,6 @@ function Register() {
     if (activeStep === 0) {
       if (password === confirmPassword && isValid) {
         setRegisterClicked(true);
-        setPassword("");
         setConfirmPassword("");
       } else if (password !== confirmPassword) {
         toast.error("Le password non corrispondono");
@@ -324,8 +326,7 @@ function Register() {
         error("Inserisci il tuo indirizzo di residenza");
         return;
       }
-    }
-    if (activeStep === 6) {
+    } else if (activeStep === 6) {
       sendStudentToDB();
       return;
     }

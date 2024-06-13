@@ -127,7 +127,7 @@ export const cardsContainer = styled.div`
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    height: 150vh;
+    max-height: 150vh;
     border-radius: 12px;
     background-color: #fff;
     overflow: scroll;
