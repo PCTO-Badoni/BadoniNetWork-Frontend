@@ -226,13 +226,14 @@ function Register() {
       datanascita:
         deadlineDate.getFullYear() +
         "-" +
-        deadlineDate.getMonth().toString().padStart(2, "0") +
+        (deadlineDate.getMonth() + 1).toString().padStart(2, "0") +
         "-" +
         deadlineDate.getDate().toString().padStart(2, "0"),
       indirizzo: selectedAddress.label,
     };
 
     console.log(data.datanascita);
+    console.log(articolazione.id);
 
     try {
       const response = await fetch("http://localhost:8080/register/utente", {
