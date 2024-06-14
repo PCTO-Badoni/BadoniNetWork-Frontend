@@ -97,9 +97,14 @@ const ChipSelector = ({
             <Select
               name="articolazione"
               id="articolazione"
-              defaultValue={articolazione ? articolazione : ""}
+              defaultValue={articolazione ? articolazione.descrizione : ""}
               style={{ width: "90%" }}
-              onChange={(e) => setArticolazione(e.target.value)}
+              onChange={(e) => {
+                const selectedOption = options.find(
+                  (option) => option.descrizione === e.target.value,
+                );
+                setArticolazione(selectedOption);
+              }}
               required
             >
               <option value="" disabled hidden>

@@ -102,7 +102,7 @@ const Step6 = React.memo(
             <label htmlFor="articolazione">Articolazione</label>
             <Input
               idtype="articolazione"
-              value={articolazione}
+              value={articolazione.descrizione}
               disabled={true}
             />
           </div>
