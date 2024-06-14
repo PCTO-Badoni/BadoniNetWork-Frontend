@@ -225,6 +225,7 @@ function Register() {
       password: password,
       idarticolazione: articolazione.id,
       dataregistrazione: toLocalISOString(new Date()),
+      ultimoaccesso: toLocalISOString(new Date()),
       datanascita:
         deadlineDate.getFullYear() +
         "-" +
@@ -233,10 +234,6 @@ function Register() {
         deadlineDate.getDate().toString().padStart(2, "0"),
       indirizzo: selectedAddress.label,
     };
-
-    console.log(data.datanascita);
-    console.log(articolazione.id);
-    console.log(password);
 
     try {
       const response = await fetch("http://localhost:8080/register/utente", {
