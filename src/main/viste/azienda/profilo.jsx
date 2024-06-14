@@ -9,29 +9,29 @@ import {faHouse, faList} from '@fortawesome/free-solid-svg-icons';
 import {faRightFromBracket, faFilter} from '@fortawesome/free-solid-svg-icons';
 const listIcon = <FontAwesomeIcon icon={faList} />;
 
-const Chat = ({
-                     searchTerm,
-                     setSearchTerm,
-                     selectedChips,
-                     setSelectedChips,
-                     selectedCompetenze,
-                     setSelectedCompetenze,
-                     selectedLingue,
-                     setSelectedLingue,
-                     chips,
-                     competenze,
-                     lingue,
-                     isFilterOpen,
-                     setFilterOpen,
-                     viewMode,
-                     setViewMode,
-                     handleChipClick,
-                     handleChipDelete,
-                     handleCompetenzaClick,
-                     handleCompetenzaDelete,
-                     handleLinguaClick,
-                     handleLinguaDelete
-                 }) => {
+const Profilo = ({
+                           searchTerm,
+                           setSearchTerm,
+                           selectedChips,
+                           setSelectedChips,
+                           selectedCompetenze,
+                           setSelectedCompetenze,
+                           selectedLingue,
+                           setSelectedLingue,
+                           chips,
+                           competenze,
+                           lingue,
+                           isFilterOpen,
+                           setFilterOpen,
+                           viewMode,
+                           setViewMode,
+                           handleChipClick,
+                           handleChipDelete,
+                           handleCompetenzaClick,
+                           handleCompetenzaDelete,
+                           handleLinguaClick,
+                           handleLinguaDelete
+                       }) => {
 
     const selectedFilteredChips = selectedChips.filter((chip) =>
         chip.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
@@ -82,23 +82,27 @@ const Chat = ({
     return (
         <Components.contentContainer>
             <Components.TopBar style={{height: '150px'}}>
-                <Components.ProfileInformations style={{transition: 'all 0.3s'}}>
-                    <div style={{
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                        alignContent: 'flex-start',
-                        alignItems: 'flex-start'
-                    }}>
-                        <div style={{width: '73.8em'}}>
+                    <Components.ProfileInformations style={{transition: 'all 0.3s'}}>
+                        <div style={{
+                            flexDirection: 'column',
+                            justifyContent: 'flex-start',
+                            alignContent: 'flex-start',
+                            alignItems: 'flex-start'
+                        }}>
+                            <div style={{width: '73.8em'}}>
 
+                            </div>
                         </div>
-                    </div>
 
-                </Components.ProfileInformations>
+                    </Components.ProfileInformations>
 
             </Components.TopBar>
+                <Components.cardsContainer>
+
+                </Components.cardsContainer>
+
         </Components.contentContainer>
     );
 }
 
-export default Chat;
+export default Profilo;

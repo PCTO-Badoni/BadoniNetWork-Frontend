@@ -7,9 +7,7 @@ export const Header = styled.div`
     flex-direction: row;
     justify-content: space-between;
     box-shadow: 0 19px 15px -22px #C2C2C2;
-    width: 100dvw;
-    
-    
+    width: 100vw;
     height: 5em;
     position: sticky;
     top: 0;
@@ -80,6 +78,7 @@ export const HeaderProfilePic = styled.div`
     background-position: center;
     margin: 10px auto 10px;
 `;
+
 
 export const NotificationsContainer = styled.div`
     position: absolute;

@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import * as Components from "../../HomeComponents";
+import * as Components from "../../MainPageComponents";
 import StudentCard from '../../Components/cards/StudentCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BsFillGridFill } from "react-icons/bs";
@@ -79,6 +79,19 @@ const ListaStudenti = ({
         }
     };
 
+
+    const filteredStudents = students.filter(student => {
+        // Se non ci sono competenze selezionate, mostra tutti gli studenti
+        if (selectedCompetenze.length === 0) {
+            return true;
+        }
+
+        // Controlla se lo studente ha tutte le competenze selezionate
+        return selectedCompetenze.every(competenza =>
+            student.skills.includes(competenza.descrizione)
+        );
+    });
+
     return (
         <Components.contentContainer>
             <Components.TopBar style={{ height: isFilterOpen ? '285px' : '100px', transition: 'height 0.3s' }}>
@@ -114,7 +127,7 @@ const ListaStudenti = ({
                             alignItems: 'flex-start'
                         }}>
                             <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Indirizzi</h5>
-                            <div style={{width: '400px'}}>
+                            <div style={{width: '400px' , paddingRight:'10px'}}>
                                 {selectedFilteredChips.map((chip) => (
                                     <Chip
                                         key={chip.id}
@@ -140,7 +153,7 @@ const ListaStudenti = ({
                         </div>
                         <div style={{flexDirection: 'column'}}>
                             <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Competenze</h5>
-                            <div style={{width: '100%', overflowY: 'scroll', height: '7.5em'}}>
+                            <div style={{width: '100%', overflowY: 'scroll', height: '7.5em', scrollbarWidth:'none', paddingRight:'10px'}}>
                                 {selectedFilteredCompetenze.map((competenza) => (
                                     <Chip
                                         key={competenza.id}
@@ -166,7 +179,7 @@ const ListaStudenti = ({
                         </div>
                         <div style={{flexDirection: 'column'}}>
                             <h5 style={{paddingTop: '20px', paddingLeft: '10px', margin: '0'}}>Lingue</h5>
-                            <div style={{width: '100%', overflowY: 'scroll', height: '7.5em'}}>
+                            <div style={{width: '100%', overflowY: 'scroll', height: '7.5em', scrollbarWidth:'none'}}>
                                 {selectedFilteredLingue.map((lingua) => (
                                     <Chip
                                         key={lingua.id}
@@ -197,7 +210,7 @@ const ListaStudenti = ({
             </Components.TopBar>
             {viewMode === 'cards' ? (
                 <Components.cardsContainer>
-                    {students.map((student, index) => (
+                    {filteredStudents.map((student, index) => (
                         <StudentCard
                             key={index}
                             student={student}
@@ -207,7 +220,7 @@ const ListaStudenti = ({
                 </Components.cardsContainer>
             ) : (
                 <Components.listContainer>
-                    {students.map((student, index) => (
+                    {filteredStudents.map((student, index) => (
                         <Components.listItem key={index}>
                             <Components.listItemProfilePic dotColor={student.dotColor}/>
                             <Components.listItemInfo>
