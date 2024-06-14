@@ -6,6 +6,8 @@ export const Container = styled.div`
     width: 100%;
     max-height: 200vh;
     overflow: scroll;
+    justify-content: flex-start;
+    align-items: flex-start; // Modifica qui
 `;
 
 export const contentContainer = styled.div`
@@ -13,7 +15,7 @@ export const contentContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 110dvh;
     border-radius: 12px;
     padding-left: 15px;
 `;
@@ -51,25 +53,14 @@ export const FilterButton = styled.button`
     cursor: pointer;
 `;
 
-export const FilterContainer = styled.div`
+export const ProfileInformations = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     margin-top: 2em;
     padding-bottom: 20px;
-    border-top: 1px solid #ccc
 `;
 
-export const Sidebar = styled.div`
-    background-color: #fff;
-    width: 18dvw;
-    height: 80dvh;
-    padding: 15px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-    
-`;
 
 export const Button = styled.button`
     border-radius: 20px;
@@ -86,9 +77,9 @@ export const Button = styled.button`
     text-decoration: none;
     width: 100%;
     z-index: 50;
-    
+
     &:focus {
-    outline: none;
+        outline: none;
     }
 `;
 
@@ -127,7 +118,7 @@ export const cardsContainer = styled.div`
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    max-height: 150vh;
+    height: 90vh;
     border-radius: 12px;
     background-color: #fff;
     overflow: scroll;
@@ -212,11 +203,11 @@ export const ListItemSkill = styled.div`
     border-radius: 10px;
     background-color: rgba(20, 117, 207, 0.7);
     color: #fff;
-    
+
     &:first-child {
         margin-left: 0;
     }
-    
+
     &:hover {
         background-color: rgba(20, 117, 207, 0.9);
     }
@@ -256,7 +247,7 @@ export const DisponibilityButton = styled.button`
     color: black;
     text-decoration: none;
     font-family: "Montserrat", sans-serif;
-    
+
     &:hover {
         cursor: pointer;
     }

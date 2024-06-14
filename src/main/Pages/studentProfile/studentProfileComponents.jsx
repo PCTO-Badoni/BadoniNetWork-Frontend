@@ -7,9 +7,10 @@ export const Container = styled.div`
     padding: 30px 30px 10px;
     border-radius: 12px;
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
-    width: 95vw;
+    width: 100%;
     height: 95vh;
     overflow: clip;
+    scale: 0.85;
 `;
 
 export const studentName = styled.div`
@@ -32,6 +33,7 @@ export const studentSkills = styled.div`
     justify-content: center;
     flex-wrap: wrap;
     margin-top: 0;
+    
 `;
 
 export const studentSkill = styled.span`
@@ -125,8 +127,7 @@ export const userInformations = styled.div`
     justify-content: center;
     align-items: flex-start;
     height: 100%;
-    width: 100%;
-    padding: 40px 20px;
+    padding: 40px 0 40px 20px;
     border-radius: 12px;
 `;
 
@@ -437,27 +438,24 @@ export const ButtonsRow = styled.div`
 export const AboutMe = styled.div`
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    align-items: start;
-    font-size: 17px;
-    width: 100%;
+    justify-content: center; // Centra verticalmente
+    align-items: center;
+    width: 50%;
     height: 100%;
+    font-size: 0.5em;
     border-radius: 12px;
-    background-color: #f2f2f2;
     padding: 0 20px 20px;
     overflow: scroll;
     max-height: 200px;
 `;
-
 export const Sectiontitle = styled.h2`
     font-size: 1.5rem;
     width: 100%;
     height: 50px;
     padding-top: 5px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #f1f1f1;
     color: #333;
     top: 0;
-    background-color: #f2f2f2; // Aggiungi un colore di sfondo per evitare sovrapposizioni di testo
     z-index: 1; // Assicurati che il titolo sia sopra gli altri elementi
     position: sticky;
 `;
@@ -544,6 +542,7 @@ export const MapAndAziendeContainer = styled.div`
     width: 100%;
     height: 100%;
     gap: 20px; /* Adds space between the map and AziendeWorked */
+    padding-left: 20px;
 `;
 
 export const AziendaWorked = styled.div`
@@ -572,6 +571,7 @@ export const MapTitle = styled.h2`
     height: 40px;
     margin-top: 25px;
     border-bottom: 1px solid #333;
+    
     color: #333;
     position: sticky;
     top: 0;
