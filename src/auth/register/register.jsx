@@ -255,6 +255,7 @@ function Register() {
 
       const responseData = await response.json();
       if (responseData.message !== "Email valida") {
+        navigate("/homepage");
         responseView(responseData.message);
       }
     } catch (error) {
@@ -459,6 +460,7 @@ function Register() {
                 activeStep === 0 ? setRegisterClicked(false) : handleBack();
               }}
               disabled={!isRegisterClicked}
+              style={{ marginTop: "6em" }}
             >
               {arrowLeft}
             </Components.StepsNavButton>
@@ -649,6 +651,7 @@ function Register() {
                 !isRegisterClicked ? setRegisterClicked(true) : handleNext();
               }}
               disabled={!isRegisterClicked}
+              style={{ marginTop: "6em" }}
             >
               {activeStep === steps.length ? save : arrowRight}
             </Components.StepsNavButton>
