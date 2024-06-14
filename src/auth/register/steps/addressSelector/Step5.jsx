@@ -12,6 +12,7 @@ const AutocompleteSearch = ({
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const VITE_TOMTOM_API_KEY = import.meta.env.VITE_TOMTOM_API_KEY;
 
   const options = suggestions.map((suggestion) => ({
     value: suggestion.id, // or any unique identifier
@@ -26,7 +27,7 @@ const AutocompleteSearch = ({
           `https://api.tomtom.com/search/2/search/${inputValue}.json`,
           {
             params: {
-              key: "GKKdaSewOQJ1qLgzHcWa1mJxy3z9JzRg",
+              key: VITE_TOMTOM_API_KEY,
               typeahead: true,
               limit: 5,
             },
@@ -101,6 +102,7 @@ const AutocompleteSearch = ({
 
 const Map = ({ position }) => {
   const mapContainerRef = useRef(null);
+  const VITE_TOMTOM_API_KEY = import.meta.env.VITE_TOMTOM_API_KEY;
 
   useEffect(() => {
     if (!mapContainerRef.current) {
@@ -108,7 +110,7 @@ const Map = ({ position }) => {
     }
 
     const map = tt.map({
-      key: "GKKdaSewOQJ1qLgzHcWa1mJxy3z9JzRg",
+      key: VITE_TOMTOM_API_KEY,
       container: mapContainerRef.current,
       center: position,
       zoom: 17,

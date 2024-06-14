@@ -3,13 +3,15 @@ import * as OTPComponents from "../../../../OTP/OTPComponents";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
-const Step1 = React.memo(({ email, setCodeVerified }) => {
+const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
   const [num1, setNum1] = React.useState("");
   const [num2, setNum2] = React.useState("");
   const [num3, setNum3] = React.useState("");
   const [num4, setNum4] = React.useState("");
   const [num5, setNum5] = React.useState("");
   const [num6, setNum6] = React.useState("");
+
+  const [isSent, setIsSent] = React.useState(false);
 
   let navigate = useNavigate();
 
@@ -48,30 +50,33 @@ const Step1 = React.memo(({ email, setCodeVerified }) => {
       email,
     };
 
-    try {
-      const response = await fetch(
-        "http://localhost:8080/api/send-student-otp",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+    if (!isCodeVerified) {
+      try {
+        const response = await fetch(
+          "http://localhost:8080/api/send-student-otp",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
           },
-          body: JSON.stringify(data),
-        },
-      );
+        );
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        error(errorData.message || "Errore durante la richiesta");
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
+        if (!response.ok) {
+          const errorData = await response.json();
+          error(errorData.message || "Errore durante la richiesta");
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
-      const responseData = await response.json();
-      if (responseData.message === "Verifica inviata") {
-        responseView(responseData.message);
+        const responseData = await response.json();
+        if (responseData.message === "Verifica inviata") {
+          setIsSent(true);
+          responseView(responseData.message);
+        }
+      } catch (error) {
+        console.error("There was an error!", error);
       }
-    } catch (error) {
-      console.error("There was an error!", error);
     }
   }
 
@@ -164,9 +169,10 @@ const Step1 = React.memo(({ email, setCodeVerified }) => {
         </div>
         <OTPComponents.verifyButton
           id="verifyButton"
+          isCodeVerified={isCodeVerified}
           onClick={(e) => verifyOTPCode(e)}
         >
-          Verifica
+          {isSent ? (!isCodeVerified ? "Verifica" : "Verificato") : "Invio..."}
         </OTPComponents.verifyButton>
       </OTPComponents.form>
     </div>
