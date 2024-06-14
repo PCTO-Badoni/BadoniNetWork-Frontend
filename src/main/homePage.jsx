@@ -128,55 +128,59 @@ function HomePage() {
     return (
         <>
             <div style={{display: 'flex', flexDirection: 'column', overflow: 'scroll', marginTop: 'auto'}}>
-                <Components.Container style={{scale:'0.9'}}>
-                    <Components.Sidebar>
-                        <Components.MenuContainer>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('home')} style={{backgroundColor: activeButton === 'home' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'home' ? '2px solid black' : null}}>
-                                <FontAwesomeIcon icon={faHouse} /> Homepage
-                            </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('lista')} style={{backgroundColor: activeButton === 'lista' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'lista' ? '2px solid black' : null}}>
-                                <FaIdCard /> Lista Studenti
-                            </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('chat')} style={{backgroundColor: activeButton === 'chat' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'chat' ? '2px solid black' : null}}>
-                                <IoChatboxEllipses /> Chat
-                            </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('annunci')} style={{backgroundColor: activeButton === 'annunci' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'annunci' ? '2px solid black' : null}}>
-                                <BiSolidMegaphone /> Annunci Lavorativi
-                            </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('impostazioni')} style={{backgroundColor: activeButton === 'impostazioni' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'impostazioni' ? '2px solid black' : null}}>
-                                <RiSettings3Fill />Impostazioni
-                            </Components.MenuItem>
-                        </Components.MenuContainer>
-                        <div style={{width: '100%', marginTop: 'auto'}}>
-                            <Components.MenuItem onClick={() => handleButtonClick('logout')} style={{ borderRadius:'8px' ,backgroundColor: activeButton === 'logout' ? '#f0f0f0' : 'transparent'}}>
-                                {logoutIcon} Logout
-                            </Components.MenuItem>
-                        </div>
-                    </Components.Sidebar>
-                    <ListaStudenti
-                        searchTerm={searchTerm}
-                        setSearchTerm={setSearchTerm}
-                        selectedChips={selectedChips}
-                        setSelectedChips={setSelectedChips}
-                        selectedCompetenze={selectedCompetenze}
-                        setSelectedCompetenze={setSelectedCompetenze}
-                        selectedLingue={selectedLingue}
-                        setSelectedLingue={setSelectedLingue}
-                        chips={chips}
-                        competenze={competenze}
-                        lingue={lingue}
-                        isFilterOpen={isFilterOpen}
-                        setFilterOpen={setFilterOpen}
-                        viewMode={viewMode}
-                        setViewMode={setViewMode}
-                        handleChipClick={handleChipClick}
-                        handleChipDelete={handleChipDelete}
-                        handleCompetenzaClick={handleCompetenzaClick}
-                        handleCompetenzaDelete={handleCompetenzaDelete}
-                        handleLinguaClick={handleLinguaClick}
-                        handleLinguaDelete={handleLinguaDelete}
-                    />
-                </Components.Container>
+                    <Components.Container style={{scale:'0.9'}}>
+                        <Components.Sidebar>
+                            <Components.MenuContainer>
+                                <Components.MenuItem to='/' onClick={() => handleButtonClick('home')} style={{backgroundColor: activeButton === 'home' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'home' ? '2px solid black' : null}}>
+                                    <FontAwesomeIcon icon={faHouse} /> Homepage
+                                </Components.MenuItem>
+                                <Components.MenuItem to='/' onClick={() => handleButtonClick('lista')} style={{backgroundColor: activeButton === 'lista' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'lista' ? '2px solid black' : null}}>
+                                    <FaIdCard /> Lista Studenti
+                                </Components.MenuItem>
+                                <Components.MenuItem to='/' onClick={() => handleButtonClick('chat')} style={{backgroundColor: activeButton === 'chat' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'chat' ? '2px solid black' : null}}>
+                                    <IoChatboxEllipses /> Chat
+                                </Components.MenuItem>
+                                <Components.MenuItem to='/' onClick={() => handleButtonClick('annunci')} style={{backgroundColor: activeButton === 'annunci' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'annunci' ? '2px solid black' : null}}>
+                                    <BiSolidMegaphone /> Annunci
+                                </Components.MenuItem>
+                                <Components.MenuItem to='/' onClick={() => handleButtonClick('impostazioni')} style={{backgroundColor: activeButton === 'impostazioni' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'impostazioni' ? '2px solid black' : null}}>
+                                    <RiSettings3Fill />Impostazioni
+                                </Components.MenuItem>
+                            </Components.MenuContainer>
+                            <div style={{width: '100%', marginTop: 'auto'}}>
+                                <Components.MenuItem onClick={() => handleButtonClick('logout')} style={{ borderRadius:'8px' ,backgroundColor: activeButton === 'logout' ? '#f0f0f0' : 'transparent'}}>
+                                    {logoutIcon} Logout
+                                </Components.MenuItem>
+                            </div>
+                        </Components.Sidebar>
+                        {activeButton === 'lista' && (
+                                <ListaStudenti
+                                    searchTerm={searchTerm}
+                                    setSearchTerm={setSearchTerm}
+                                    selectedChips={selectedChips}
+                                    setSelectedChips={setSelectedChips}
+                                    selectedCompetenze={selectedCompetenze}
+                                    setSelectedCompetenze={setSelectedCompetenze}
+                                    selectedLingue={selectedLingue}
+                                    setSelectedLingue={setSelectedLingue}
+                                    chips={chips}
+                                    competenze={competenze}
+                                    lingue={lingue}
+                                    isFilterOpen={isFilterOpen}
+                                    setFilterOpen={setFilterOpen}
+                                    viewMode={viewMode}
+                                    setViewMode={setViewMode}
+                                    handleChipClick={handleChipClick}
+                                    handleChipDelete={handleChipDelete}
+                                    handleCompetenzaClick={handleCompetenzaClick}
+                                    handleCompetenzaDelete={handleCompetenzaDelete}
+                                    handleLinguaClick={handleLinguaClick}
+                                    handleLinguaDelete={handleLinguaDelete}
+                                />
+                            )
+                        }
+
+                    </Components.Container>
                 <Footer/>
             </div>
         </>

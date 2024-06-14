@@ -15,7 +15,6 @@ import {faInbox} from "@fortawesome/free-solid-svg-icons";
 import {students} from "./main/Components/students";
 import {ToastContainer} from "react-toastify";
 
-
 async function fetchNotifications() {
     // Qui dovresti fare la chiamata alla tua API o al tuo servizio per ottenere le notifiche
     // Per ora, restituisco un array di notifiche fittizio
@@ -49,6 +48,8 @@ function useBodyScroll() {
         }
     }, [location]);
 }
+
+
 
 function PageController() {
 

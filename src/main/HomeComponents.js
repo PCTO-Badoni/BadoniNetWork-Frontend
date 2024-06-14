@@ -117,6 +117,7 @@ export const MenuItem = styled.div`
     display: flex;
     flex-direction: row;
     gap: 10px;
+    font-size: 1em;
 `;
 
 export const cardsContainer = styled.div`
