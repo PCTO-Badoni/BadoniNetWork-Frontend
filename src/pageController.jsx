@@ -7,6 +7,7 @@ import Login from "./auth/login/login";
 import ReactDOM from "react-dom";
 import EmailSent from "./auth/register/email/emailSent";
 import ForgotPassword from "./auth/security/forgotPassword";
+import ChangePassword from "./auth/security/changePassword";
 import { PhotoProvider } from "./auth/register/steps/profilePicture/PhotoContext";
 import StudentProfile from "./main/Pages/studentProfile/studentProfile";
 import * as Components from './MainComponents';
@@ -134,6 +135,7 @@ ReactDOM.render(
                 <Route path="/OTP" element={<OTP/>}/>
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/forgotPassword" element={<ForgotPassword/>}/>
+                <Route path="/changePassword" element={<ChangePassword/>} />
                 <Route path="/homepage/studentProfile/:id" element={<StudentProfile />} />
             </Routes>
         </div>
