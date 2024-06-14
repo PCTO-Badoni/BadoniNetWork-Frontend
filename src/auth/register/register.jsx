@@ -225,6 +225,7 @@ function Register() {
       password: password,
       idarticolazione: articolazione.idarticolazione,
       dataregistrazione: toLocalISOString(new Date()),
+      ultimoaccesso: toLocalISOString(new Date()),
       datanascita:
         deadlineDate.getFullYear() +
         "-" +
