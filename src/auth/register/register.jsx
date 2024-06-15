@@ -179,14 +179,6 @@ function Register() {
       }
 
       handleNext(isValid);
-      /*
-                  const contentType = response.headers.get("content-type");
-                  if (contentType && contentType.indexOf("application/json") !== -1) {
-                      const responseData = await response.json();
-                      console.log(responseData);
-                  } else {
-                      console.log("Response is not JSON. It is:", contentType);
-                  } */
     } catch (error) {
       console.log("Error:", error);
     }
@@ -300,7 +292,7 @@ function Register() {
         toast.error("Le password non corrispondono");
         setPasswordsMatch(false);
         return;
-      } else {
+      } else if (!passwordStrength) {
         toast.error("Password non sicura");
         return;
       }

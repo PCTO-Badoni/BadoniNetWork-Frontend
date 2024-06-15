@@ -102,6 +102,7 @@ export const Form = styled.form`
 `;
 
 export const Title = styled.h1`
+  font-size: 3em;
   text-align: center;
   font-weight: bold;
   opacity: 1;
@@ -150,7 +151,7 @@ export const Button = styled.button`
   border: 1px solid #5865f2;
   background-color: #5865f2;
   color: #ffffff;
-  font-size: 0.75rem;
+  font-size: 1rem;
   font-weight: bold;
   padding: 0.75rem 2.8125rem;
   letter-spacing: 1px;
@@ -185,6 +186,7 @@ export const StepsNavButton = styled.button`
 `;
 
 export const GhostButton = styled(Button)`
+  font-size: 1em;
   background-color: transparent;
   border-color: #ffffff;
 `;
@@ -208,9 +210,22 @@ export const OverlayContainer = styled.div`
 `;
 
 export const Overlay = styled.div`
-  background: #ff416c;
-  background: -webkit-linear-gradient(to right, #ff4b2b, #ff416c);
-  background: linear-gradient(to right, #5865f2, #b258f2);
+  background: hsla(239, 94%, 14%, 1);
+  background: linear-gradient(
+    90deg,
+    hsla(239, 94%, 14%, 1) 0%,
+    hsla(205, 68%, 50%, 1) 100%
+  );
+  background: -moz-linear-gradient(
+    90deg,
+    hsla(239, 94%, 14%, 1) 0%,
+    hsla(205, 68%, 50%, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    90deg,
+    hsla(239, 94%, 14%, 1) 0%,
+    hsla(205, 68%, 50%, 1) 100%
+  );
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
@@ -254,7 +269,7 @@ export const RightOverlayPanel = styled(OverlayPanel)`
 `;
 
 export const Paragraph = styled.p`
-  font-size: 0.875rem;
+  font-size: 1.5rem;
   font-weight: 100;
   line-height: 1.25rem;
   letter-spacing: 0.5px;
@@ -348,19 +363,63 @@ export const FooterContainer = styled.div`
   margin: 0 auto;
 `;
 
-
 export const FooterButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
   padding-top: 1.25rem;
 
-  background-color: #f0f0f0;  
+  background-color: #f0f0f0;
   width: 30px;
   border: none;
-  
+
   &:hover {
     cursor: pointer;
     background-color: #f9f9f9;
+  }
+`;
+
+export const ChipsSelectorInputContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-bottom: 25px;
+  justify-content: space-between;
+
+  @media only screen and (max-width: 1300px) {
+    flex-direction: column;
+  }
+`;
+
+export const RecapImage = styled.img`
+  border-radius: 50%;
+  object-fit: cover;
+  border: 5px solid rgba(20, 117, 207, 0.5);
+  height: 250px;
+  width: 250px;
+
+  @media only screen and (max-width: 991px) {
+    width: 150px;
+    height: 150px;
+  }
+`;
+
+export const RecapContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 5em;
+  padding-right: 5em;
+
+  @media only screen and (max-width: 1000px) {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+`;
+
+export const RecapInput = styled.div`
+  @media only screen and (max-width: 1500px) {
+    width: 40%;
   }
 `;

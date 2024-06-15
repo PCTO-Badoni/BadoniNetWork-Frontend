@@ -111,7 +111,6 @@ const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
       const responseData = await response.json();
       if (responseData.message === "Codice valido") {
         setCodeVerified(true);
-        responseView(responseData.message);
       }
     } catch (error) {
       console.error("There was an error!", error);
