@@ -61,8 +61,13 @@ function ChangePassword() {
   async function submitPassword(event) {
     event.preventDefault();
 
-    if (password !== confirmPassword) {
+    if (password === confirmPassword && isValid) {
+      responseView("Password modificata correttamente!");
+    } else if (password !== confirmPassword) {
       error("Le password non corrispondono");
+      return;
+    } else {
+      error("Password non sicura");
       return;
     }
 
