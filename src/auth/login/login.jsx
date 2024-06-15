@@ -32,7 +32,7 @@ function Login() {
         };
 
         try {
-            const response = await fetch("http://localhost:8080/login/authenticate", {
+            const response = await fetch("http://localhost:8080/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -47,6 +47,7 @@ function Login() {
             }
 
             const responseData = await response.json();
+            console.log(responseData)
         } catch (error) {
             console.error("There was an error!", error);
         }
