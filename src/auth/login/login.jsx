@@ -62,7 +62,7 @@ function Login() {
                 <LoginComponents.Input type="password" placeholder="Password" value={password} onChange={e => setPassword(e.target.value)} required/>
                 <LoginComponents.Button>Accedi</LoginComponents.Button>
                 <LoginComponents.clickableText to="/forgotPassword">Password dimenticata?</LoginComponents.clickableText>
-                <LoginComponents.clickableText to="/">Non hai un account? Registrati</LoginComponents.clickableText>
+                <LoginComponents.clickableText to="/register">Non hai un account? Registrati</LoginComponents.clickableText>
             </LoginComponents.Form>
         </LoginComponents.Container>
         <ToastContainer newestOnTop={true}/>
