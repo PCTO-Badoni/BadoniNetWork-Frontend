@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { BrowserRouter as Router, Route, Routes, useLocation } from "react-router-dom";
 import Register from "./auth/register/register";
 import MainPage from "./main/mainPage";
@@ -15,6 +15,16 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faInbox} from "@fortawesome/free-solid-svg-icons";
 import {students} from "./main/Components/students";
 import {ToastContainer} from "react-toastify";
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
+import { Avatar } from 'primereact/avatar';
+import { AvatarGroup } from 'primereact/avatargroup';
+import {Badge} from "primereact/badge";   //Optional for grouping
+import 'primereact/resources/themes/bootstrap4-light-blue/theme.css';
+import {Menu} from "primereact/menu";
+import {Button} from "primereact/button";
+import {Toast} from "primereact/toast";
+
+
 
 async function fetchNotifications() {
     // Qui dovresti fare la chiamata alla tua API o al tuo servizio per ottenere le notifiche
@@ -73,7 +83,26 @@ function PageController() {
         setPopupOpen(!isPopupOpen);
     };
 
+    let menuRight = useRef(null);
+
+    const items = [
+        {
+            label: 'Options',
+            items: [
+                {
+                    label: 'Refresh',
+                    icon: 'pi pi-refresh'
+                },
+                {
+                    label: 'Export',
+                    icon: 'pi pi-upload'
+                }
+            ]
+        }
+    ];
+
     return (
+        <PrimeReactProvider>
         <>
             <Components.Header>
                 <div style={{
@@ -94,26 +123,17 @@ function PageController() {
                     justifyContent: 'center',
                     paddingRight: '1%',
                 }}>
-                    <Components.NotificationButton onClick={handleNotificationClick} notificationNumber={notifications.length}>
-                        {bellIcon}
-                    </Components.NotificationButton>
-                    {isPopupOpen && (
-                        notifications.length > 0 ? (
-                        <Components.NotificationsContainer>
-                            notifiche non lette: {notifications.length}
-                            {notifications.map(notification => (
-                                <Components.NotificationItem key={notification.id}>
-                                    <p>{notification.text}</p>
-                                    <button onClick={() => handleDeleteClick(notification.id)}>Elimina</button>
-                                </Components.NotificationItem>
-                            ))}
-                        </Components.NotificationsContainer>
-                        ) : null)}
-                    <Components.HeaderProfilePic dotColor={students[0].dotColor} style={{scale: '0.8'}}/>
+                    <Avatar className="p-overlay-badge" icon="pi pi-user" size="large"  onClick={(event) => menuRight.current.toggle(event)}>
+                        <Badge value=" " style={{scale: '80%'}}/>
+                        <Menu model={items} popup ref={menuRight} id="popup_menu_right" popupAlignment="right" />
+
+                    </Avatar>
                 </div>
             </Components.Header>
             <ToastContainer newestOnTop={true} />
         </>
+
+        </PrimeReactProvider>
     );
 }
 
