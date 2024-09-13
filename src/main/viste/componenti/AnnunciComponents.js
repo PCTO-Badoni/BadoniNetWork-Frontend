@@ -3,9 +3,11 @@ import styled from "styled-components";
 export const Container = styled.div`
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 100vw;
     max-height: 200vh;
     overflow: scroll;
+    align-items: flex-start; // Modifica qui
+    justify-content: start;
 `;
 
 export const contentContainer = styled.div`
@@ -13,7 +15,7 @@ export const contentContainer = styled.div`
     flex-direction: column;
     align-items: center;
     width: 100%;
-    height: 100%;
+    height: 110dvh;
     border-radius: 12px;
     padding-left: 15px;
 `;
@@ -21,12 +23,11 @@ export const contentContainer = styled.div`
 export const TopBar = styled.div`
     background: #fff;
     display: flex;
-    flex-direction: column;
-    align-items: start;
+    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
     height: 7em;
     border-radius: 12px;
-    padding: 2em 2em 1.5em;
     margin-bottom: 15px;
 `;
 
@@ -51,14 +52,36 @@ export const FilterButton = styled.button`
     cursor: pointer;
 `;
 
-export const FilterContainer = styled.div`
+export const InfoAnnunci = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    background: blue;
     margin-top: 2em;
     padding-bottom: 20px;
-    border-top: 1px solid #ccc
 `;
+
+
+export const InfoAnnunciElement = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    h1:first-child {
+        margin-bottom: 0.25em; // Riduci il margine inferiore del primo elemento h1
+    }
+
+    h5:last-child {
+        margin-top: 0; // Riduci il margine superiore dell'ultimo elemento h1
+        font-weight: lighter;
+
+    }
+`;
+
+
+
 
 export const Sidebar = styled.div`
     background-color: #fff;
@@ -68,7 +91,7 @@ export const Sidebar = styled.div`
     border-radius: 12px;
     display: flex;
     flex-direction: column;
-    
+
 `;
 
 export const Button = styled.button`
@@ -86,11 +109,15 @@ export const Button = styled.button`
     text-decoration: none;
     width: 100%;
     z-index: 50;
-    
+
     &:focus {
-    outline: none;
+        outline: none;
     }
 `;
+
+
+
+
 
 export const MenuContainer = styled.div`
     display: flex;
@@ -119,18 +146,70 @@ export const MenuItem = styled.div`
     gap: 10px;
 `;
 
-export const cardsContainer = styled.div`
+export const AnnunciContainer = styled.div`
     display: flex;
-    padding: 20px;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    max-height: 150vh;
+    gap: 15px;
+    height: 95vh;
+    border-radius: 12px;
+    overflow: scroll;
+`;
+
+
+export const ListaAnnunci = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
     border-radius: 12px;
     background-color: #fff;
-    overflow: scroll;
+    padding: 20px;
+    flex: 2;
+    height: 100%;
+    overflow: auto;
+    gap: 15px;
+`;
+
+
+
+export const NuovoAnnuncio = styled.div`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    background-color: #fff;
+    padding: 20px;
+    height: 100%;
+`;
+
+export const Annuncio = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start; // Allinea a sinistra
+    align-items: center;
+    border-radius: 12px;
+    background-color: #fff;
+    -webkit-box-shadow: 0px 4px 16px 1px rgba(198, 198, 198, 0.85);
+    box-shadow: 0px 7px 16px 1px rgba(198, 198, 198, 0.85);
+    padding: 1em;
+    width: 100%;
+    min-height: 7em;
+`;
+
+export const AnnuncioImage = styled.div`
+    width: 5em;
+    height: 5em;
+    border-radius: 8px;
+    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
 `;
 
 export const listContainer = styled.div`
@@ -212,11 +291,11 @@ export const ListItemSkill = styled.div`
     border-radius: 10px;
     background-color: rgba(20, 117, 207, 0.7);
     color: #fff;
-    
+
     &:first-child {
         margin-left: 0;
     }
-    
+
     &:hover {
         background-color: rgba(20, 117, 207, 0.9);
     }
@@ -256,7 +335,7 @@ export const DisponibilityButton = styled.button`
     color: black;
     text-decoration: none;
     font-family: "Montserrat", sans-serif;
-    
+
     &:hover {
         cursor: pointer;
     }

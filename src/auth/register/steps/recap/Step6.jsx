@@ -1,7 +1,12 @@
 import React from "react";
 import { PhotoProvider, usePhoto } from "../profilePicture/PhotoContext";
 import { MdCloudUpload } from "react-icons/md";
-import { Input } from "../../RegisterComponents";
+import {
+  Input,
+  RecapContainer,
+  RecapImage,
+  RecapInput,
+} from "../../RegisterComponents";
 import ChipSelector from "../skills/ChipSelector";
 import Chip from "@mui/material/Chip";
 
@@ -21,34 +26,21 @@ const Step6 = React.memo(
     const { photo } = usePhoto();
 
     return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          paddingLeft: "15em",
-          paddingRight: "15em",
-        }}
-      >
+      <RecapContainer>
         <div
           style={{
             display: "flex",
             flexDirection: "column",
-            justifyContent: "center",
+            justifyContent: "start",
+            marginTop: "2em",
           }}
         >
-          <img
+          <RecapImage
             src={
               photo
                 ? photo
                 : "https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg"
             }
-            width={250}
-            height={250}
-            style={{
-              borderRadius: "50%",
-              objectFit: "cover",
-              border: "5px solid rgba(20, 117, 207, 0.5)",
-            }}
           />
         </div>
         <div
@@ -62,51 +54,51 @@ const Step6 = React.memo(
             width: "100%",
           }}
         >
-          <div>
+          <RecapInput>
             <label htmlFor="nome">Nome</label>
             <Input idtype="nome" value={nome} disabled={true} />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="cognome">Cognome</label>
             <Input idtype="cognome" value={cognome} disabled={true} />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="pronomi">Pronomi</label>
             <Input
               idtype="pronomi"
               value={pronomi.toString().replace("_", "/")}
               disabled={true}
             />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="datadinascita">Data di nascita</label>
             <Input
               idtype="datadinascita"
               value={dataDiNascita.toString().split(" ").slice(0, 4).join(" ")}
               disabled={true}
             />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="email">Email</label>
             <Input idtype="email" value={email} disabled={true} />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="telefono">Telefono</label>
             <Input idtype="telefono" value={telefono} disabled={true} />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="indirizzo">Indirizzo</label>
             <Input idtype="indirizzo" value={indirizzo} disabled={true} />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="articolazione">Articolazione</label>
             <Input
               idtype="articolazione"
-              value={articolazione}
+              value={articolazione.descrizione}
               disabled={true}
             />
-          </div>
-          <div>
+          </RecapInput>
+          <RecapInput>
             <label htmlFor="competenze">Competenze</label>
             <div
               style={{
@@ -118,12 +110,12 @@ const Step6 = React.memo(
                 padding: "0.75rem",
                 borderRadius: "15px",
                 fontSize: "1rem",
-                height: "4em",
+                height: "8em",
                 scrollbarWidth: "none", // For Firefox
                 msOverflowStyle: "none", // For Internet Explorer and Edge
-                width: "33.5em",
+                width: "51em",
                 flexWrap: "wrap",
-                overflowY: "scroll",
+                overflow: "scroll",
               }}
             >
               {competenze &&
@@ -131,9 +123,9 @@ const Step6 = React.memo(
                   <Chip key={index} label={competenza.descrizione} />
                 ))}
             </div>
-          </div>
+          </RecapInput>
         </div>
-      </div>
+      </RecapContainer>
     );
   },
 );

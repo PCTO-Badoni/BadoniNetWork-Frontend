@@ -93,7 +93,7 @@ function Register() {
   const [telefono, setTelefono] = useState("");
   const [erroreTelefono, setErroreTelefono] = useState(false);
   // step 3
-  const [articolazione, setArticolazione] = useState("");
+  const [articolazione, setArticolazione] = useState(null);
   const [selectedChips, setSelectedChips] = useState([]);
   const [minSelectedChips, setMinSelectedChips] = useState(4);
   // step 4
@@ -179,14 +179,6 @@ function Register() {
       }
 
       handleNext(isValid);
-      /*
-                  const contentType = response.headers.get("content-type");
-                  if (contentType && contentType.indexOf("application/json") !== -1) {
-                      const responseData = await response.json();
-                      console.log(responseData);
-                  } else {
-                      console.log("Response is not JSON. It is:", contentType);
-                  } */
     } catch (error) {
       console.log("Error:", error);
     }
@@ -223,8 +215,9 @@ function Register() {
       cognome: cognome,
       pronomi: pronomi.toString(),
       password: password,
-      idarticolazione: articolazione.id,
+      idarticolazione: articolazione.idarticolazione,
       dataregistrazione: toLocalISOString(new Date()),
+      ultimoaccesso: toLocalISOString(new Date()),
       datanascita:
         deadlineDate.getFullYear() +
         "-" +
@@ -235,7 +228,7 @@ function Register() {
     };
 
     console.log(data.datanascita);
-    console.log(articolazione.id);
+    console.log(articolazione.idarticolazione);
     console.log(password);
 
     try {
@@ -254,7 +247,36 @@ function Register() {
 
       const responseData = await response.json();
       if (responseData.message !== "Email valida") {
+        navigate("/homepage");
         responseView(responseData.message);
+      }
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  }
+
+  async function sendCompetenzeToDB() {
+    // Create an array of objects with email and idcompetenza
+    const competenze = selectedChips.map((chip) => ({
+      email: email,
+      idcompetenza: chip.id,
+    }));
+
+    try {
+      const response = await fetch(
+        "http://localhost:8080/api/set-user-competences",
+        {
+          method: "POST",
+          mode: "cors",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(competenze),
+        },
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        error(errorData.message || "Errore durante la richiesta");
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
     } catch (error) {
       console.log("Error:", error);
@@ -270,7 +292,7 @@ function Register() {
         toast.error("Le password non corrispondono");
         setPasswordsMatch(false);
         return;
-      } else {
+      } else if (!passwordStrength) {
         toast.error("Password non sicura");
         return;
       }
@@ -328,6 +350,7 @@ function Register() {
       }
     } else if (activeStep === 6) {
       sendStudentToDB();
+      sendCompetenzeToDB();
       return;
     }
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -363,7 +386,11 @@ function Register() {
       erroreNome={erroreNome}
       erroreCognome={erroreCognome}
     />,
-    <Step1 email={email} setCodeVerified={setCodeVerified} />,
+    <Step1
+      email={email}
+      setCodeVerified={setCodeVerified}
+      isCodeVerified={isCodeVerified}
+    />,
     <Step2
       deadlineDate={deadlineDate}
       setDeadlineDate={setDeadlineDate}
@@ -379,7 +406,7 @@ function Register() {
       erroreCognome={erroreCognome}
       erroreData={erroreData}
       erroreTelefono={erroreTelefono}
-      pronomi={setPronomi}
+      pronomi={pronomi}
       setPronomi={setPronomi}
     />,
     <Step3 stepTitles={stepTitles} />,
@@ -425,6 +452,7 @@ function Register() {
                 activeStep === 0 ? setRegisterClicked(false) : handleBack();
               }}
               disabled={!isRegisterClicked}
+              style={{ marginTop: "6em" }}
             >
               {arrowLeft}
             </Components.StepsNavButton>
@@ -615,6 +643,7 @@ function Register() {
                 !isRegisterClicked ? setRegisterClicked(true) : handleNext();
               }}
               disabled={!isRegisterClicked}
+              style={{ marginTop: "6em" }}
             >
               {activeStep === steps.length ? save : arrowRight}
             </Components.StepsNavButton>

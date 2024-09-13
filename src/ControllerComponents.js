@@ -79,6 +79,7 @@ export const HeaderProfilePic = styled.div`
     margin: 10px auto 10px;
 `;
 
+
 export const NotificationsContainer = styled.div`
     position: absolute;
     top: 4em;

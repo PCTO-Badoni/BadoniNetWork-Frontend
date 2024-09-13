@@ -4,7 +4,7 @@ import TextField from "@mui/material/TextField";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
 import * as Components from "../../RegisterComponents";
-import { Select } from "../../RegisterComponents";
+import { ChipsSelectorInputContainer, Select } from "../../RegisterComponents";
 
 const ChipSelector = ({
   minSelectedChips,
@@ -76,16 +76,7 @@ const ChipSelector = ({
         }}
       >
         <p>Seleziona almeno 3 competenze</p>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            marginLeft: "200px",
-            marginRight: "200px",
-            marginBottom: "25px",
-            justifyContent: "space-between",
-          }}
-        >
+        <ChipsSelectorInputContainer>
           <div
             style={{
               display: "flex",
@@ -97,9 +88,14 @@ const ChipSelector = ({
             <Select
               name="articolazione"
               id="articolazione"
-              defaultValue={articolazione ? articolazione : ""}
+              defaultValue={articolazione ? articolazione.descrizione : ""}
               style={{ width: "90%" }}
-              onChange={(e) => setArticolazione(e.target.value)}
+              onChange={(e) => {
+                const selectedOption = options.find(
+                  (option) => option.descrizione === e.target.value,
+                );
+                setArticolazione(selectedOption);
+              }}
               required
             >
               <option value="" disabled hidden>
@@ -125,7 +121,7 @@ const ChipSelector = ({
             <label htmlFor="cerca">Cerca</label>
             <Components.Input onChange={handleSearchChange} />
           </div>
-        </div>
+        </ChipsSelectorInputContainer>
       </div>
       <Box style={{ padding: "50px", paddingTop: "0px" }}>
         {selectedFilteredChips.map((chip) => (

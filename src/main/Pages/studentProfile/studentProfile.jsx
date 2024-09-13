@@ -101,14 +101,15 @@ function StudentProfile() {
                     <Components.studentSkills>
                         {student.skills.map(skill => <Components.studentSkill key={skill}>{skill}</Components.studentSkill>)}
                     </Components.studentSkills>
+
                 </Components.userInformations>
-            </Components.customBanner>
+                <Components.AboutMe>
+                    Ciao! Sono uno sviluppatore appassionato con una passione per la programmazione e la risoluzione dei problemi. Ho esperienza in vari linguaggi e framework di programmazione e sono sempre desideroso di saperne di più. Credo nel potere del lavoro di squadra e mi piace collaborare con gli altri per creare progetti straordinari.
+                </Components.AboutMe>
+                </Components.customBanner>
             <Components.contentContainer>
                 <Components.leftContainer>
-                    <Components.AboutMe>
-                        <Components.Sectiontitle>About Me</Components.Sectiontitle>
-                        Hello! I'm a passionate developer with a love for coding and problem-solving. I have experience in various programming languages and frameworks, and I'm always eager to learn more. I believe in the power of teamwork and enjoy collaborating with others to create amazing projects. In my spare time, I enjoy reading about new technologies and exploring innovative solutions in the tech world. I'm excited to bring my skills and enthusiasm to your team!
-                    </Components.AboutMe>
+
 
                     <Components.MapAndAziendeContainer>
 
@@ -118,7 +119,7 @@ function StudentProfile() {
 
                         </div>
                         <Components.AziendeWorkedContainer>
-                            <Components.Sectiontitle style={{backgroundColor:'#fff'}}>Esperienze</Components.Sectiontitle>
+                            <Components.MapTitle style={{backgroundColor:'#fff'}}>Esperienze</Components.MapTitle>
                             <Components.AziendeWorkedContent>
                                 <Components.AziendaWorked>
                                     <Components.AziendaName>Ferrari</Components.AziendaName>
@@ -153,7 +154,7 @@ function StudentProfile() {
                     </Components.AziendeWorkedContainer>
 
                         <Components.CVContainer>
-                            <Components.Sectiontitle style={{backgroundColor:'#fff'}}>Curriculum Vitae</Components.Sectiontitle>
+                            <Components.MapTitle style={{backgroundColor:'#fff'}}>Curriculum Vitae</Components.MapTitle>
                             <Components.CVContent>
                                 <Components.CVDownloader>Scarica il CV</Components.CVDownloader>
                                 <PDFPreview />
