@@ -217,7 +217,6 @@ export const socialLinksContainer = styled.div`
     padding-top: 10px;
     padding-bottom: 10px;
     scale: 0.8;
-
 `;
 
 export const SocialLink = styled.div`

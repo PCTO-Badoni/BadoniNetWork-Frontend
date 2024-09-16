@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import * as Components from "../componenti/ProfileComponents";
+import * as Components from "../componenti/ChatComponents";
 import StudentCard from '../../Components/cards/StudentCard';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { BsFillGridFill } from "react-icons/bs";
@@ -7,6 +7,8 @@ import Chip from "@mui/material/Chip";
 import {students} from "../../Components/students";
 import {faHouse, faList} from '@fortawesome/free-solid-svg-icons';
 import {faRightFromBracket, faFilter} from '@fortawesome/free-solid-svg-icons';
+import UserInfo from "../componenti/Fragments/UserInfo";
+import {ContactCard} from "../componenti/ChatComponents";
 const listIcon = <FontAwesomeIcon icon={faList} />;
 
 const Chat = ({
@@ -33,70 +35,79 @@ const Chat = ({
                      handleLinguaDelete
                  }) => {
 
-    const selectedFilteredChips = selectedChips.filter((chip) =>
-        chip.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
 
-    const filteredChips = chips.filter((chip) =>
-        chip.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    const unselectedFilteredChips = filteredChips.filter(
-        (chip) => !selectedChips.includes(chip),
-    );
-
-    const selectedFilteredCompetenze = selectedCompetenze.filter((competenza) =>
-        competenza.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    const filteredCompetenze = competenze.filter((competenza) =>
-        competenza.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    const unselectedFilteredCompetenze = filteredCompetenze.filter(
-        (competenza) => !selectedCompetenze.includes(competenza),
-    );
-
-    const selectedFilteredLingue = selectedLingue.filter((lingua) =>
-        lingua.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    const filteredLingue = lingue.filter((lingua) =>
-        lingua.descrizione.toLowerCase().includes(searchTerm.toLowerCase()),
-    );
-
-    const unselectedFilteredLingue = filteredLingue.filter(
-        (lingua) => !selectedLingue.includes(lingua),
-    );
-
-    const [activeButtons, setActiveButtons] = useState([]);
-
-    const handleButtonClick = (buttonName) => {
-        if (activeButtons.includes(buttonName)) {
-            setActiveButtons(activeButtons.filter(button => button !== buttonName));
-        } else {
-            setActiveButtons([...activeButtons, buttonName]);
-        }
-    };
 
     return (
         <Components.contentContainer>
             <Components.TopBar style={{height: '150px'}}>
-                <Components.ProfileInformations style={{transition: 'all 0.3s'}}>
-                    <div style={{
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                        alignContent: 'flex-start',
-                        alignItems: 'flex-start'
-                    }}>
-                        <div style={{width: '73.8em'}}>
-
-                        </div>
-                    </div>
-
-                </Components.ProfileInformations>
+                <UserInfo/>
 
             </Components.TopBar>
+            <Components.Content>
+                <Components.ContactsContainer>
+                    <Components.ContactCardList>
+                        <ContactCard>
+                            Contatto 1
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 2
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 3
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 4
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 5
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 6
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 7
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 8
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 9
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 10
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 11
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 12
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 13
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 14
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 15
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 16
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 17
+                        </ContactCard>
+                        <ContactCard>
+                            Contatto 18
+                        </ContactCard>
+                    </Components.ContactCardList>
+
+                </Components.ContactsContainer>
+                <Components.ChatsContainer>
+
+                </Components.ChatsContainer>
+
+            </Components.Content>
         </Components.contentContainer>
     );
 }

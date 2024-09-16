@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter as Router,
-  Link,
+  Link, Navigate,
   Route,
   Routes,
   useLocation,
@@ -44,12 +44,12 @@ async function fetchNotifications() {
     { id: 1, text: "Notifica 1" },
     { id: 2, text: "Notifica 2" },
     { id: 3, text: "Notifica 3" },
-    { id: 4, text: "Notifica 1" },
-    { id: 5, text: "Notifica 2" },
-    { id: 6, text: "Notifica 3" },
-    { id: 7, text: "Notifica 1" },
-    { id: 8, text: "Notifica 2" },
-    { id: 9, text: "Notifica 3" },
+    { id: 4, text: "Notifica 4" },
+    { id: 5, text: "Notifica 5" },
+    { id: 6, text: "Notifica 6" },
+    { id: 7, text: "Notifica 7" },
+    { id: 8, text: "Notifica 8" },
+    { id: 9, text: "Notifica 9" },
   ];
 }
 
@@ -100,7 +100,7 @@ function PageController() {
   let menuRight = useRef(null);
 
   const itemRenderer = (item) => (
-    <div className="p-menuitem-content">
+    <div className="p-menuitem-content" onClick={item.command}>
       <a className="flex align-items-center p-menuitem-link">
         <span className={item.icon} />
         <span className="mx-2">{item.label}</span>
@@ -116,6 +116,8 @@ function PageController() {
 
   const [isNotificationOpen, setNoificationOpen] = useState(false);
   const toast = useRef(null);
+  let notificationMenu = useRef(null);
+
 
   let items = [
     {
@@ -130,11 +132,12 @@ function PageController() {
         {
           label: "Notifiche",
           icon: "pi pi-inbox",
-          badge: 2,
+          badge: notifications.length > 0 ? notifications.length : null,
           template: itemRenderer,
           command: (event) => {
-            console.log(event);
-          },
+            event.stopPropagation();
+            setNoificationOpen(!isNotificationOpen)
+          }
         },
         {
           label: "Logout",
@@ -144,6 +147,31 @@ function PageController() {
         },
       ],
     },
+  ];
+
+
+  let notificationItems = [
+    {
+      label: 'Indietro',
+      icon: 'pi pi-arrow-left',
+      template: itemRenderer,
+      command: (event) => {
+        event.stopPropagation();
+        setNoificationOpen(false)
+      }
+    },
+    {
+      label: "Notifiche",
+      items: notifications.map((notification) => ({
+        label: notification.text,
+        icon: "pi pi-bell",
+        template: itemRenderer,
+        command: (event) => {
+          event.stopPropagation();
+          handleDeleteClick(notification.id)
+        },
+      })),
+    }
   ];
 
   return (
@@ -175,18 +203,23 @@ function PageController() {
             }}
           >
             <Avatar
-              className="p-overlay-badge"
-              icon="pi pi-user"
-              size="large"
-              onClick={(event) => menuRight.current.toggle(event)}
+                className="p-overlay-badge"
+                icon="pi pi-user"
+                size="large"
+                onClick={(event) => menuRight.current.toggle(event)}
             >
-              <Badge value=" " style={{ scale: "80%" }} />
+              {notifications.length > 0 && <Badge value=" " style={{ scale: "80%" }} />}
               <div className="card flex justify-content-center">
                 <Menu
-                  model={items}
-                  popup
-                  ref={menuRight}
-                  className="w-full md:w-15rem"
+                    model={isNotificationOpen ? notificationItems : items}
+                    popup
+                    ref={menuRight}
+                    className="w-full md:w-15rem"
+                    style={{
+                      maxHeight: '25em',
+                      transition: 'max-height 0.5s ease-in-out',
+                      overflowY: 'scroll'
+                    }}
                 />
               </div>
             </Avatar>
@@ -213,6 +246,7 @@ root.render(
       }}
     >
       <Routes>
+        <Route path="/" element={<Navigate to="/homepage" />} />
         <Route path="/register" element={<Register />} />
         <Route path="/homepage" element={<MainPage />} />
         <Route path="/OTP" element={<OTP />} />
