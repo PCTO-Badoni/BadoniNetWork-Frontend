@@ -8,7 +8,7 @@ export const Container = styled.div`
     max-height: 200vh;
     overflow: scroll;
     justify-content: flex-start;
-    align-items: flex-start; // Modifica qui
+    align-items: flex-start;
 `;
 
 export const contentContainer = styled.div`
@@ -24,25 +24,15 @@ export const contentContainer = styled.div`
 export const TopBar = styled.div`
     background: #fff;
     display: flex;
-    flex-direction: column;
-    align-items: start;
+    flex-direction: row;
     width: 100%;
     height: 7em;
     border-radius: 12px;
-    padding: 2em 2em 1.5em;
+    padding-top: 2em;
+    padding-right: 2em;
+    padding-left: 2em;
+    padding-bottom: 2em;
     margin-bottom: 15px;
-`;
-
-export const SearchBar = styled.input.attrs({type: 'search', placeholder: 'Cerca'})`
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    padding: 10px 5px 10px 40px;
-    background: url("https://static-00.iconduck.com/assets.00/search-icon-2048x2048-cmujl7en.png") no-repeat left 10px center;
-    background-size: 20px;
-    font-family: "Montserrat", sans-serif;
-    font-size: 0.9em;
-    width: 30em;
-    outline-color: black;
 `;
 
 export const FilterButton = styled.button`
@@ -55,14 +45,13 @@ export const FilterButton = styled.button`
 `;
 
 export const ProfileInformations = styled.div`
+    position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
     height: 100%;
+    width: 100%;
+    background-color: #fff;
 `;
-
-
-
 
 export const MenuContainer = styled.div`
     display: flex;
@@ -108,7 +97,7 @@ export const ContactsContainer = styled.div`
     display: flex;
     padding: 20px;
     flex-direction: row;
-    flex-grow: 1;
+    flex-grow: 0;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
@@ -116,17 +105,18 @@ export const ContactsContainer = styled.div`
     background-color: #fff;
     overflow: clip;
     height: 100%;
+    width: 37%;
     margin-right: 10px;
 `;
 
 export const ChatsContainer = styled.div`
     display: flex;
     padding: 20px;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
-    flex-grow: 10;
+    flex-grow: 5;
     height: 100%;
     border-radius: 12px;
     background-color: #fff;
@@ -134,23 +124,58 @@ export const ChatsContainer = styled.div`
     margin-left: 5px;
 `;
 
+export const Chat = styled.div`
+    display: flex;
+    flex-grow: 1;
+    width: 100%;
+    margin-bottom: 20px;
+`;
+
+export const Input = styled.div`
+    width: 100%;
+`;
+
 export const ContactCard = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
     width: 100%;
-    height: 50px;
+    height: 5em;
     border-radius: 12px;
     background-color: #fff;
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 15px;
     border: 1px solid #ccc;
-    
-    
-    
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
+export const ContactsSearchBar = styled.input.attrs({type: 'search', placeholder: 'Cerca'})`
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 10px 5px 10px 40px;
+    background: url("https://static-00.iconduck.com/assets.00/search-icon-2048x2048-cmujl7en.png") no-repeat left 10px center;
+    background-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9em;
+    width: 100%;
+    outline-color: black;
+    margin-bottom: 10px;
+`;
+
+export const ContactProfileImage = styled.div `
+    position: relative;
+    width: 85px;
+    height: 85px;
+    scale: 0.6;
+    border-radius: 50%;
+    background-image: url("https://us-tuna-sounds-images.voicemod.net/07c58346-18e5-4c50-93c4-608c8b7729e8-1725480637335.png");
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
+    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
+`;
 
 export const ContactCardList = styled.div`
     display: flex;
@@ -162,11 +187,7 @@ export const ContactCardList = styled.div`
     border-radius: 12px;
     background-color: #fff;
     margin-bottom: 10px;
-    padding: 10px;
     overflow: scroll;
-    
-    
-    
 `;
 
 export const listContainer = styled.div`
@@ -217,8 +238,8 @@ export const listItemProfilePic = styled.div`
 
 export const userInfoProfilePic = styled.div`
     position: relative;
-    width: 100px;
-    height: 100px;
+    width: 85px;
+    height: 100%;
     border-radius: 50%;
     background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
     background-size: cover;
@@ -251,9 +272,7 @@ export const SkillChip = styled(Chip)`
     &:hover {
         background-color: rgba(20, 117, 207, 0.9);        
     }
-    `
-    
-
+`;
 export const listItemName = styled.h3`
     font-size: 1.2rem;
     font-weight: bold;
@@ -264,8 +283,7 @@ export const listItemName = styled.h3`
 export const UserInfoSideInfo = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: end;
-    align-items: center;
+    justify-content: center;
     width: auto;
     height: auto;
 `;
@@ -283,7 +301,6 @@ export const SideInfoElement = styled.div`
     h5:last-child {
         margin-top: 0; // Riduci il margine superiore dell'ultimo elemento h1
         font-weight: lighter;
-
     }
 `;
 

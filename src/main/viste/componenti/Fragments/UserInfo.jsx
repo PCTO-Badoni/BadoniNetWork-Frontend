@@ -4,8 +4,8 @@ import * as Components from "../ChatComponents";
 const UserInfo = ({ }) => {
     return (
         <Components.ProfileInformations style={{transition: 'all 0.3s'}}>
-            <Components.userInfoProfilePic style={{backgroundImage: `url(https://marketplace.canva.com/EAFqNrAJpQs/1/0/1600w/canva-neutral-pink-modern-circle-shape-linkedin-profile-picture-WAhofEY5L1U.jpg)`}} dotColor={"green"} />
-            <div style={{flexDirection: 'column', justifyContent: 'flex-start', alignContent: 'flex-start', alignItems: 'flex-start'}}>
+            <Components.userInfoProfilePic style={{backgroundImage: `url(https://us-tuna-sounds-images.voicemod.net/07c58346-18e5-4c50-93c4-608c8b7729e8-1725480637335.png)`}} dotColor={"green"} />
+            <div>
                 <Components.listItemName>Federico Bugni</Components.listItemName>
                 <Components.listItemInfo>
                     <Components.SkillChip label="React" />

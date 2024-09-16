@@ -164,6 +164,10 @@ export const Button = styled.button`
   &:focus {
     outline: none;
   }
+  
+  &:active {
+    transform: scale(0.95);
+  }
 `;
 
 export const StepsNavButton = styled.button`

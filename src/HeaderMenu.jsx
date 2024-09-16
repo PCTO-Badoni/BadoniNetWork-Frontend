@@ -114,15 +114,15 @@ export default function HeaderMenu() {
             label: 'Profile',
             items: [
                 {
-                    label: 'Settings',
-                    icon: 'pi pi-cog',
-                    shortcut: '⌘+O',
-                    template: itemRenderer,
-                },
-                {
                     label: 'Messages',
                     icon: 'pi pi-inbox',
                     badge: 2,
+                    template: itemRenderer,
+                },
+                {
+                    label: 'Settings',
+                    icon: 'pi pi-cog',
+                    shortcut: '⌘+O',
                     template: itemRenderer,
                 },
                 {

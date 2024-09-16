@@ -114,7 +114,7 @@ function PageController() {
     </div>
   );
 
-  const [isNotificationOpen, setNoificationOpen] = useState(false);
+  const [isNotificationOpen, setNotificationOpen] = useState(false);
   const toast = useRef(null);
   let notificationMenu = useRef(null);
 
@@ -124,20 +124,21 @@ function PageController() {
       label: "Profilo",
       items: [
         {
-          label: "Impostazioni",
-          icon: "pi pi-cog",
-          shortcut: "⌘+O",
-          template: itemRenderer,
-        },
-        {
           label: "Notifiche",
           icon: "pi pi-inbox",
           badge: notifications.length > 0 ? notifications.length : null,
           template: itemRenderer,
           command: (event) => {
             event.stopPropagation();
-            setNoificationOpen(!isNotificationOpen)
+            setNotificationOpen(!isNotificationOpen)
           }
+        },
+
+        {
+          label: "Impostazioni",
+          icon: "pi pi-cog",
+          shortcut: "⌘+O",
+          template: itemRenderer,
         },
         {
           label: "Logout",
@@ -157,7 +158,7 @@ function PageController() {
       template: itemRenderer,
       command: (event) => {
         event.stopPropagation();
-        setNoificationOpen(false)
+        setNotificationOpen(false)
       }
     },
     {
@@ -188,7 +189,11 @@ function PageController() {
             }}
           >
             <Components.Logo />
-            <Link to="/login">
+            <Link to="/login"
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+            }}>
               <h3>Badoni NetWork</h3>
             </Link>
           </div>
@@ -206,9 +211,10 @@ function PageController() {
                 className="p-overlay-badge"
                 icon="pi pi-user"
                 size="large"
+                style={{borderRadius: '100px'}}
                 onClick={(event) => menuRight.current.toggle(event)}
             >
-              {notifications.length > 0 && <Badge value=" " style={{ scale: "80%" }} />}
+              {notifications.length > 0 && <Badge value=" " style={{ scale: "70%", marginTop: '6px', marginRight: '6px' }} />}
               <div className="card flex justify-content-center">
                 <Menu
                     model={isNotificationOpen ? notificationItems : items}
@@ -246,7 +252,7 @@ root.render(
       }}
     >
       <Routes>
-        <Route path="/" element={<Navigate to="/homepage" />} />
+        <Route path="/" element={<Navigate to="/homepage#chat" />} />
         <Route path="/register" element={<Register />} />
         <Route path="/homepage" element={<MainPage />} />
         <Route path="/OTP" element={<OTP />} />

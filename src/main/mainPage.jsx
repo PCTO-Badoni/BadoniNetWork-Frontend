@@ -1,10 +1,10 @@
 import * as Components from "./MainPageComponents";
 import ReactDOM from "react-dom";
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import "../styles.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {faHouse, faList} from '@fortawesome/free-solid-svg-icons';
-import {faRightFromBracket, faFilter} from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faList } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket, faFilter } from '@fortawesome/free-solid-svg-icons';
 import "././sideBar/homeStyle.css";
 import { Link } from 'react-router-dom';
 import Footer from "../footer";
@@ -92,10 +92,17 @@ function MainPage() {
     const [viewMode, setViewMode] = useState('cards');
     const [activeButton, setActiveButton] = useState('home');
 
+    useEffect(() => {
+        const hash = window.location.hash.substring(1);
+        if (hash) {
+            setActiveButton(hash);
+        }
+    }, []);
+
     const handleButtonClick = (buttonName) => {
-       if(activeButton === 'logout') {
-           setActiveButton('home');
-       }
+        if (activeButton === 'logout') {
+            setActiveButton('home');
+        }
         setActiveButton(buttonName);
     };
 
@@ -134,33 +141,33 @@ function MainPage() {
 
     return (
         <>
-            <div style={{display: 'flex', flexDirection: 'column', overflow: 'scroll', marginTop: 'auto'}}>
-                <Components.Container style={{scale:'0.9'}}>
+            <div style={{ display: 'flex', flexDirection: 'column', overflow: 'scroll', marginTop: 'auto' }}>
+                <Components.Container style={{ scale: '0.9' }}>
                     <Components.Sidebar>
                         <Components.MenuContainer>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('home')} style={{backgroundColor: activeButton === ('home' || 'logout') ? '#f0f0f0' : 'transparent', borderLeft: activeButton === ('home' || 'logout') ? '2px solid black' : null}}>
+                            <Components.MenuItem to='/' onClick={() => handleButtonClick('home')} style={{ backgroundColor: activeButton === ('home' || 'logout') ? '#f0f0f0' : 'transparent', borderLeft: activeButton === ('home' || 'logout') ? '2px solid black' : null }}>
                                 <FontAwesomeIcon icon={faHouse} /> Homepage
                             </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('lista')} style={{backgroundColor: activeButton === 'lista' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'lista' ? '2px solid black' : null}}>
+                            <Components.MenuItem to='/' onClick={() => handleButtonClick('lista')} style={{ backgroundColor: activeButton === 'lista' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'lista' ? '2px solid black' : null }}>
                                 <FaIdCard /> Lista Studenti
                             </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('chat')} style={{backgroundColor: activeButton === 'chat' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'chat' ? '2px solid black' : null}}>
+                            <Components.MenuItem to='/' onClick={() => handleButtonClick('chat')} style={{ backgroundColor: activeButton === 'chat' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'chat' ? '2px solid black' : null }}>
                                 <IoChatboxEllipses /> Chat
                             </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('annunci')} style={{backgroundColor: activeButton === 'annunci' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'annunci' ? '2px solid black' : null}}>
+                            <Components.MenuItem to='/' onClick={() => handleButtonClick('annunci')} style={{ backgroundColor: activeButton === 'annunci' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'annunci' ? '2px solid black' : null }}>
                                 <BiSolidMegaphone /> Annunci
                             </Components.MenuItem>
-                            <Components.MenuItem to='/' onClick={() => handleButtonClick('profilo')} style={{backgroundColor: activeButton === 'profilo' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'profilo' ? '2px solid black' : null}}>
+                            <Components.MenuItem to='/' onClick={() => handleButtonClick('profilo')} style={{ backgroundColor: activeButton === 'profilo' ? '#f0f0f0' : 'transparent', borderLeft: activeButton === 'profilo' ? '2px solid black' : null }}>
                                 <RiSettings3Fill /> Profilo
                             </Components.MenuItem>
                         </Components.MenuContainer>
-                        <div style={{width: '100%', marginTop: 'auto'}}>
-                            <Components.MenuItem to='/login' onClick={() => handleButtonClick('logout')} style={{ borderRadius:'8px' ,backgroundColor: activeButton === 'logout' ? '#f0f0f0' : 'transparent'}}>
+                        <div style={{ width: '100%', marginTop: 'auto' }}>
+                            <Components.MenuItem to='/login' onClick={() => handleButtonClick('logout')} style={{ borderRadius: '8px', backgroundColor: activeButton === 'logout' ? '#f0f0f0' : 'transparent' }}>
                                 {logoutIcon} Logout
                             </Components.MenuItem>
                         </div>
                     </Components.Sidebar>
-                    <div style={{ width: '100%', flex: 1, display: 'flex', flexDirection: 'column', alignItems:'flex-start', justifyContent:'flex-start' }}>
+                    <div style={{ width: '100%', flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'flex-start' }}>
                         {activeButton === 'lista' && (
                             <ListaStudenti
                                 searchTerm={searchTerm}

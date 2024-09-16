@@ -283,6 +283,27 @@ function Register() {
     }
   }
 
+  async function getCompetenzeFromDB() {
+    try {
+      const response = await fetch("http://localhost:8080/api/get-all-competenze", {
+        method: "GET",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        error(errorData.message || "Errore durante la richiesta");
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const responseData = await response.json();
+      return responseData;
+    } catch (error) {
+      console.log("Error:", error);
+    }
+  }
+
   const handleNext = (isValid) => {
     if (activeStep === 0) {
       if (password === confirmPassword && isValid) {
@@ -437,6 +458,7 @@ function Register() {
 
   return (
     <>
+      <Components.Button onClick={getCompetenzeFromDB} >getcomp</Components.Button>
       <div style={{ scale: "0.9", marginTop: "-10em" }}>
         <PhotoProvider>
           <div

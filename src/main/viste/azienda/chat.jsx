@@ -11,102 +11,96 @@ import UserInfo from "../componenti/Fragments/UserInfo";
 import {ContactCard} from "../componenti/ChatComponents";
 const listIcon = <FontAwesomeIcon icon={faList} />;
 
+
+import { IconField } from 'primereact/iconfield';
+import { InputIcon } from 'primereact/inputicon';
+import { InputText } from "primereact/inputtext";
+
+
 const Chat = ({
-                     searchTerm,
-                     setSearchTerm,
-                     selectedChips,
-                     setSelectedChips,
-                     selectedCompetenze,
-                     setSelectedCompetenze,
-                     selectedLingue,
-                     setSelectedLingue,
-                     chips,
-                     competenze,
-                     lingue,
-                     isFilterOpen,
-                     setFilterOpen,
-                     viewMode,
-                     setViewMode,
-                     handleChipClick,
-                     handleChipDelete,
-                     handleCompetenzaClick,
-                     handleCompetenzaDelete,
-                     handleLinguaClick,
-                     handleLinguaDelete
-                 }) => {
+                  searchTerm,
+                  setSearchTerm,
+                  selectedChips,
+                  setSelectedChips,
+                  selectedCompetenze,
+                  setSelectedCompetenze,
+                  selectedLingue,
+                  setSelectedLingue,
+                  chips,
+                  competenze,
+                  lingue,
+                  isFilterOpen,
+                  setFilterOpen,
+                  viewMode,
+                  setViewMode,
+                  handleChipClick,
+                  handleChipDelete,
+                  handleCompetenzaClick,
+                  handleCompetenzaDelete,
+                  handleLinguaClick,
+                  handleLinguaDelete
+              }) => {
 
 
+    const contacts = [
+        { id: 1, name: "Contatto 1" },
+        { id: 2, name: "Contatto 2" },
+        { id: 3, name: "Contatto 3" },
+        { id: 4, name: "Contatto 4" },
+        { id: 5, name: "Contatto 5" },
+        { id: 6, name: "Contatto 6" },
+        { id: 7, name: "Contatto 7" },
+        { id: 8, name: "Contatto 8" },
+        { id: 9, name: "Contatto 9" },
+        { id: 10, name: "Contatto 10" },
+        { id: 11, name: "Contatto 11" },
+        { id: 12, name: "Contatto 12" },
+        { id: 13, name: "Contatto 13" },
+        { id: 14, name: "Contatto 14" },
+        { id: 15, name: "Contatto 15" },
+        { id: 16, name: "Contatto 16" },
+        { id: 17, name: "Contatto 17" },
+        { id: 18, name: "Giovanni 18" },
+    ];
+
+    const filteredContacts = contacts.filter(contact =>
+        contact.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    const handleClick = () => {
+        console.log("ciao");
+    };
 
     return (
         <Components.contentContainer>
             <Components.TopBar style={{height: '150px'}}>
                 <UserInfo/>
-
             </Components.TopBar>
             <Components.Content>
                 <Components.ContactsContainer>
+                    <Components.ContactsSearchBar
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                    />
                     <Components.ContactCardList>
-                        <ContactCard>
-                            Contatto 1
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 2
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 3
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 4
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 5
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 6
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 7
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 8
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 9
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 10
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 11
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 12
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 13
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 14
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 15
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 16
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 17
-                        </ContactCard>
-                        <ContactCard>
-                            Contatto 18
-                        </ContactCard>
+                        {filteredContacts.map((contact) => (
+                             <ContactCard key={contact.id}>
+                                <Components.ContactProfileImage />
+                                {contact.name}
+                            </ContactCard>
+                        ))}
                     </Components.ContactCardList>
-
                 </Components.ContactsContainer>
                 <Components.ChatsContainer>
+                    <Components.Chat>
+                        <h1>chat content</h1>
 
+                    </Components.Chat>
+                    <Components.Input>
+                        <IconField style={{width: '100%'}}>
+                            <InputIcon className="pi pi-send" onClick={() => {handleClick}}> </InputIcon>
+                            <InputText v-model="value2"  style={{borderRadius: '12px', width: '100%'}}/>
+                        </IconField>
+                    </Components.Input>
                 </Components.ChatsContainer>
-
             </Components.Content>
         </Components.contentContainer>
     );
