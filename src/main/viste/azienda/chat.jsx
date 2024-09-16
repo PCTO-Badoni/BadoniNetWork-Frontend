@@ -10,6 +10,7 @@ import {faRightFromBracket, faFilter} from '@fortawesome/free-solid-svg-icons';
 import UserInfo from "../componenti/Fragments/UserInfo";
 import {ContactCard} from "../componenti/ChatComponents";
 const listIcon = <FontAwesomeIcon icon={faList} />;
+import '../chat.css';
 
 
 import { IconField } from 'primereact/iconfield';
@@ -63,12 +64,24 @@ const Chat = ({
         { id: 18, name: "Giovanni 18" },
     ];
 
+
+    const [isInputActive, setIsInputActive] = useState(false);
+
+    const handleFocus = () => {
+        setIsInputActive(true);
+    };
+
+    const handleBlur = () => {
+        setIsInputActive(false);
+    };
+
+    const handleClick = () => {
+        setIconBgColor("blue");
+    };
+
     const filteredContacts = contacts.filter(contact =>
         contact.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
-    const handleClick = () => {
-        console.log("ciao");
-    };
 
     return (
         <Components.contentContainer>
@@ -82,7 +95,7 @@ const Chat = ({
                     />
                     <Components.ContactCardList>
                         {filteredContacts.map((contact) => (
-                             <ContactCard key={contact.id}>
+                            <ContactCard key={contact.id}>
                                 <Components.ContactProfileImage />
                                 {contact.name}
                             </ContactCard>
@@ -92,12 +105,20 @@ const Chat = ({
                 <Components.ChatsContainer>
                     <Components.Chat>
                         <h1>chat content</h1>
-
                     </Components.Chat>
                     <Components.Input>
                         <IconField style={{width: '100%'}}>
-                            <InputIcon className="pi pi-send" onClick={() => {handleClick}}> </InputIcon>
-                            <InputText v-model="value2"  style={{borderRadius: '12px', width: '100%'}}/>
+                            <InputIcon
+                                className="pi pi-send"
+                                onClick={() => console.log("Icon clicked")}
+                                style={{ cursor: 'pointer', color: isInputActive ? '#6366f1' : '#ccc', marginRight: '5px', scale: isInputActive ? '1.5' : '1', transition: 'all 0.3s' }}
+                            />
+                            <InputText
+                                v-model="value2"
+                                style={{borderRadius: '12px', width: '100%'}}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                            />
                         </IconField>
                     </Components.Input>
                 </Components.ChatsContainer>

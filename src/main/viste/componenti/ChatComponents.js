@@ -95,9 +95,7 @@ export const Content = styled.div`
 
 export const ContactsContainer = styled.div`
     display: flex;
-    padding: 20px;
     flex-direction: row;
-    flex-grow: 0;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
@@ -107,6 +105,10 @@ export const ContactsContainer = styled.div`
     height: 100%;
     width: 37%;
     margin-right: 10px;
+    padding: 20px 0 20px 20px;
+    
+    
+    
 `;
 
 export const ChatsContainer = styled.div`
@@ -146,6 +148,8 @@ export const ContactCard = styled.div`
     background-color: #fff;
     margin-bottom: 15px;
     border: 1px solid #ccc;
+    
+    
     &:hover {
         cursor: pointer;
     }
@@ -162,6 +166,7 @@ export const ContactsSearchBar = styled.input.attrs({type: 'search', placeholder
     width: 100%;
     outline-color: black;
     margin-bottom: 10px;
+    margin-right: 20px;
 `;
 
 export const ContactProfileImage = styled.div `
@@ -181,13 +186,15 @@ export const ContactCardList = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: start;
-    align-items: center;
+    align-items: flex-start;
     width: 100%;
     height: 100%;
     border-radius: 12px;
     background-color: #fff;
     margin-bottom: 10px;
     overflow: scroll;
+    padding-right: 20px;
+    padding-bottom: 30px;
 `;
 
 export const listContainer = styled.div`

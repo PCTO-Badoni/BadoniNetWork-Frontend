@@ -17,6 +17,8 @@ import Profilo from "./viste/azienda/profilo";
 import Chat from "./viste/azienda/chat";
 import HomePage from "./viste/azienda/home";
 import Annunci from "./viste/azienda/annunci";
+import { useNavigate } from 'react-router-dom';
+
 
 const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />
 
@@ -91,19 +93,27 @@ function MainPage() {
     const [isFilterOpen, setFilterOpen] = useState(false);
     const [viewMode, setViewMode] = useState('cards');
     const [activeButton, setActiveButton] = useState('home');
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const hash = window.location.hash.substring(1);
+        const hash = location.hash.substring(1);
         if (hash) {
             setActiveButton(hash);
         }
-    }, []);
+    }, [location]);
+
+    useEffect(() => {
+        if (activeButton) {
+            navigate(`#${activeButton}`);
+        }
+    }, [activeButton, navigate]);
 
     const handleButtonClick = (buttonName) => {
         if (activeButton === 'logout') {
             setActiveButton('home');
+        } else {
+            setActiveButton(buttonName);
         }
-        setActiveButton(buttonName);
     };
 
     const handleChipClick = (chip) => {
