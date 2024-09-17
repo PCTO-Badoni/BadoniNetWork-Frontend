@@ -137,13 +137,18 @@ function PageController() {
           icon: "pi pi-cog",
           shortcut: "⌘+O",
           template: itemRenderer,
-          command: () => navigate("/hopmepage#profilo"),
+          command: () => {
+            navigate("/homepage#profilo");
+          },
         },
         {
           label: "Logout",
           icon: "pi pi-sign-out",
           shortcut: "⌘+Q",
           template: itemRenderer,
+          command: () => {
+            navigate("/login");
+          },
         },
       ],
     },
@@ -268,7 +273,6 @@ root.render(
           path="/homepage/studentProfile/:id"
           element={<StudentProfile />}
         />
-        <Route path="/settings" element={<Settings />} />
       </Routes>
     </div>
   </Router>,
