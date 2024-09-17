@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import {
   BrowserRouter as Router,
-  Link, Navigate,
+  Link,
+  Navigate,
   Route,
   Routes,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
 import Register from "./auth/register/register";
 import MainPage from "./main/mainPage";
@@ -38,8 +40,6 @@ import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
 
 async function fetchNotifications() {
-  // Qui dovresti fare la chiamata alla tua API o al tuo servizio per ottenere le notifiche
-  // Per ora, restituisco un array di notifiche fittizio
   return [
     { id: 1, text: "Notifica 1" },
     { id: 2, text: "Notifica 2" },
@@ -54,7 +54,6 @@ async function fetchNotifications() {
 }
 
 async function deleteNotification(id) {
-  // Qui dovresti fare la chiamata alla tua API o al tuo servizio per eliminare la notifica
   console.log(`Notifica ${id} eliminata`);
 }
 
@@ -76,6 +75,7 @@ function useBodyScroll() {
 
 function PageController() {
   const [notifications, setNotifications] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchNotifications().then(setNotifications);
@@ -118,7 +118,6 @@ function PageController() {
   const toast = useRef(null);
   let notificationMenu = useRef(null);
 
-
   let items = [
     {
       label: "Profilo",
@@ -130,36 +129,40 @@ function PageController() {
           template: itemRenderer,
           command: (event) => {
             event.stopPropagation();
-            setNotificationOpen(!isNotificationOpen)
-          }
+            setNotificationOpen(!isNotificationOpen);
+          },
         },
-
         {
           label: "Impostazioni",
           icon: "pi pi-cog",
           shortcut: "⌘+O",
           template: itemRenderer,
+          command: () => {
+            navigate("/homepage#profilo");
+          },
         },
         {
           label: "Logout",
           icon: "pi pi-sign-out",
           shortcut: "⌘+Q",
           template: itemRenderer,
+          command: () => {
+            navigate("/login");
+          },
         },
       ],
     },
   ];
 
-
   let notificationItems = [
     {
-      label: 'Indietro',
-      icon: 'pi pi-arrow-left',
+      label: "Indietro",
+      icon: "pi pi-arrow-left",
       template: itemRenderer,
       command: (event) => {
         event.stopPropagation();
-        setNotificationOpen(false)
-      }
+        setNotificationOpen(false);
+      },
     },
     {
       label: "Notifiche",
@@ -169,10 +172,10 @@ function PageController() {
         template: itemRenderer,
         command: (event) => {
           event.stopPropagation();
-          handleDeleteClick(notification.id)
+          handleDeleteClick(notification.id);
         },
       })),
-    }
+    },
   ];
 
   return (
@@ -189,11 +192,13 @@ function PageController() {
             }}
           >
             <Components.Logo />
-            <Link to="/login"
-                  style={{
-                    textDecoration: "none",
-                    color: "black",
-            }}>
+            <Link
+              to="/login"
+              style={{
+                textDecoration: "none",
+                color: "black",
+              }}
+            >
               <h3>Badoni NetWork</h3>
             </Link>
           </div>
@@ -208,24 +213,29 @@ function PageController() {
             }}
           >
             <Avatar
-                className="p-overlay-badge"
-                icon="pi pi-user"
-                size="large"
-                style={{borderRadius: '100px'}}
-                onClick={(event) => menuRight.current.toggle(event)}
+              className="p-overlay-badge"
+              icon="pi pi-user"
+              size="large"
+              style={{ borderRadius: "100px" }}
+              onClick={(event) => menuRight.current.toggle(event)}
             >
-              {notifications.length > 0 && <Badge value=" " style={{ scale: "70%", marginTop: '6px', marginRight: '6px' }} />}
+              {notifications.length > 0 && (
+                <Badge
+                  value=" "
+                  style={{ scale: "70%", marginTop: "6px", marginRight: "6px" }}
+                />
+              )}
               <div className="card flex justify-content-center">
                 <Menu
-                    model={isNotificationOpen ? notificationItems : items}
-                    popup
-                    ref={menuRight}
-                    className="w-full md:w-15rem"
-                    style={{
-                      maxHeight: '25em',
-                      transition: 'max-height 0.5s ease-in-out',
-                      overflowY: 'scroll'
-                    }}
+                  model={isNotificationOpen ? notificationItems : items}
+                  popup
+                  ref={menuRight}
+                  className="w-full md:w-15rem"
+                  style={{
+                    maxHeight: "25em",
+                    transition: "max-height 0.5s ease-in-out",
+                    overflowY: "scroll",
+                  }}
                 />
               </div>
             </Avatar>
