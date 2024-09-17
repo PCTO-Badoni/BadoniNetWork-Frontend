@@ -23,25 +23,11 @@ export const contentContainer = styled.div`
 
 export const TopBar = styled.div`
     background: #fff;
-    display: flex;
-    flex-direction: row;
     width: 100%;
     height: 7em;
     border-radius: 12px;
-    padding-top: 2em;
-    padding-right: 2em;
-    padding-left: 2em;
-    padding-bottom: 2em;
+    padding: 2em;
     margin-bottom: 15px;
-`;
-
-export const FilterButton = styled.button`
-    opacity: 1;
-    background: none;
-    border: none;
-    font-size: 1em;
-    font-family: "Montserrat", sans-serif;
-    cursor: pointer;
 `;
 
 export const ProfileInformations = styled.div`
@@ -51,6 +37,64 @@ export const ProfileInformations = styled.div`
     height: 100%;
     width: 100%;
     background-color: #fff;
+`;
+
+export const userInfoProfilePic = styled.div`
+    position: relative;
+    width: 85px;
+    height: 100%;
+    border-radius: 50%;
+    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
+    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: ${props => props.dotColor};
+        border: 2px solid #fff;
+    }
+`;
+
+export const listItemName = styled.div`
+    font-size: 1.6rem;
+    font-weight: bold;
+`;
+
+export const listItemInfo = styled.div`
+    width: 100%;
+    font-size: 1em;
+`;
+
+export const UserInfoSideInfo = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+    height: auto;
+`;
+
+export const SideInfoElement = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    h1:first-child {
+        margin-bottom: 0.25em; // Riduci il margine inferiore del primo elemento h1
+    }
+
+    h5:last-child {
+        margin-top: 0; // Riduci il margine superiore dell'ultimo elemento h1
+        font-weight: lighter;
+    }
 `;
 
 export const MenuContainer = styled.div`
@@ -87,10 +131,9 @@ export const Content = styled.div`
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    height: 90vh;
+    height: 75vh;
     border-radius: 12px;
     background-color: transparent;
-    overflow: scroll;
 `;
 
 export const ContactsContainer = styled.div`
@@ -106,9 +149,6 @@ export const ContactsContainer = styled.div`
     width: 37%;
     margin-right: 10px;
     padding: 20px 0 20px 20px;
-    
-    
-    
 `;
 
 export const ChatsContainer = styled.div`
@@ -117,24 +157,17 @@ export const ChatsContainer = styled.div`
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: wrap;
     flex-grow: 5;
     height: 100%;
     border-radius: 12px;
     background-color: #fff;
-    overflow: scroll;
     margin-left: 5px;
-`;
-
-export const Chat = styled.div`
-    display: flex;
-    flex-grow: 1;
-    width: 100%;
-    margin-bottom: 20px;
+    overflow: scroll;
 `;
 
 export const Input = styled.div`
     width: 100%;
+    margin-top: 20px;
 `;
 
 export const ContactCard = styled.div`
@@ -148,7 +181,6 @@ export const ContactCard = styled.div`
     background-color: #fff;
     margin-bottom: 15px;
     border: 1px solid #ccc;
-    
     
     &:hover {
         cursor: pointer;
@@ -175,7 +207,7 @@ export const ContactProfileImage = styled.div `
     height: 85px;
     scale: 0.6;
     border-radius: 50%;
-    background-image: url("https://us-tuna-sounds-images.voicemod.net/07c58346-18e5-4c50-93c4-608c8b7729e8-1725480637335.png");
+    background-image: url(${props => props.url});
     background-size: cover;
     background-position: center;
     border: 2px solid #fff;
@@ -197,74 +229,10 @@ export const ContactCardList = styled.div`
     padding-bottom: 30px;
 `;
 
-export const listContainer = styled.div`
-    display: flex;
-    padding: 20px;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    width: 100%;
-    height: 150vh;
-
-    border-radius: 12px;
-    background-color: #fff;
-    overflow: scroll;
-`;
-
 export const listItem = styled.div`
     display: flex;
     width: 100%;
     border-bottom: 1px solid #ccc;
-`;
-
-export const listItemProfilePic = styled.div`
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
-    background-size: cover;
-    background-position: center;
-    margin: 10px auto 10px;
-    border: 2px solid #fff;
-    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
-
-    &::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: ${props => props.dotColor};
-        border: 2px solid #fff;
-    }
-`;
-
-export const userInfoProfilePic = styled.div`
-    position: relative;
-    width: 85px;
-    height: 100%;
-    border-radius: 50%;
-    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
-    background-size: cover;
-    background-position: center;
-    border: 2px solid #fff;
-    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
-
-    &::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        background-color: ${props => props.dotColor};
-        border: 2px solid #fff;
-    }
 `;
 
 export const SkillChip = styled(Chip)`
@@ -274,50 +242,10 @@ export const SkillChip = styled(Chip)`
     margin-right: 5px;
     font-weight: bold;
     border-radius: 10px;
-
     
     &:hover {
         background-color: rgba(20, 117, 207, 0.9);        
     }
-`;
-export const listItemName = styled.h3`
-    font-size: 1.2rem;
-    font-weight: bold;
-    margin-bottom: 0;
-    padding-left: 10px;
-`;
-
-export const UserInfoSideInfo = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: auto;
-    height: auto;
-`;
-
-export const SideInfoElement = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    h1:first-child {
-        margin-bottom: 0.25em; // Riduci il margine inferiore del primo elemento h1
-    }
-
-    h5:last-child {
-        margin-top: 0; // Riduci il margine superiore dell'ultimo elemento h1
-        font-weight: lighter;
-    }
-`;
-
-export const listItemInfo = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    height: 70%;
-    padding-left: 10px;
 `;
 
 export const ListItemSkills = styled.div`
