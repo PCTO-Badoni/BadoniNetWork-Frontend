@@ -2,6 +2,8 @@ import * as ForgotPasswordComponents from "../../auth/security/ForgotPasswordCom
 import React from "react";
 import {Bounce, toast, ToastContainer} from "react-toastify";
 
+const prefix = process.env.DEFAULT_HOST_DOMAIN;
+
 const responseView = (body) =>
     toast.success(body, {
         position: "top-right",
@@ -40,7 +42,7 @@ function ForgotPassword() {
         };
 
         try {
-            const response = await fetch("http://localhost:8080/password-recovery", {
+            const response = await fetch(prefix+"/password-recovery", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

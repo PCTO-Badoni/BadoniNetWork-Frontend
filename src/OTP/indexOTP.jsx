@@ -6,6 +6,8 @@ import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
 import Footer from "../footer";
 
+const prefix = process.env.DEFAULT_HOST_DOMAIN;
+
 const error = (message) => toast.error( message, {
     position: "top-right",
     autoClose: 5000,
@@ -51,7 +53,7 @@ function OTP() {
        };
 
        try {
-           const response = await fetch("http://localhost:8080/register/validate-otp", {
+           const response = await fetch(prefix+"/register/validate-otp", {
                method: "POST",
                 headers: {
                      "Content-Type": "application/json"
