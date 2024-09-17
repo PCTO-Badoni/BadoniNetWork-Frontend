@@ -84,7 +84,7 @@ const Chat = ({
 
 
     const messages = [
-        { id: 1, sender: activeContact, text: "Ciao, come staiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?", timestamp: "ggwp AM" },
+        { id: 1, sender: activeContact, text: "Ciao, come staiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?", timestamp: "ggwp AM" },
         { id: 2, sender: "Tu", text: "Tutto bene, grazie! E tu?", timestamp: "10:02 AM" },
         { id: 3, sender: activeContact, text: "Anche io, grazie!", timestamp: "10:03 AM" },
         { id: 4, sender: activeContact, text: "Stornzo", timestamp: "10:03 AM" },

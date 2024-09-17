@@ -3,7 +3,7 @@ import * as OTPComponents from "../../../../OTP/OTPComponents";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
-const prefix = process.env.DEFAULT_HOST_DOMAIN;
+const prefix = typeof process !== 'undefined' && process.env.REACT_APP_DEFAULT_HOST_DOMAIN ? process.env.REACT_APP_DEFAULT_HOST_DOMAIN : '';
 
 const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
   const [num1, setNum1] = React.useState("");

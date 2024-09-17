@@ -113,7 +113,6 @@ export const Content = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    flex-wrap: wrap;
     width: 100%;
     height: 75vh;
     border-radius: 12px;

@@ -2,7 +2,7 @@ import * as ForgotPasswordComponents from "../../auth/security/ForgotPasswordCom
 import React from "react";
 import {Bounce, toast, ToastContainer} from "react-toastify";
 
-const prefix = process.env.DEFAULT_HOST_DOMAIN;
+const prefix = typeof process !== 'undefined' && process.env.REACT_APP_DEFAULT_HOST_DOMAIN ? process.env.REACT_APP_DEFAULT_HOST_DOMAIN : '';
 
 const responseView = (body) =>
     toast.success(body, {

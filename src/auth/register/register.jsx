@@ -24,7 +24,7 @@ const arrowLeft = <FontAwesomeIcon icon={faChevronLeft} />;
 const arrowRight = <FontAwesomeIcon icon={faChevronRight} />;
 const save = <FontAwesomeIcon icon={faSave} />;
 const steps = ["Step0", "Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
-const prefix = process.env.DEFAULT_HOST_DOMAIN;
+const prefix = typeof process !== 'undefined' && process.env.REACT_APP_DEFAULT_HOST_DOMAIN ? process.env.REACT_APP_DEFAULT_HOST_DOMAIN : '';
 
 const responseView = (body) =>
   toast.success(body, {
