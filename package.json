@@ -23,6 +23,8 @@
     "dayjs": "^1.11.11",
     "login-signup-form-with-slider-animation": "file:",
     "normalize.css": "^8.0.1",
+    "primeflex": "^3.3.1",
+    "primeicons": "^7.0.0",
     "primereact": "^10.8.2",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.2",
@@ -47,13 +49,13 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.0",
-    "prettier": "^3.3.2",
+    "prettier": "^3.3.3",
     "typescript": "3.3.3",
     "vite": "^5.3.1"
   },
   "scripts": {
     "dev": "vite --port 3001",
-    "build": "tsc && vite build",
+    "build": "vite build",
     "preview": "vite preview"
   },
   "browserslist": [

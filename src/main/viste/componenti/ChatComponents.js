@@ -1,13 +1,14 @@
 import styled from "styled-components";
+import Chip from "@mui/material/Chip";
 
 export const Container = styled.div`
     display: flex;
     flex-direction: row;
-    width: 100vw;
+    width: 100%;
     max-height: 200vh;
     overflow: scroll;
-    align-items: flex-start; // Modifica qui
-    justify-content: start;
+    justify-content: flex-start;
+    align-items: flex-start;
 `;
 
 export const contentContainer = styled.div`
@@ -22,48 +23,65 @@ export const contentContainer = styled.div`
 
 export const TopBar = styled.div`
     background: #fff;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     width: 100%;
     height: 7em;
     border-radius: 12px;
+    padding: 2em;
     margin-bottom: 15px;
 `;
 
-export const SearchBar = styled.input.attrs({type: 'search', placeholder: 'Cerca'})`
-    border-radius: 20px;
-    border: 1px solid #ccc;
-    padding: 10px 5px 10px 40px;
-    background: url("https://static-00.iconduck.com/assets.00/search-icon-2048x2048-cmujl7en.png") no-repeat left 10px center;
-    background-size: 20px;
-    font-family: "Montserrat", sans-serif;
-    font-size: 0.9em;
-    width: 30em;
-    outline-color: black;
-`;
-
-export const FilterButton = styled.button`
-    opacity: 1;
-    background: none;
-    border: none;
-    font-size: 1em;
-    font-family: "Montserrat", sans-serif;
-    cursor: pointer;
-`;
-
-export const InfoAnnunci = styled.div`
+export const ProfileInformations = styled.div`
+    position: relative;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    height: 100%;
     width: 100%;
-    background: blue;
-    margin-top: 2em;
-    padding-bottom: 20px;
+    background-color: #fff;
 `;
 
+export const userInfoProfilePic = styled.div`
+    position: relative;
+    width: 85px;
+    height: 100%;
+    border-radius: 50%;
+    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
+    background-size: cover;
+    background-position: center;
+    border: 2px solid #fff;
+    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
-export const InfoAnnunciElement = styled.div`
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: ${props => props.dotColor};
+        border: 2px solid #fff;
+    }
+`;
+
+export const listItemName = styled.div`
+    font-size: 1.6rem;
+    font-weight: bold;
+`;
+
+export const listItemInfo = styled.div`
+    width: 100%;
+    font-size: 1em;
+`;
+
+export const UserInfoSideInfo = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: auto;
+    height: auto;
+`;
+
+export const SideInfoElement = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -76,48 +94,8 @@ export const InfoAnnunciElement = styled.div`
     h5:last-child {
         margin-top: 0; // Riduci il margine superiore dell'ultimo elemento h1
         font-weight: lighter;
-
     }
 `;
-
-
-
-
-export const Sidebar = styled.div`
-    background-color: #fff;
-    width: 18dvw;
-    height: 80dvh;
-    padding: 15px;
-    border-radius: 12px;
-    display: flex;
-    flex-direction: column;
-
-`;
-
-export const Button = styled.button`
-    border-radius: 20px;
-    border: 1px solid #5865f2;
-    background-color: #5865f2;
-    color: #ffffff;
-    font-size: 12px;
-    font-weight: bold;
-    padding: 12px 45px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: transform 80ms ease-in;
-    margin: 8px 0 0;
-    text-decoration: none;
-    width: 100%;
-    z-index: 50;
-
-    &:focus {
-        outline: none;
-    }
-`;
-
-
-
-
 
 export const MenuContainer = styled.div`
     display: flex;
@@ -146,85 +124,109 @@ export const MenuItem = styled.div`
     gap: 10px;
 `;
 
-export const AnnunciContainer = styled.div`
+export const Content = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    gap: 15px;
-    height: 95vh;
+    height: 75vh;
     border-radius: 12px;
+    background-color: transparent;
+`;
+
+export const ContactsContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    border-radius: 12px;
+    background-color: #fff;
+    overflow: clip;
+    height: 100%;
+    width: 37%;
+    margin-right: 10px;
+    padding: 20px 0 20px 20px;
+`;
+
+export const ChatsContainer = styled.div`
+    display: flex;
+    padding: 20px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-grow: 5;
+    height: 100%;
+    border-radius: 12px;
+    background-color: #fff;
+    margin-left: 5px;
     overflow: scroll;
 `;
 
-
-export const ListaAnnunci = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    align-items: center;
-    border-radius: 12px;
-    background-color: #fff;
-    padding: 20px;
-    flex: 2;
-    height: 100%;
-    overflow: auto;
-    gap: 15px;
+export const Input = styled.div`
+    width: 100%;
+    margin-top: 20px;
 `;
 
-
-
-export const NuovoAnnuncio = styled.div`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 12px;
-    background-color: #fff;
-    padding: 20px;
-    height: 100%;
-`;
-
-export const Annuncio = styled.div`
+export const ContactCard = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: flex-start; // Allinea a sinistra
+    justify-content: start;
     align-items: center;
+    width: 100%;
+    height: 5em;
     border-radius: 12px;
     background-color: #fff;
-    -webkit-box-shadow: 0px 4px 16px 1px rgba(198, 198, 198, 0.85);
-    box-shadow: 0px 7px 16px 1px rgba(198, 198, 198, 0.85);
-    padding: 1em;
-    width: 100%;
-    min-height: 7em;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    
+    &:hover {
+        cursor: pointer;
+    }
 `;
 
-export const AnnuncioImage = styled.div`
-    width: 5em;
-    height: 5em;
-    border-radius: 8px;
-    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
+export const ContactsSearchBar = styled.input.attrs({type: 'search', placeholder: 'Cerca'})`
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    padding: 10px 5px 10px 40px;
+    background: url("https://static-00.iconduck.com/assets.00/search-icon-2048x2048-cmujl7en.png") no-repeat left 10px center;
+    background-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9em;
+    width: 100%;
+    outline-color: black;
+    margin-bottom: 10px;
+    margin-right: 20px;
+`;
+
+export const ContactProfileImage = styled.div `
+    position: relative;
+    width: 85px;
+    height: 85px;
+    scale: 0.6;
+    border-radius: 50%;
+    background-image: url(${props => props.url});
     background-size: cover;
     background-position: center;
     border: 2px solid #fff;
+    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 `;
 
-export const listContainer = styled.div`
+export const ContactCardList = styled.div`
     display: flex;
-    padding: 20px;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
+    justify-content: start;
     align-items: flex-start;
-    flex-wrap: wrap;
     width: 100%;
-    height: 150vh;
-
+    height: 100%;
     border-radius: 12px;
     background-color: #fff;
+    margin-bottom: 10px;
     overflow: scroll;
+    padding-right: 20px;
+    padding-bottom: 30px;
 `;
 
 export const listItem = styled.div`
@@ -233,44 +235,17 @@ export const listItem = styled.div`
     border-bottom: 1px solid #ccc;
 `;
 
-export const listItemProfilePic = styled.div`
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
-    background-size: cover;
-    background-position: center;
-    margin: 10px auto 10px;
-    border: 2px solid #fff;
-    box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
-
-    &::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: ${props => props.dotColor};
-        border: 2px solid #fff;
-    }
-`;
-
-export const listItemName = styled.h3`
-    font-size: 1.2rem;
+export const SkillChip = styled(Chip)`
+    background-color: rgba(20, 117, 207, 0.7);
+    color: #fff;
+    margin-top: 5px;
+    margin-right: 5px;
     font-weight: bold;
-    margin-bottom: 0;
-    padding-left: 10px;
-`;
-
-export const listItemInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 70%;
+    border-radius: 10px;
+    
+    &:hover {
+        background-color: rgba(20, 117, 207, 0.9);        
+    }
 `;
 
 export const ListItemSkills = styled.div`

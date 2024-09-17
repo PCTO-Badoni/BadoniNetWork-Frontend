@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 export const Header = styled.div`
@@ -43,6 +44,14 @@ export const NotificationButton = styled.button`
         background-color: red;
         border: 2px solid white;
     }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  color: inherit;
+  &:hover {
+    color: inherit;
+  }
 `;
 
 export const listItemProfilePic = styled.div`
