@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import * as Components from "../../RegisterComponents";
 import { ChipsSelectorInputContainer, Select } from "../../RegisterComponents";
 
+const prefix = process.env.DEFAULT_HOST_DOMAIN;
+
 const ChipSelector = ({
   minSelectedChips,
   setMinSelectedChips,
@@ -19,12 +21,12 @@ const ChipSelector = ({
   const [options, setOptions] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/get-all-competenze")
+    fetch(prefix+"/api/get-all-competenze")
       .then((response) => response.json())
       .then((data) => setChips(data))
       .catch((error) => console.error("Error:", error));
 
-    fetch("http://localhost:8080/api/get-all-articolazioni")
+    fetch(prefix+"/api/get-all-articolazioni")
       .then((response) => response.json())
       .then((data) => {
         // 4. Parse the response data and update the options state with the data.

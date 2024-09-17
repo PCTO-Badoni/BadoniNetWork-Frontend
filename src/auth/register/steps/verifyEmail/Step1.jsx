@@ -3,6 +3,8 @@ import * as OTPComponents from "../../../../OTP/OTPComponents";
 import { useNavigate } from "react-router-dom";
 import { Bounce, toast } from "react-toastify";
 
+const prefix = process.env.DEFAULT_HOST_DOMAIN;
+
 const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
   const [num1, setNum1] = React.useState("");
   const [num2, setNum2] = React.useState("");
@@ -53,7 +55,7 @@ const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
     if (!isCodeVerified) {
       try {
         const response = await fetch(
-          "http://localhost:8080/api/send-student-otp",
+          prefix+"/api/send-student-otp",
           {
             method: "POST",
             headers: {
@@ -92,7 +94,7 @@ const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/verify-student-otp",
+        prefix+"/api/verify-student-otp",
         {
           method: "POST",
           headers: {

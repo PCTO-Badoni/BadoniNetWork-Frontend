@@ -6,6 +6,8 @@ import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom"; // Modifica qui
 
+const prefix = process.env.DEFAULT_HOST_DOMAIN;
+
 const error = (message) => toast.error( message, {
     position: "top-right",
     autoClose: 5000,
@@ -32,7 +34,7 @@ function Login() {
         };
 
         try {
-            const response = await fetch("http://localhost:8080/login", {
+            const response = await fetch(prefix+"/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

@@ -24,6 +24,7 @@ const arrowLeft = <FontAwesomeIcon icon={faChevronLeft} />;
 const arrowRight = <FontAwesomeIcon icon={faChevronRight} />;
 const save = <FontAwesomeIcon icon={faSave} />;
 const steps = ["Step0", "Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
+const prefix = process.env.DEFAULT_HOST_DOMAIN;
 
 const responseView = (body) =>
   toast.success(body, {
@@ -160,7 +161,7 @@ function Register() {
     };
 
     try {
-      const response = await fetch("http://localhost:8080/api/verify-email", {
+      const response = await fetch(prefix+"/api/verify-email", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -232,7 +233,7 @@ function Register() {
     console.log(password);
 
     try {
-      const response = await fetch("http://localhost:8080/register/utente", {
+      const response = await fetch(prefix+"/register/utente", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -264,7 +265,7 @@ function Register() {
 
     try {
       const response = await fetch(
-        "http://localhost:8080/api/set-user-competences",
+        prefix+"/api/set-user-competences",
         {
           method: "POST",
           mode: "cors",
