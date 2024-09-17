@@ -73,28 +73,12 @@ export const listItemInfo = styled.div`
     font-size: 1em;
 `;
 
-export const UserInfoSideInfo = styled.div`
+export const nameContainer = styled.div`
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    width: auto;
-    height: auto;
-`;
-
-export const SideInfoElement = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 30%;
-    h1:first-child {
-        margin-bottom: 0.25em; // Riduci il margine inferiore del primo elemento h1
-    }
-
-    h5:last-child {
-        margin-top: 0; // Riduci il margine superiore dell'ultimo elemento h1
-        font-weight: lighter;
-    }
+    align-content: center;
+    height: 4em;
 `;
 
 export const MenuContainer = styled.div`
@@ -153,7 +137,7 @@ export const ContactsContainer = styled.div`
 
 export const ChatsContainer = styled.div`
     display: flex;
-    padding: 20px;
+    padding: 0 20px 20px;
     flex-direction: column;
     justify-content: space-between;
     align-items: flex-start;

@@ -80,15 +80,18 @@ const Chat = ({
         contact.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const [activeContact, setActiveContact] = useState(contacts[0].name);
+
+
     const messages = [
-        { id: 1, sender: "Giovanni 18", text: "Ciao, come staiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?", timestamp: "ggwp AM" },
+        { id: 1, sender: activeContact, text: "Ciao, come staiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?", timestamp: "ggwp AM" },
         { id: 2, sender: "Tu", text: "Tutto bene, grazie! E tu?", timestamp: "10:02 AM" },
-        { id: 3, sender: "Giovanni 18", text: "Anche io, grazie!", timestamp: "10:03 AM" },
-        { id: 4, sender: "Giovanni 18", text: "Stornzo", timestamp: "10:03 AM" },
-        { id: 5, sender: "Giovanni 18", text: "Ciao, come stai?", timestamp: "10:01 AM" },
+        { id: 3, sender: activeContact, text: "Anche io, grazie!", timestamp: "10:03 AM" },
+        { id: 4, sender: activeContact, text: "Stornzo", timestamp: "10:03 AM" },
+        { id: 5, sender: activeContact, text: "Ciao, come stai?", timestamp: "10:01 AM" },
         { id: 6, sender: "Tu", text: "Tutto bene, grazie! E tu?", timestamp: "10:02 AM" },
-        { id: 7, sender: "Giovanni 18", text: "Anche io, grazie!", timestamp: "10:03 AM" },
-        { id: 8, sender: "Giovanni 18", text: "Stornzo", timestamp: "sex AM" },
+        { id: 7, sender: activeContact, text: "Anche io, grazie!", timestamp: "10:03 AM" },
+        { id: 8, sender: activeContact, text: "Stornzo", timestamp: "sex AM" },
     ];
 
     const chatContainerRef = useRef(null);
@@ -127,6 +130,10 @@ const Chat = ({
 
 
 
+    const handleContactClick = (contact) => {
+        setActiveContact(contact.name);
+    };
+
 
     return (
         <Components.contentContainer>
@@ -140,8 +147,8 @@ const Chat = ({
                     />
                     <Components.ContactCardList>
                         {filteredContacts.map((contact) => (
-                            <ContactCard key={contact.id}>
-                                <Components.ContactProfileImage url={contact.profilePic}/>
+                            <ContactCard key={contact.id} onClick={() => handleContactClick(contact)}>
+                                <Components.ContactProfileImage url={contact.profilePic} />
                                 {contact.name}
                             </ContactCard>
                         ))}
@@ -149,7 +156,10 @@ const Chat = ({
                 </Components.ContactsContainer>
 
                 <Components.ChatsContainer ref={chatContainerRef} style={{height: '100%'}}>
-                    <div style={{width:'100%', overflowY: 'scroll', paddingRight: '20px', paddingLeft: '20px', paddingTop: '20px'}}>
+                    <Components.nameContainer>
+                        <h2>{activeContact}</h2>
+                    </Components.nameContainer>
+                    <div style={{width:'100%', overflowY: 'scroll', paddingRight: '20px', paddingLeft: '20px', paddingTop: '10px'}}>
                         {messages.map((message) => (
                             <Message
                                 key={message.id}
@@ -160,7 +170,6 @@ const Chat = ({
                             />
                         ))}
                     </div>
-
                     <Components.Input>
                         <IconField style={{width: '100%'}}>
                             <InputIcon
