@@ -6,7 +6,7 @@ import Box from "@mui/material/Box";
 import * as Components from "../../RegisterComponents";
 import { ChipsSelectorInputContainer, Select } from "../../RegisterComponents";
 
-const prefix = typeof process !== 'undefined' && process.env.REACT_APP_DEFAULT_HOST_DOMAIN ? process.env.REACT_APP_DEFAULT_HOST_DOMAIN : '';
+const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
 const ChipSelector = ({
                           minSelectedChips,
                           setMinSelectedChips,
