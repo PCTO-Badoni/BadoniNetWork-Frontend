@@ -26,6 +26,7 @@ const save = <FontAwesomeIcon icon={faSave} />;
 const steps = ["Step0", "Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
 const prefix = typeof process !== 'undefined' && process.env.REACT_APP_DEFAULT_HOST_DOMAIN ? process.env.REACT_APP_DEFAULT_HOST_DOMAIN : '';
 
+
 const responseView = (body) =>
   toast.success(body, {
     position: "top-right",
@@ -118,7 +119,7 @@ function Register() {
     console.log(data);
 
     try {
-      const response = await fetch("http://localhost:8080/register/azienda", {
+      const response = await fetch(prefix+"/register/azienda", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -286,7 +287,7 @@ function Register() {
 
   async function getCompetenzeFromDB() {
     try {
-      const response = await fetch("http://localhost:8080/api/get-all-competenze", {
+      const response = await fetch(prefix+"/api/get-all-competenze", {
         method: "GET",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
