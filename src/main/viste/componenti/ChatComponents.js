@@ -79,6 +79,7 @@ export const nameContainer = styled.div`
   flex-direction: row;
   align-content: center;
   height: 4em;
+  border-bottom: 2px solid #ccc;
 `;
 
 export const MenuContainer = styled.div`
@@ -161,12 +162,24 @@ export const ContactCard = styled.div`
   width: 100%;
   height: 5em;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: ${({ contactId, selectedId }) =>
+    contactId === selectedId ? "rgba(160,160,160,0.27)" : "#fff"};
   margin-bottom: 15px;
-  border: 1px solid #ccc;
+  border: ${({ contactId, selectedId }) =>
+    contactId === selectedId ? "2px solid #ccc" : "1px solid #ccc"};
 
   &:hover {
-    cursor: pointer;
+    background-color: ${({ contactId, selectedId }) =>
+      contactId === selectedId
+        ? "rgba(160,160,160,0.27)"
+        : "rgba(160, 160, 160, 0.15)"};
+
+    cursor: ${({ contactId, selectedId }) =>
+      contactId === selectedId ? "" : "pointer"};
+  }
+
+  &:active {
+    background-color: rgba(160, 160, 160, 0.27);
   }
 `;
 
@@ -193,12 +206,38 @@ export const ContactProfileImage = styled.div`
   width: 85px;
   height: 85px;
   scale: 0.6;
+  aspect-ratio: 1/1;
   border-radius: 50%;
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-position: center;
   border: 2px solid #fff;
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
+`;
+
+export const ContactInfos = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px;
+`;
+
+export const ContactName = styled.div`
+  font-size: 1em;
+  display: flex;
+
+  width: 100%;
+  justify-content: space-between; /* Distribuisce gli elementi tra l'inizio e la fine */
+  padding-right: 10px;
+`;
+
+export const ContactLastMsg = styled.div`
+  font-size: 0.9em;
+  color: #8a8a8a;
+  white-space: nowrap; /* Evita che il testo vada a capo */
+  overflow: hidden; /* Nasconde il testo che esce fuori */
+  text-overflow: ellipsis; /* Aggiunge i "..." quando il testo è troppo lungo */
+  max-width: 20em; /* Limita la larghezza al 100% del contenitore */
 `;
 
 export const ContactCardList = styled.div`
