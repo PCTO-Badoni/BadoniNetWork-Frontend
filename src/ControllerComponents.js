@@ -3,47 +3,50 @@ import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
 
 export const Header = styled.div`
-    background: #fff;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    box-shadow: 0 19px 15px -22px #C2C2C2;
-    width: 100vw;
-    height: 5em;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    margin-top: -1em;
+  background: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  box-shadow: 0 19px 15px -22px #c2c2c2;
+  width: 100%;
+  height: 5em;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  margin-top: -1em;
 `;
 
-export const Logo = styled.img.attrs(props => ({src: logo}))`
-    width: 60px;
-    height: 60px;
-    background-size: cover;
+export const Logo = styled.img.attrs((props) => ({ src: logo }))`
+  width: 60px;
+  height: 60px;
+  background-size: cover;
 `;
 
 export const NotificationButton = styled.button`
-    background: none;
+  background: none;
 
-    position: relative;
-    border: none;
-    font-size: 30px;
-    &::after {
-        content: "${props => props.notificationNumber < 99 ? String(props.notificationNumber) : '99+'}";
-        position: absolute;
-        font-size: 8px;
-        text-align: center;
-        justify-content: center;
-        color: white;
-        font-weight: bold;
-        bottom: 0;
-        right: 0;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: red;
-        border: 2px solid white;
-    }
+  position: relative;
+  border: none;
+  font-size: 30px;
+  &::after {
+    content: "${(props) =>
+      props.notificationNumber < 99
+        ? String(props.notificationNumber)
+        : "99+"}";
+    position: absolute;
+    font-size: 8px;
+    text-align: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: red;
+    border: 2px solid white;
+  }
 `;
 
 const StyledLink = styled(Link)`
@@ -55,64 +58,61 @@ const StyledLink = styled(Link)`
 `;
 
 export const listItemProfilePic = styled.div`
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
-    background-size: cover;
-    background-position: center;
-    margin: 10px auto 10px;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
+  background-size: cover;
+  background-position: center;
+  margin: 10px auto 10px;
 
-    &::after {
-        content: "";
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 10px;
-        height: 10px;
-        border-radius: 50%;
-        background-color: ${props => props.dotColor};
-        border: 2px solid white;
-    }
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: ${(props) => props.dotColor};
+    border: 2px solid white;
+  }
 `;
 
 export const HeaderProfilePic = styled.div`
-    position: relative;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
-    background-size: cover;
-    background-position: center;
-    margin: 10px auto 10px;
+  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
+  background-size: cover;
+  background-position: center;
+  margin: 10px auto 10px;
 `;
 
-
 export const NotificationsContainer = styled.div`
-    position: absolute;
-    top: 4em;
-    right: 3em;
-    width: 12em;
-    max-height: 20em;
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 19px 15px -22px #C2C2C2;
-    z-index: 1000;
-    border: 1px solid #C2C2C2;
-    overflow-y: scroll;
+  position: absolute;
+  top: 4em;
+  right: 3em;
+  width: 12em;
+  max-height: 20em;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 19px 15px -22px #c2c2c2;
+  z-index: 1000;
+  border: 1px solid #c2c2c2;
+  overflow-y: scroll;
 
-    &:last-child {
-        border-bottom: none;
-    }
-    
+  &:last-child {
+    border-bottom: none;
+  }
 `;
 
 export const NotificationItem = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-left: 1em;
-    border-bottom: 1px solid #C2C2C2;
-    
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-left: 1em;
+  border-bottom: 1px solid #c2c2c2;
 `;
