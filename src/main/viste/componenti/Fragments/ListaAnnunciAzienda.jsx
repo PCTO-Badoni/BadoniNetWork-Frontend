@@ -40,16 +40,16 @@ const ListaAnnunciAzienda = ({}) => {
         <Components.Annuncio>
           <Components.AnnuncioImage />
           <Components.AnnuncioInfo>
-            <h2>Ingegnere </h2>
+            <Components.AnnuncioTitolo>ingegnere</Components.AnnuncioTitolo>
           </Components.AnnuncioInfo>
           <Components.AnnuncioButtons>
             <FooterIcon
               className="pi pi-eye"
-              style={{ color: "black" }}
+              style={{ color: "black", margin: "auto" }}
             ></FooterIcon>
             <FooterIcon
               className="pi pi-trash"
-              style={{ color: "black" }}
+              style={{ color: "red", margin: "auto" }}
             ></FooterIcon>
           </Components.AnnuncioButtons>
         </Components.Annuncio>

@@ -74,6 +74,7 @@ export const InfoAnnunciElement = styled.div`
   justify-content: center;
   align-items: center;
   width: 30%;
+
   h1:first-child {
     margin-bottom: 0.25em; // Riduci il margine inferiore del primo elemento h1
   }
@@ -174,7 +175,6 @@ export const NuovoAnnuncio = styled.div`
 export const Annuncio = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
   border-radius: 12px;
   background-color: #fff;
   -webkit-box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
@@ -182,6 +182,12 @@ export const Annuncio = styled.div`
   padding: 1em;
   width: 100%;
   height: 7em;
+
+  &:hover {
+    cursor: pointer;
+    scale: 1.01;
+    transition: scale 0.2s ease;
+  }
 `;
 
 export const AnnuncioImage = styled.div`
@@ -197,7 +203,7 @@ export const AnnuncioImage = styled.div`
 export const AnnuncioInfo = styled.div`
   height: 100%;
   width: 100%;
-  background-color: blue;
+  background-color: rgba(0, 0, 255, 0.3);
   margin-left: 15px;
   display: flex;
   flex-direction: column;
@@ -207,12 +213,23 @@ export const AnnuncioInfo = styled.div`
   }
 `;
 
+export const AnnuncioTitolo = styled.div`
+  width: 100%;
+  color: black;
+  font-size: 1.2em;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: bold;
+`;
+
+export const AnnuncioComps = styled.div``;
+
 export const AnnuncioButtons = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: red;
-  justify-content: space-between;
+  background-color: rgba(255, 0, 0, 0.44);
 `;
 
 export const listContainer = styled.div`
