@@ -50,7 +50,7 @@ export const userInfoProfilePic = styled.div`
   border: 2px solid #fff;
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
-  &::after {
+  &::after { 
     content: "";
     position: absolute;
     bottom: 0;

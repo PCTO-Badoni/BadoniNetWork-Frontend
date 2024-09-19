@@ -177,8 +177,8 @@ export const Annuncio = styled.div`
   align-items: center;
   border-radius: 12px;
   background-color: #fff;
-  -webkit-box-shadow: 0px 4px 16px 0px rgba(198, 198, 198, 0.85);
-  box-shadow: 0px 7px 16px 0px rgba(198, 198, 198, 0.85);
+  -webkit-box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   padding: 1em;
   width: 100%;
   height: 7em;
