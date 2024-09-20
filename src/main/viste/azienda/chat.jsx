@@ -191,7 +191,23 @@ const Chat = ({
     }
   }, [messages]);
 
-  const Message = ({ sender, text, timestamp, isOwnMessage }) => {
+  const Message = ({ sender, text, timestamp, isOwnMessage, index }) => {
+    const [isTouched, setIsTouched] = useState(false);
+
+    const handleMouseEnter = () => {
+      setIsTouched(true);
+    };
+
+    const handleMouseLeave = () => {
+      setIsTouched(false);
+    };
+
+    const deleteMessage = (event, index) => {
+      if (event.target.value === "delete") {
+        console.log({ index });
+      }
+    };
+
     return (
       <div
         style={{
@@ -201,6 +217,8 @@ const Chat = ({
         }}
       >
         <div
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           style={{
             display: "inline-block",
             backgroundColor: isOwnMessage ? "rgba(99,102,241,0.47)" : "#f1f1f1",
@@ -214,9 +232,37 @@ const Chat = ({
           }}
         >
           <p style={{ margin: 0 }}></p>
-          <p style={{ margin: 0 }}>{text}</p>
           <p
-            style={{ fontSize: "0.8em", color: isOwnMessage ? "#000" : "#888" }}
+            style={{
+              margin: 0,
+              display: "flex",
+            }}
+          >
+            {text}
+            {isTouched && (
+              <select
+                onChange={(event) => deleteMessage(event, index)}
+                style={{
+                  marginLeft: "6px",
+                  backgroundColor: "transparent",
+                  border: isOwnMessage ? "rgba(99,102,241,0.47)" : "#f1f1f1",
+                  padding: "2px",
+                  width: "17px",
+                  fontSize: "1em",
+                  outline: "none",
+                }}
+                defaultValue=""
+              >
+                <option value="" disabled hidden></option>
+                <option value="delete">Elimina il messaggio</option>
+              </select>
+            )}
+          </p>
+          <p
+            style={{
+              fontSize: "0.8em",
+              color: isOwnMessage ? "#000" : "#888",
+            }}
           >
             {timestamp}
           </p>
@@ -258,7 +304,7 @@ const Chat = ({
     }
   };
 
-  const sendMessageKey = () => {
+  const sendMessageKey = (event) => {
     if (event.key === "Enter") {
       if (newMessage.trim()) {
         const message = {
@@ -330,13 +376,14 @@ const Chat = ({
               paddingTop: "10px",
             }}
           >
-            {messages.map((message) => (
+            {messages.map((message, index) => (
               <Message
                 key={message.id}
                 sender={message.sender}
                 text={message.text}
                 timestamp={message.timestamp}
                 isOwnMessage={message.sender === "Tu"}
+                index={index}
               />
             ))}
           </div>
