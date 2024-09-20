@@ -8,7 +8,6 @@ import {
   faRightFromBracket,
   faFilter,
 } from "@fortawesome/free-solid-svg-icons";
-import "././sideBar/homeStyle.css";
 import { Link } from "react-router-dom";
 import Footer from "../footer";
 import { BiSolidMegaphone } from "react-icons/bi";
@@ -21,10 +20,19 @@ import Chat from "./viste/azienda/chat";
 import HomePage from "./viste/azienda/home";
 import Annunci from "./viste/azienda/annunci";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  contrastColor,
+  fourthColor,
+  secondColor,
+  secondColorDarker,
+} from "../constants/colors";
+import { useParams } from "react-router-dom";
 
 const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />;
 
 function MainPage() {
+  const { parametro } = useParams(); // Ottieni il parametro dalla rotta
+
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedChips, setSelectedChips] = useState([]);
   const [selectedCompetenze, setSelectedCompetenze] = useState([]);
@@ -94,7 +102,7 @@ function MainPage() {
   ]);
   const [isFilterOpen, setFilterOpen] = useState(false);
   const [viewMode, setViewMode] = useState("cards");
-  const [activeButton, setActiveButton] = useState("home");
+  const [activeButton, setActiveButton] = useState(parametro);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -117,12 +125,6 @@ function MainPage() {
       window.removeEventListener("hashchange", handleHashChange);
     };
   }, []);
-
-  useEffect(() => {
-    if (activeButton) {
-      window.location.hash = `#${activeButton}`; // Update the hash manually
-    }
-  }, [activeButton]);
 
   const handleButtonClick = (buttonName) => {
     if (activeButton === "logout") {
@@ -190,11 +192,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === ("home" || "logout")
-                      ? "#f0f0f0"
+                      ? `${secondColor}`
                       : "transparent",
                   borderLeft:
                     activeButton === ("home" || "logout")
-                      ? "2px solid black"
+                      ? `2px solid ${contrastColor}`
                       : null,
                 }}
               >
@@ -205,9 +207,11 @@ function MainPage() {
                 onClick={() => handleButtonClick("lista")}
                 style={{
                   backgroundColor:
-                    activeButton === "lista" ? "#f0f0f0" : "transparent",
+                    activeButton === "lista" ? `${secondColor}` : "transparent",
                   borderLeft:
-                    activeButton === "lista" ? "2px solid black" : null,
+                    activeButton === "lista"
+                      ? `2px solid ${contrastColor}`
+                      : null,
                 }}
               >
                 <FaIdCard /> Lista Studenti
@@ -217,9 +221,11 @@ function MainPage() {
                 onClick={() => handleButtonClick("chat")}
                 style={{
                   backgroundColor:
-                    activeButton === "chat" ? "#f0f0f0" : "transparent",
+                    activeButton === "chat" ? `${secondColor}` : "transparent",
                   borderLeft:
-                    activeButton === "chat" ? "2px solid black" : null,
+                    activeButton === "chat"
+                      ? `2px solid ${contrastColor}`
+                      : null,
                 }}
               >
                 <IoChatboxEllipses /> Chat
@@ -229,9 +235,13 @@ function MainPage() {
                 onClick={() => handleButtonClick("annunci")}
                 style={{
                   backgroundColor:
-                    activeButton === "annunci" ? "#f0f0f0" : "transparent",
+                    activeButton === "annunci"
+                      ? `${secondColor}`
+                      : "transparent",
                   borderLeft:
-                    activeButton === "annunci" ? "2px solid black" : null,
+                    activeButton === "annunci"
+                      ? `2px solid ${contrastColor}`
+                      : null,
                 }}
               >
                 <BiSolidMegaphone /> Annunci
@@ -241,9 +251,13 @@ function MainPage() {
                 onClick={() => handleButtonClick("profilo")}
                 style={{
                   backgroundColor:
-                    activeButton === "profilo" ? "#f0f0f0" : "transparent",
+                    activeButton === "profilo"
+                      ? `${secondColor}`
+                      : "transparent",
                   borderLeft:
-                    activeButton === "profilo" ? "2px solid black" : null,
+                    activeButton === "profilo"
+                      ? `2px solid ${contrastColor}`
+                      : null,
                 }}
               >
                 <RiSettings3Fill /> Profilo
@@ -256,7 +270,9 @@ function MainPage() {
                 style={{
                   borderRadius: "8px",
                   backgroundColor:
-                    activeButton === "logout" ? "#f0f0f0" : "transparent",
+                    activeButton === "logout"
+                      ? `${secondColor}`
+                      : "transparent",
                 }}
               >
                 {logoutIcon} Logout

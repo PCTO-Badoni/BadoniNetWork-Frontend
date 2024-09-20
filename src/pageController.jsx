@@ -24,6 +24,7 @@ import { faInbox } from "@fortawesome/free-solid-svg-icons";
 import { students } from "./main/Components/students";
 import { ToastContainer } from "react-toastify";
 import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
+import { useParams } from "react-router-dom";
 
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 
@@ -34,10 +35,14 @@ import { Menu } from "primereact/menu";
 import { Badge } from "primereact/badge";
 import { Avatar } from "primereact/avatar";
 
+import setCssVariables from "./setCssVariables";
+
 import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
+import { contrastColor } from "./constants/colors";
+setCssVariables();
 
 async function fetchNotifications() {
   return [
@@ -199,7 +204,7 @@ function PageController() {
                 color: "black",
               }}
             >
-              <h3>Badoni NetWork</h3>
+              <h3 style={{ color: `${contrastColor}` }}>Badoni NetWork</h3>
             </Link>
           </div>
           <div
@@ -262,9 +267,8 @@ root.render(
       }}
     >
       <Routes>
-        <Route path="/" element={<Navigate to="/homepage#chat" />} />
+        <Route path="/azienda/:parametro" element={<MainPage />} />{" "}
         <Route path="/register" element={<Register />} />
-        <Route path="/homepage" element={<MainPage />} />
         <Route path="/OTP" element={<OTP />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />

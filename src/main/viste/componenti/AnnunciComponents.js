@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { contrastColor, firstColor } from "../../../constants/colors";
 
 export const Container = styled.div`
   display: flex;
@@ -21,7 +22,7 @@ export const contentContainer = styled.div`
 `;
 
 export const TopBar = styled.div`
-  background: #fff;
+  background: ${firstColor};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -44,7 +45,7 @@ export const SearchBar = styled.input.attrs({
   font-family: "Montserrat", sans-serif;
   font-size: 0.9em;
   width: 100%;
-  outline-color: black;
+  outline-color: ${firstColor};
 `;
 
 export const FilterButton = styled.button`
@@ -74,6 +75,7 @@ export const InfoAnnunciElement = styled.div`
   justify-content: center;
   align-items: center;
   width: 30%;
+  color: ${contrastColor};
 
   h1:first-child {
     margin-bottom: 0.25em; // Riduci il margine inferiore del primo elemento h1
@@ -89,7 +91,7 @@ export const Button = styled.button`
   border-radius: 20px;
   border: 1px solid #5865f2;
   background-color: #5865f2;
-  color: #ffffff;
+  color: ${firstColor};
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -118,7 +120,7 @@ export const MenuContainer = styled.div`
 
 export const MenuItem = styled.div`
   cursor: pointer;
-  color: black;
+  color: ${firstColor};
   text-decoration: none;
   width: 100%;
   border-top-right-radius: 8px;
@@ -144,6 +146,7 @@ export const AnnunciContainer = styled.div`
   height: 95vh;
   border-radius: 12px;
   overflow: scroll;
+  color: ${contrastColor};
 `;
 
 export const ListaAnnunci = styled.div`
@@ -152,12 +155,13 @@ export const ListaAnnunci = styled.div`
   justify-content: start;
   align-items: center;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: ${firstColor};
   padding: 20px;
   flex: 2;
   height: 100%;
   overflow: auto;
   gap: 15px;
+  color: ${contrastColor};
 `;
 
 export const NuovoAnnuncio = styled.div`
@@ -167,21 +171,23 @@ export const NuovoAnnuncio = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: ${firstColor};
   padding: 20px;
   height: 100%;
+  color: ${contrastColor};
 `;
 
 export const Annuncio = styled.div`
   display: flex;
   flex-direction: row;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: ${firstColor};
   -webkit-box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   padding: 1em;
   width: 100%;
   height: 7em;
+  color: ${contrastColor};
 
   &:hover {
     cursor: pointer;
@@ -197,13 +203,14 @@ export const AnnuncioImage = styled.div`
   background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
   background-size: cover;
   background-position: center;
-  border: 2px solid #fff;
+  border: 2px solid ${firstColor};
 `;
 
 export const AnnuncioInfo = styled.div`
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 255, 0.3);
+  color: ${contrastColor};
   margin-left: 15px;
   display: flex;
   flex-direction: column;
@@ -215,7 +222,7 @@ export const AnnuncioInfo = styled.div`
 
 export const AnnuncioTitolo = styled.div`
   width: 100%;
-  color: black;
+  color: ${contrastColor};
   font-size: 1.2em;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -230,29 +237,8 @@ export const AnnuncioButtons = styled.div`
   flex-direction: column;
   height: 100%;
   background-color: rgba(255, 0, 0, 0.44);
+  color: ${contrastColor};
 `;
-
-export const listContainer = styled.div`
-  display: flex;
-  padding: 20px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  width: 100%;
-  height: 150vh;
-
-  border-radius: 12px;
-  background-color: #fff;
-  overflow: scroll;
-`;
-
-export const listItem = styled.div`
-  display: flex;
-  width: 100%;
-  border-bottom: 1px solid #ccc;
-`;
-
 export const listItemProfilePic = styled.div`
   position: relative;
   width: 50px;
@@ -262,7 +248,7 @@ export const listItemProfilePic = styled.div`
   background-size: cover;
   background-position: center;
   margin: 10px auto 10px;
-  border: 2px solid #fff;
+  border: 2px solid ${firstColor};
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
   &::after {
@@ -274,7 +260,7 @@ export const listItemProfilePic = styled.div`
     height: 10px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor};
-    border: 2px solid #fff;
+    border: 2px solid ${firstColor};
   }
 `;
 
@@ -310,7 +296,7 @@ export const ListItemSkill = styled.div`
   margin-top: 5px;
   border-radius: 10px;
   background-color: rgba(20, 117, 207, 0.7);
-  color: #fff;
+  color: ${firstColor};
 
   &:first-child {
     margin-left: 0;
@@ -334,7 +320,7 @@ export const ViewModeButton = styled.button`
   background: none;
   border: none;
   font-size: 20px;
-  color: black;
+  color: ${firstColor};
   letter-spacing: 1px;
   text-transform: uppercase;
   text-decoration: none;
@@ -352,7 +338,7 @@ export const DisponibilityButton = styled.button`
   background: none;
   border: none;
   font-size: 15px;
-  color: black;
+  color: ${contrastColor};
   text-decoration: none;
   font-family: "Montserrat", sans-serif;
 
@@ -363,7 +349,7 @@ export const DisponibilityButton = styled.button`
 
 export const VerticalSeparator = styled.div`
   height: 20px;
-  border-left: 1px solid black;
+  border-left: 1px solid ${firstColor};
   margin-left: 10px;
   margin-right: 10px;
 `;

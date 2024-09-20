@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { firstColor, secondColor, shadowColor } from "./constants/colors";
 
 export const Header = styled.div`
-  background: #fff;
+  background: ${firstColor};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  box-shadow: 0 19px 15px -22px #c2c2c2;
+  box-shadow: 0 19px 15px -22px ${shadowColor};
   width: 100%;
   height: 5em;
   position: sticky;

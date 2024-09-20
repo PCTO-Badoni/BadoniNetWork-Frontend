@@ -17,6 +17,14 @@ import "../chat.css";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
+import {
+  borderColor,
+  contrastColor,
+  fifthColor,
+  searchBarColor,
+  secondColor,
+  thirdColor,
+} from "../../../constants/colors";
 
 const Chat = ({
   searchTerm,
@@ -239,7 +247,8 @@ const Chat = ({
         <div
           style={{
             display: "inline-block",
-            backgroundColor: isOwnMessage ? "rgba(99,102,241,0.47)" : "#f1f1f1",
+            backgroundColor: isOwnMessage ? `${thirdColor}` : `${secondColor}`,
+            color: isOwnMessage ? "#000" : `${contrastColor}`,
             padding: "10px",
             borderRadius: "10px",
             maxWidth: "70%", // Limita la larghezza del messaggio
@@ -288,7 +297,7 @@ const Chat = ({
                   <Components.ContactName>
                     {contact.name}
                     {/* Messaggio allineato a sinistra */}
-                    <span style={{ color: "#8a8a8a" }}>
+                    <span style={{ color: `${fifthColor}` }}>
                       {messages[7].timestamp}
                     </span>{" "}
                   </Components.ContactName>
@@ -342,7 +351,12 @@ const Chat = ({
               />
               <InputText
                 v-model="value2"
-                style={{ borderRadius: "12px", width: "100%" }}
+                style={{
+                  borderRadius: "12px",
+                  width: "100%",
+                  borderColor: `${borderColor}`,
+                  backgroundColor: `${searchBarColor}`,
+                }}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
               />

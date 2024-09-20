@@ -5,7 +5,7 @@
 }
 
 body {
-  background: #f0f0f0;
+  background: var(--second-color);;
   display: flex;
   justify-content: center;
   align-items: center;
