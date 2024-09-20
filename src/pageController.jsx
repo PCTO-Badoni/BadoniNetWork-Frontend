@@ -41,7 +41,9 @@ import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
-import { contrastColor } from "./constants/colors";
+const { contrastColor, setTheme } = useColors();
+import { ThemeProvider } from "./ThemeContext";
+import { useColors } from "./constants/colors";
 setCssVariables();
 
 async function fetchNotifications() {
@@ -182,11 +184,17 @@ function PageController() {
       })),
     },
   ];
+  const handleThemeChange = () => {
+    setTheme(); // Cambia il tema
+    // I colori verranno automaticamente aggiornati grazie ai getter
+  };
 
   return (
     <PrimeReactProvider>
       <>
         <Components.Header>
+          <Button onClick={handleThemeChange}></Button>
+
           <div
             style={{
               display: "flex",
@@ -227,7 +235,11 @@ function PageController() {
               {notifications.length > 0 && (
                 <Badge
                   value=" "
-                  style={{ scale: "70%", marginTop: "6px", marginRight: "6px" }}
+                  style={{
+                    scale: "70%",
+                    marginTop: "6px",
+                    marginRight: "6px",
+                  }}
                 />
               )}
               <div className="card flex justify-content-center">
@@ -256,29 +268,31 @@ function PageController() {
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  <Router>
-    <PageController />
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "calc(100vh - 6em)", // sottrai l'altezza dell'header
-      }}
-    >
-      <Routes>
-        <Route path="/azienda/:parametro" element={<MainPage />} />{" "}
-        <Route path="/register" element={<Register />} />
-        <Route path="/OTP" element={<OTP />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/changePassword" element={<ChangePassword />} />
-        <Route
-          path="/homepage/studentProfile/:id"
-          element={<StudentProfile />}
-        />
-      </Routes>
-    </div>
-  </Router>,
+  <ThemeProvider>
+    <Router>
+      <PageController />
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "calc(100vh - 6em)", // sottrai l'altezza dell'header
+        }}
+      >
+        <Routes>
+          <Route path="/azienda/:parametro" element={<MainPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/OTP" element={<OTP />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forgotPassword" element={<ForgotPassword />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route
+            path="/homepage/studentProfile/:id"
+            element={<StudentProfile />}
+          />
+        </Routes>
+      </div>
+    </Router>
+  </ThemeProvider>,
   root,
 );

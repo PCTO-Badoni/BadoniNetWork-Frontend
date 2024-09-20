@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import { firstColor, secondColor, shadowColor } from "./constants/colors";
+import { useColors } from "./constants/colors";
+const { firstColor, secondColor, shadowColor } = useColors();
 
 export const Header = styled.div`
   background: ${firstColor};

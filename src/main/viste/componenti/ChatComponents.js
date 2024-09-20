@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import Chip from "@mui/material/Chip";
-import {
+import { useColors } from "../../../constants/colors";
+const {
   borderColor,
   contrastColor,
   fifthColor,
   firstColor,
   searchBarColor,
   secondColorDarker,
-} from "../../../constants/colors";
+} = useColors();
 
 export const Container = styled.div`
   display: flex;

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React from "react";
-import { firstColor, secondColor, thirdColor } from "../../../constants/colors";
+import { useColors } from "../../../constants/colors";
+const { firstColor, secondColor, thirdColor } = useColors();
 
 export const Container = styled.div`
   background-color: ${firstColor};

@@ -17,14 +17,7 @@ import "../chat.css";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
-import {
-  borderColor,
-  contrastColor,
-  fifthColor,
-  searchBarColor,
-  secondColor,
-  thirdColor,
-} from "../../../constants/colors";
+import { useColors } from "../../../constants/colors";
 
 const Chat = ({
   searchTerm,
@@ -49,6 +42,14 @@ const Chat = ({
   handleLinguaClick,
   handleLinguaDelete,
 }) => {
+  const {
+    borderColor,
+    contrastColor,
+    fifthColor,
+    searchBarColor,
+    secondColor,
+    thirdColor,
+  } = useColors();
   const contacts = [
     {
       id: 1,

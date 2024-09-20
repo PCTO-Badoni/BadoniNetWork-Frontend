@@ -20,19 +20,16 @@ import Chat from "./viste/azienda/chat";
 import HomePage from "./viste/azienda/home";
 import Annunci from "./viste/azienda/annunci";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  contrastColor,
-  fourthColor,
-  secondColor,
-  secondColorDarker,
-} from "../constants/colors";
+
 import { useParams } from "react-router-dom";
+import { useColors } from "../constants/colors";
 
 const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />;
 
 function MainPage() {
   const { parametro } = useParams(); // Ottieni il parametro dalla rotta
-
+  const { contrastColor, fourthColor, secondColor, secondColorDarker } =
+    useColors();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedChips, setSelectedChips] = useState([]);
   const [selectedCompetenze, setSelectedCompetenze] = useState([]);

@@ -20,7 +20,7 @@ import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import tt from "@tomtom-international/web-sdk-maps";
 import ttServices from "@tomtom-international/web-sdk-services";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
-import { firstColor } from "../../../constants/colors";
+import { useColors } from "../../../constants/colors";
 
 const instagram = <FontAwesomeIcon icon={faInstagram} />;
 const facebook = <FontAwesomeIcon icon={faFacebook} />;
@@ -48,6 +48,8 @@ function PDFPreview() {
 }
 
 function StudentProfile() {
+  const { firstColor } = useColors();
+
   useEffect(() => {
     const city = "Lecco, Italy";
 

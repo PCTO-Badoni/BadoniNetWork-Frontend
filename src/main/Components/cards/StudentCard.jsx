@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import * as Components from "./CardComponents";
 import { Link } from "react-router-dom";
-import { firstColor } from "../../../constants/colors";
+import { useColors } from "../../../constants/colors";
+const { firstColor, lightFirstColor } = useColors();
 
 const StyledStudentCard = styled.div`
-  background-color: ${firstColor};
+  background-color: ${lightFirstColor};
   border-radius: 12px;
   box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   width: 200px;

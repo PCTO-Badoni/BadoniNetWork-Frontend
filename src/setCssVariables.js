@@ -1,4 +1,6 @@
-import { firstColor, secondColor, thirdColor } from "./constants/colors";
+import { useColors } from "./constants/colors";
+
+const { firstColor, secondColor, thirdColor } = useColors();
 
 const setCssVariables = () => {
   document.documentElement.style.setProperty("--first-color", firstColor);

@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { contrastColor, firstColor } from "../../../constants/colors";
+import { useColors } from "../../../constants/colors";
+const { contrastColor, firstColor } = useColors();
 
 export const Container = styled.div`
   display: flex;

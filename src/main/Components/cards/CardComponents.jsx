@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { firstColor } from "../../../constants/colors";
+import { useColors } from "../../../constants/colors";
+const { contrastColor, firstColor } = useColors();
 
 function getRandomColor() {
   const colors = ["green", "yellow", "red"];
@@ -35,6 +36,7 @@ export const studentName = styled.h2`
   font-size: 1rem; // Modifica qui
   margin: 0;
   text-align: center;
+  color: ${contrastColor};
 `;
 
 export const studentDescription = styled.p`
@@ -42,6 +44,7 @@ export const studentDescription = styled.p`
   text-align: center;
   padding-right: 10px;
   padding-left: 10px;
+  color: ${contrastColor};
 `;
 
 export const studentSkills = styled.div`
@@ -51,6 +54,8 @@ export const studentSkills = styled.div`
   margin-top: 0px;
   height: 55px;
   padding-right: 20px;
+  color: ${contrastColor};
+
   padding-left: 20px;
   overflow: scroll;
   scrollbar-width: none; // For Firefox
@@ -65,9 +70,10 @@ export const studentSkill = styled.span`
     margin-top: 5px;
     border-radius: 10px;
     background-color: rgba(20, 117, 207, 0.7);
-    color: ${firstColor};
-    
-    &:first-child {
+  color: white;
+
+
+  &:first-child {
         margin-left: 0;
     }
     
@@ -77,10 +83,10 @@ export const studentSkill = styled.span`
 
 export const studentButton = styled.button`
   background-color: rgba(20, 117, 207, 0.62);
-  color: ${firstColor};
   border: none;
   border-radius: 10px;
   width: 85%;
+  color: white;
 
   padding: 5px 10px;
   font-size: 0.8rem; // Modifica qui
