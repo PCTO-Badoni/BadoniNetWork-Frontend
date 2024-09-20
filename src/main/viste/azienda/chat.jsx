@@ -204,9 +204,23 @@ const Chat = ({
 
     const deleteMessage = (event, index) => {
       if (event.target.value === "delete") {
-        console.log({ index });
+        messages.splice(index, 1);
+      }
+      setIsTouched(false);
+    };
+
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsTouched(false);
       }
     };
+
+    useEffect(() => {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, []);
 
     return (
       <div
