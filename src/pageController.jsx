@@ -12,7 +12,7 @@ import Register from "./auth/register/register";
 import MainPage from "./main/mainPage";
 import OTP from "./OTP/indexOTP";
 import Login from "./auth/login/login";
-import ReactDOM from "react-dom";
+import ReactDOM from "react-dom/client";
 import EmailSent from "./auth/register/email/emailSent";
 import ForgotPassword from "./auth/security/forgotPassword";
 import ChangePassword from "./auth/security/changePassword";
@@ -276,5 +276,4 @@ root.render(
       </Routes>
     </div>
   </Router>,
-  root,
 );

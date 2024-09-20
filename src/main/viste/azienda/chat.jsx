@@ -18,6 +18,10 @@ import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
 
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:3001");
+
 const Chat = ({
   searchTerm,
   setSearchTerm,
@@ -170,53 +174,13 @@ const Chat = ({
     contact.name.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
-  const [activeContact, setActiveContact] = useState(contacts[0]);
+  const [activeContact, setActiveContact] = useState(contacts[0], {
+    name: "Contatto Attivo",
+  });
 
-  const messages = [
-    {
-      id: 1,
-      sender: activeContact.name,
-      text: "Ciao, come staiaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa?",
-      timestamp: "ggwp AM",
-    },
-    {
-      id: 2,
-      sender: "Tu",
-      text: "Tutto bene, grazie! E tu?",
-      timestamp: "10:02 AM",
-    },
-    {
-      id: 3,
-      sender: activeContact.name,
-      text: "Anche io, grazie!",
-      timestamp: "10:03 AM",
-    },
-    { id: 4, sender: activeContact, text: "Stornzo", timestamp: "10:03 AM" },
-    {
-      id: 5,
-      sender: activeContact.name,
-      text: "Ciao, come stai?",
-      timestamp: "10:01 AM",
-    },
-    {
-      id: 6,
-      sender: "Tu",
-      text: "Tutto bene, grazie! E tu?",
-      timestamp: "10:02 AM",
-    },
-    {
-      id: 7,
-      sender: activeContact.name,
-      text: "Anche io, grazie!",
-      timestamp: "10:03 AM",
-    },
-    {
-      id: 8,
-      sender: activeContact.name,
-      text: "Ciao! Tutto bene?",
-      timestamp: "10:04 AM",
-    },
-  ];
+  const [newMessage, setNewMessage] = useState("");
+
+  const [messages, setMessages] = useState([]);
 
   const chatContainerRef = useRef(null);
 
@@ -265,6 +229,51 @@ const Chat = ({
     setActiveContact(contact);
   };
 
+  useEffect(() => {
+    socket.on("receiveMessage", (message) => {
+      setMessages((prevMessages) => [...prevMessages, message]);
+    });
+
+    return () => {
+      socket.off("receiveMessage");
+    };
+  }, []);
+
+  const options = {
+    hour: "2-digit",
+    minute: "2-digit",
+  };
+
+  const sendMessage = () => {
+    if (newMessage.trim()) {
+      const message = {
+        id: Date.now(),
+        sender: "Tu",
+        text: newMessage,
+        timestamp: new Date().toLocaleTimeString([], options),
+      };
+      socket.emit("sendMessage", message);
+      setMessages((prevMessages) => [...prevMessages, message]);
+      setNewMessage("");
+    }
+  };
+
+  const sendMessageKey = () => {
+    if (event.key === "Enter") {
+      if (newMessage.trim()) {
+        const message = {
+          id: Date.now(),
+          sender: "Tu",
+          text: newMessage,
+          timestamp: new Date().toLocaleTimeString([], options),
+        };
+        socket.emit("sendMessage", message);
+        setMessages((prevMessages) => [...prevMessages, message]);
+        setNewMessage("");
+      }
+    }
+  };
+
   return (
     <Components.contentContainer>
       <Components.TopBar style={{ height: "150px" }}>
@@ -287,13 +296,17 @@ const Chat = ({
                 <Components.ContactInfos>
                   <Components.ContactName>
                     {contact.name}
-                    {/* Messaggio allineato a sinistra */}
-                    <span style={{ color: "#8a8a8a" }}>
-                      {messages[7].timestamp}
-                    </span>{" "}
+                    {messages.length > 0 ? (
+                      <span style={{ color: "#8a8a8a" }}>
+                        {messages[messages.length - 1].timestamp}
+                      </span>
+                    ) : null}
                   </Components.ContactName>
                   <Components.ContactLastMsg>
-                    <span>{messages[7].text}</span>{" "}
+                    <span>
+                      {messages.length > 0 &&
+                        messages[messages.length - 1].text}
+                    </span>
                   </Components.ContactLastMsg>
                 </Components.ContactInfos>
               </ContactCard>
@@ -331,20 +344,21 @@ const Chat = ({
             <IconField style={{ width: "100%" }}>
               <InputIcon
                 className="pi pi-send"
-                onClick={() => console.log("Icon clicked")}
+                onClick={sendMessage}
                 style={{
                   cursor: "pointer",
-                  color: isInputActive ? "#6366f1" : "#ccc",
+                  color: newMessage ? "#6366f1" : "#ccc",
                   marginRight: "5px",
-                  scale: isInputActive ? "1.5" : "1",
+                  scale: newMessage ? "1.5" : "1",
                   transition: "all 0.3s",
                 }}
               />
               <InputText
-                v-model="value2"
+                value={newMessage}
+                onKeyDown={sendMessageKey}
+                onChange={(e) => setNewMessage(e.target.value)}
                 style={{ borderRadius: "12px", width: "100%" }}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
+                placeholder="Scrivi un messaggio..."
               />
             </IconField>
           </Components.Input>

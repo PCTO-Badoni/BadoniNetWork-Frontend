@@ -206,7 +206,7 @@ export const ContactProfileImage = styled.div`
   width: 85px;
   height: 85px;
   scale: 0.6;
-  aspect-ratio: 1/1;
+  aspect-ratio: 30/1;
   border-radius: 50%;
   background-image: url(${(props) => props.url});
   background-size: cover;
