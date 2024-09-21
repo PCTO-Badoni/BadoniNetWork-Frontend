@@ -6,7 +6,7 @@ import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom"; // Modifica qui
 
-const prefix = typeof process !== 'undefined' && process.env.REACT_APP_DEFAULT_HOST_DOMAIN ? process.env.REACT_APP_DEFAULT_HOST_DOMAIN : '';
+const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
 
 const error = (message) => toast.error( message, {
     position: "top-right",
