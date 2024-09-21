@@ -272,7 +272,7 @@ root.render(
         <Route path="/OTP" element={<OTP />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
-        <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/changePassword/:email" element={<ChangePassword />} />
         <Route
           path="/homepage/studentProfile/:id"
           element={<StudentProfile />}

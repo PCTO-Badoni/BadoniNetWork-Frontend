@@ -7,6 +7,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import StrengthMeter from "../register/StrengthMeter";
 import PasswordChecklist from "react-password-checklist";
+import { useParams } from 'react-router-dom';
+
+const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
 
 const responseView = (body) =>
   toast.success(body, {
@@ -35,6 +38,7 @@ const error = (message) =>
   });
 
 function ChangePassword() {
+  const { email } = useParams();
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
 
@@ -60,9 +64,36 @@ function ChangePassword() {
 
   async function submitPassword(event) {
     event.preventDefault();
-
+    
     if (password === confirmPassword && isValid) {
-      responseView("Password modificata correttamente!");
+
+      const data = {
+        email,
+        password,
+        confirmPassword
+      };
+
+      try {
+          const response = await fetch(prefix+"/change-password-recovery", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify(data)
+          });
+
+          if (!response.ok) {
+              const errorData = await response.json();
+              error(errorData.message || "Errore durante il login");
+              throw new Error("HTTP error! status: " + response.status);
+          }
+
+          const responseData = await response.json();
+          console.log(responseData)
+          responseView("Password modificata correttamente!");
+        } catch {
+
+      }
     } else if (password !== confirmPassword) {
       error("Le password non corrispondono");
       return;
