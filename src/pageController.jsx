@@ -41,7 +41,7 @@ import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
-import { contrastColor } from "./constants/colors";
+import { getColors, switchTheme } from "./constants/colors";
 setCssVariables();
 
 async function fetchNotifications() {
@@ -81,6 +81,15 @@ function useBodyScroll() {
 function PageController() {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
+
+  const [_, setForceUpdate] = useState(false); // Forza il re-render quando cambia il tema
+
+  const handleThemeSwitch = () => {
+    switchTheme(); // Cambia il tema nel file colors.js
+    setForceUpdate((prev) => !prev); // Forza il re-render
+  };
+
+  const colors = getColors(); // Ottieni i colori aggiornati dal file colors.js
 
   useEffect(() => {
     fetchNotifications().then(setNotifications);
@@ -187,6 +196,7 @@ function PageController() {
     <PrimeReactProvider>
       <>
         <Components.Header>
+          <Button onClick={handleThemeSwitch}>cambia tema</Button>
           <div
             style={{
               display: "flex",
@@ -204,7 +214,9 @@ function PageController() {
                 color: "black",
               }}
             >
-              <h3 style={{ color: `${contrastColor}` }}>Badoni NetWork</h3>
+              <h3 style={{ color: `${colors.contrastColor}` }}>
+                Badoni NetWork
+              </h3>
             </Link>
           </div>
           <div

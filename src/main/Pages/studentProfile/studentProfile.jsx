@@ -20,7 +20,7 @@ import "@tomtom-international/web-sdk-maps/dist/maps.css";
 import tt from "@tomtom-international/web-sdk-maps";
 import ttServices from "@tomtom-international/web-sdk-services";
 import { faLink } from "@fortawesome/free-solid-svg-icons";
-import { firstColor } from "../../../constants/colors";
+import { getColors } from "../../../constants/colors";
 
 const instagram = <FontAwesomeIcon icon={faInstagram} />;
 const facebook = <FontAwesomeIcon icon={faFacebook} />;
@@ -48,6 +48,7 @@ function PDFPreview() {
 }
 
 function StudentProfile() {
+  const colors = getColors();
   useEffect(() => {
     const city = "Lecco, Italy";
 
@@ -131,7 +132,9 @@ function StudentProfile() {
               <div id="map" style={{ borderRadius: "12px", flex: "1" }}></div>
             </div>
             <Components.AziendeWorkedContainer>
-              <Components.MapTitle style={{ backgroundColor: firstColor }}>
+              <Components.MapTitle
+                style={{ backgroundColor: colors.firstColor }}
+              >
                 Esperienze
               </Components.MapTitle>
               <Components.AziendeWorkedContent>
@@ -181,7 +184,9 @@ function StudentProfile() {
             </Components.AziendeWorkedContainer>
 
             <Components.CVContainer>
-              <Components.MapTitle style={{ backgroundColor: firstColor }}>
+              <Components.MapTitle
+                style={{ backgroundColor: colors.firstColor }}
+              >
                 Curriculum Vitae
               </Components.MapTitle>
               <Components.CVContent>
@@ -217,19 +222,19 @@ function StudentProfile() {
                     type="email"
                     placeholder="Email Aziendale"
                     onChange={(e) => setEmail(e.target.value)}
-                    style={{ backgroundColor: firstColor }}
+                    style={{ backgroundColor: colors.firstColor }}
                   />
                   <Components.EmailTitleInput
                     type="text"
                     placeholder="Nome Azienda"
                     onChange={(e) => setEmail(e.target.value)}
-                    style={{ backgroundColor: firstColor }}
+                    style={{ backgroundColor: colors.firstColor }}
                   />
                   <Components.EmailContentInput
                     type="text"
                     placeholder="Messaggio"
                     onChange={(e) => setEmail(e.target.value)}
-                    style={{ backgroundColor: firstColor }}
+                    style={{ backgroundColor: colors.firstColor }}
                   />
                   <Components.ButtonsRow>
                     <Components.Iconbutton icon={<FaEnvelope size={20} />} />

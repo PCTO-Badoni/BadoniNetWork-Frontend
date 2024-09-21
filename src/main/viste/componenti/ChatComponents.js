@@ -1,13 +1,8 @@
 import styled from "styled-components";
 import Chip from "@mui/material/Chip";
-import {
-  borderColor,
-  contrastColor,
-  fifthColor,
-  firstColor,
-  searchBarColor,
-  secondColorDarker,
-} from "../../../constants/colors";
+import { getColors } from "../../../constants/colors";
+
+const colors = getColors();
 
 export const Container = styled.div`
   display: flex;
@@ -30,7 +25,7 @@ export const contentContainer = styled.div`
 `;
 
 export const TopBar = styled.div`
-  background: ${firstColor};
+  background: ${colors.firstColor};
   width: 100%;
   height: 7em;
   border-radius: 12px;
@@ -44,7 +39,7 @@ export const ProfileInformations = styled.div`
   flex-direction: row;
   height: 100%;
   width: 100%;
-  background-color: ${firstColor};
+  background-color: ${colors.firstColor};
 `;
 
 export const userInfoProfilePic = styled.div`
@@ -55,7 +50,7 @@ export const userInfoProfilePic = styled.div`
   background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
   background-size: cover;
   background-position: center;
-  border: 2px solid ${firstColor};
+  border: 2px solid ${colors.firstColor};
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
   &::after {
@@ -67,20 +62,20 @@ export const userInfoProfilePic = styled.div`
     height: 20px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor};
-    border: 2px solid ${firstColor};
+    border: 2px solid ${colors.firstColor};
   }
 `;
 
 export const listItemName = styled.div`
   font-size: 1.6rem;
   font-weight: bold;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
 `;
 
 export const listItemInfo = styled.div`
   width: 100%;
   font-size: 1em;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
 `;
 
 export const nameContainer = styled.div`
@@ -89,8 +84,8 @@ export const nameContainer = styled.div`
   flex-direction: row;
   align-content: center;
   height: 4em;
-  border-bottom: 2px solid ${borderColor};
-  color: ${contrastColor};
+  border-bottom: 2px solid ${colors.borderColor};
+  color: ${colors.contrastColor};
 `;
 
 export const MenuContainer = styled.div`
@@ -105,7 +100,7 @@ export const MenuContainer = styled.div`
 
 export const MenuItem = styled.div`
   cursor: pointer;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
   text-decoration: none;
   width: 100%;
   border-top-right-radius: 8px;
@@ -138,7 +133,7 @@ export const ContactsContainer = styled.div`
   align-items: flex-start;
   flex-wrap: wrap;
   border-radius: 12px;
-  background-color: ${firstColor};
+  background-color: ${colors.firstColor};
   overflow: clip;
   height: 100%;
   width: 37%;
@@ -155,7 +150,7 @@ export const ChatsContainer = styled.div`
   flex-grow: 5;
   height: 100%;
   border-radius: 12px;
-  background-color: ${firstColor};
+  background-color: ${colors.firstColor};
   margin-left: 5px;
   overflow: scroll;
 `;
@@ -163,8 +158,8 @@ export const ChatsContainer = styled.div`
 export const Input = styled.div`
   width: 100%;
   margin-top: 20px;
-  color: ${contrastColor};
-  background-color: ${searchBarColor};
+  color: ${colors.contrastColor};
+  background-color: ${colors.searchBarColor};
 `;
 
 export const ContactCard = styled.div`
@@ -172,23 +167,23 @@ export const ContactCard = styled.div`
   flex-direction: row;
   justify-content: start;
   align-items: center;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
   width: 100%;
   height: 5em;
   border-radius: 12px;
   background-color: ${({ contactId, selectedId }) =>
-    contactId === selectedId ? `${secondColorDarker}` : "${firstColor}"};
+    contactId === selectedId ? `${colors.secondColorDarker}` : "${firstColor}"};
   margin-bottom: 15px;
   border: ${({ contactId, selectedId }) =>
     contactId === selectedId
-      ? `2px solid ${borderColor}`
-      : `1px solid ${borderColor}`};
+      ? `2px solid ${colors.borderColor}`
+      : `1px solid ${colors.borderColor}`};
 
   &:hover {
     background-color: ${({ contactId, selectedId }) =>
       contactId === selectedId
-        ? `${secondColorDarker}`
-        : `${secondColorDarker}`};
+        ? `${colors.secondColorDarker}`
+        : `${colors.secondColorDarker}`};
 
     cursor: ${({ contactId, selectedId }) =>
       contactId === selectedId ? "" : "pointer"};
@@ -200,22 +195,22 @@ export const ContactsSearchBar = styled.input.attrs({
   placeholder: "Cerca",
 })`
   border-radius: 12px;
-  border-color: ${borderColor};
-  border: 1px solid ${contrastColor};
+  border-color: ${colors.borderColor};
+  border: 1px solid ${colors.contrastColor};
   padding: 10px 5px 10px 40px;
   background: url("https://static-00.iconduck.com/assets.00/search-icon-2048x2048-cmujl7en.png")
     no-repeat left 10px center;
   background-size: 20px;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
   font-family: "Montserrat", sans-serif;
   font-size: 0.9em;
   width: 100%;
-  outline-color: ${contrastColor};
+  outline-color: ${colors.contrastColor};
   margin-bottom: 10px;
   margin-right: 20px;
 
   &::placeholder {
-    color: ${contrastColor}; /* Cambia il colore del placeholder */
+    color: ${colors.contrastColor}; /* Cambia il colore del placeholder */
   }
 `;
 export const ContactProfileImage = styled.div`
@@ -228,7 +223,7 @@ export const ContactProfileImage = styled.div`
   background-image: url(${(props) => props.url});
   background-size: cover;
   background-position: center;
-  border: 2px solid ${firstColor};
+  border: 2px solid ${colors.firstColor};
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 `;
 
@@ -242,7 +237,7 @@ export const ContactInfos = styled.div`
 export const ContactName = styled.div`
   font-size: 1em;
   display: flex;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
   width: 100%;
   justify-content: space-between; /* Distribuisce gli elementi tra l'inizio e la fine */
   padding-right: 10px;
@@ -250,7 +245,7 @@ export const ContactName = styled.div`
 
 export const ContactLastMsg = styled.div`
   font-size: 0.9em;
-  color: ${fifthColor};
+  color: ${colors.fifthColor};
   white-space: nowrap; /* Evita che il testo vada a capo */
   overflow: hidden; /* Nasconde il testo che esce fuori */
   text-overflow: ellipsis; /* Aggiunge i "..." quando il testo è troppo lungo */
@@ -265,7 +260,7 @@ export const ContactCardList = styled.div`
   width: 100%;
   height: 100%;
   border-radius: 12px;
-  background-color: ${firstColor};
+  background-color: ${colors.firstColor};
   margin-bottom: 10px;
   overflow: scroll;
   padding-right: 20px;
@@ -275,12 +270,12 @@ export const ContactCardList = styled.div`
 export const listItem = styled.div`
   display: flex;
   width: 100%;
-  border-bottom: 1px solid ${borderColor};
+  border-bottom: 1px solid ${colors.borderColor};
 `;
 
 export const SkillChip = styled(Chip)`
   background-color: rgba(20, 117, 207, 0.7);
-  color: ${firstColor};
+  color: ${colors.firstColor};
   margin-top: 5px;
   margin-right: 5px;
   font-weight: bold;
@@ -308,7 +303,7 @@ export const ListItemSkill = styled.div`
   margin-top: 5px;
   border-radius: 10px;
   background-color: rgba(20, 117, 207, 0.7);
-  color: ${firstColor};
+  color: ${colors.firstColor};
 
   &:first-child {
     margin-left: 0;
@@ -332,7 +327,7 @@ export const ViewModeButton = styled.button`
   background: none;
   border: none;
   font-size: 20px;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
   letter-spacing: 1px;
   text-transform: uppercase;
   text-decoration: none;
@@ -350,7 +345,7 @@ export const DisponibilityButton = styled.button`
   background: none;
   border: none;
   font-size: 15px;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
   text-decoration: none;
   font-family: "Montserrat", sans-serif;
 
@@ -361,7 +356,7 @@ export const DisponibilityButton = styled.button`
 
 export const VerticalSeparator = styled.div`
   height: 20px;
-  border-left: 1px solid ${contrastColor};
+  border-left: 1px solid ${colors.contrastColor};
   margin-left: 10px;
   margin-right: 10px;
 `;

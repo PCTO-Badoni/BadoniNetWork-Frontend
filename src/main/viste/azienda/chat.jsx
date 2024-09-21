@@ -17,14 +17,7 @@ import "../chat.css";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
-import {
-  borderColor,
-  contrastColor,
-  fifthColor,
-  searchBarColor,
-  secondColor,
-  thirdColor,
-} from "../../../constants/colors";
+import { getColors } from "../../../constants/colors";
 
 const Chat = ({
   searchTerm,
@@ -180,6 +173,8 @@ const Chat = ({
 
   const [activeContact, setActiveContact] = useState(contacts[0]);
 
+  const colors = getColors();
+
   const messages = [
     {
       id: 1,
@@ -247,8 +242,10 @@ const Chat = ({
         <div
           style={{
             display: "inline-block",
-            backgroundColor: isOwnMessage ? `${thirdColor}` : `${secondColor}`,
-            color: isOwnMessage ? "#000" : `${contrastColor}`,
+            backgroundColor: isOwnMessage
+              ? `${colors.thirdColor}`
+              : `${colors.secondColor}`,
+            color: isOwnMessage ? "#000" : `${colors.contrastColor}`,
             padding: "10px",
             borderRadius: "10px",
             maxWidth: "70%", // Limita la larghezza del messaggio
@@ -297,7 +294,7 @@ const Chat = ({
                   <Components.ContactName>
                     {contact.name}
                     {/* Messaggio allineato a sinistra */}
-                    <span style={{ color: `${fifthColor}` }}>
+                    <span style={{ color: `${colors.fifthColor}` }}>
                       {messages[7].timestamp}
                     </span>{" "}
                   </Components.ContactName>
@@ -354,8 +351,8 @@ const Chat = ({
                 style={{
                   borderRadius: "12px",
                   width: "100%",
-                  borderColor: `${borderColor}`,
-                  backgroundColor: `${searchBarColor}`,
+                  borderColor: `${colors.borderColor}`,
+                  backgroundColor: `${colors.searchBarColor}`,
                 }}
                 onFocus={handleFocus}
                 onBlur={handleBlur}

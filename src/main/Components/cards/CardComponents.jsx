@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { firstColor } from "../../../constants/colors";
+import { getColors } from "../../../constants/colors";
+
+const colors = getColors();
 
 function getRandomColor() {
   const colors = ["green", "yellow", "red"];
@@ -15,7 +17,7 @@ export const cardProfilePic = styled.div`
   background-size: cover;
   background-position: center;
   margin: 10px auto 10px;
-  border: 2px solid ${firstColor};
+  border: 2px solid ${colors.firstColor};
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
   &::after {
@@ -27,7 +29,7 @@ export const cardProfilePic = styled.div`
     height: 20px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor}; // Modifica qui
-    border: 2px solid ${firstColor};
+    border: 2px solid ${colors.firstColor};
   }
 `;
 
@@ -65,7 +67,7 @@ export const studentSkill = styled.span`
     margin-top: 5px;
     border-radius: 10px;
     background-color: rgba(20, 117, 207, 0.7);
-    color: ${firstColor};
+    color: ${colors.firstColor};
     
     &:first-child {
         margin-left: 0;
@@ -77,7 +79,7 @@ export const studentSkill = styled.span`
 
 export const studentButton = styled.button`
   background-color: rgba(20, 117, 207, 0.62);
-  color: ${firstColor};
+  color: ${colors.firstColor};
   border: none;
   border-radius: 10px;
   width: 85%;
@@ -103,7 +105,7 @@ export const customBanner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${firstColor};
+  color: ${colors.firstColor};
   font-size: 2rem;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

@@ -1,5 +1,7 @@
 import styled from "styled-components";
-import { contrastColor, firstColor } from "../constants/colors";
+import { getColors } from "../constants/colors";
+
+const colors = getColors();
 
 export const Container = styled.div`
   display: flex;
@@ -22,7 +24,7 @@ export const contentContainer = styled.div`
 `;
 
 export const TopBar = styled.div`
-  background: ${firstColor};
+  background: ${colors.firstColor};
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -68,7 +70,7 @@ export const FilterContainer = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  background-color: ${firstColor};
+  background-color: ${colors.firstColor};
   width: 18dvw;
   height: 80dvh;
   padding: 15px;
@@ -81,7 +83,7 @@ export const Button = styled.button`
   border-radius: 20px;
   border: 1px solid #5865f2;
   background-color: #5865f2;
-  color: ${firstColor}fff;
+  color: ${colors.firstColor}fff;
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -110,7 +112,7 @@ export const MenuContainer = styled.div`
 
 export const MenuItem = styled.div`
   cursor: pointer;
-  color: ${contrastColor};
+  color: ${colors.contrastColor};
   text-decoration: none;
   width: 100%;
   border-top-right-radius: 8px;
@@ -136,7 +138,7 @@ export const cardsContainer = styled.div`
 
   max-height: 95vh;
   border-radius: 12px;
-  background-color: ${firstColor};
+  background-color: ${colors.firstColor};
   overflow: scroll;
 `;
 
@@ -151,7 +153,7 @@ export const listContainer = styled.div`
   height: 150vh;
 
   border-radius: 12px;
-  background-color: ${firstColor};
+  background-color: ${colors.firstColor};
   overflow: scroll;
 `;
 
@@ -170,7 +172,7 @@ export const listItemProfilePic = styled.div`
   background-size: cover;
   background-position: center;
   margin: 10px auto 10px;
-  border: 2px solid ${firstColor};
+  border: 2px solid ${colors.firstColor};
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
   &::after {
@@ -182,7 +184,7 @@ export const listItemProfilePic = styled.div`
     height: 10px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor};
-    border: 2px solid ${firstColor};
+    border: 2px solid ${colors.firstColor};
   }
 `;
 
@@ -218,7 +220,7 @@ export const ListItemSkill = styled.div`
   margin-top: 5px;
   border-radius: 10px;
   background-color: rgba(20, 117, 207, 0.7);
-  color: ${firstColor};
+  color: ${colors.firstColor};
 
   &:first-child {
     margin-left: 0;
