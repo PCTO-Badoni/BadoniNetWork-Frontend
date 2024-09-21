@@ -191,7 +191,25 @@ const Chat = ({
     }
   }, [messages]);
 
-  const Message = ({ sender, text, timestamp, isOwnMessage, index }) => {
+  /*const deleteMessage = (event, index) => {
+    messages.splice(index, 1);
+  };*/
+
+  const deleteMessage = (index) => {
+    setMessages((prevMessages) => {
+      const updatedMessages = prevMessages.filter((_, i) => i !== index);
+      return updatedMessages;
+    });
+  };
+
+  const Message = ({
+    sender,
+    text,
+    timestamp,
+    isOwnMessage,
+    index,
+    deleteMessage,
+  }) => {
     const [isTouched, setIsTouched] = useState(false);
 
     const handleMouseEnter = () => {
@@ -202,17 +220,18 @@ const Chat = ({
       setIsTouched(false);
     };
 
-    const deleteMessage = (event, index) => {
-      if (event.target.value === "delete") {
-        messages.splice(index, 1);
-      }
-      setIsTouched(false);
-    };
-
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setIsTouched(false);
       }
+    };
+
+    const handleSelectChange = (event) => {
+      const value = event.target.value;
+      if (value === "delete") {
+        deleteMessage(index);
+      }
+      setIsTouched(false);
     };
 
     useEffect(() => {
@@ -255,7 +274,7 @@ const Chat = ({
             {text}
             {isTouched && (
               <select
-                onChange={(event) => deleteMessage(event, index)}
+                onChange={handleSelectChange}
                 style={{
                   marginLeft: "6px",
                   backgroundColor: "transparent",
@@ -382,6 +401,7 @@ const Chat = ({
             <h2>{activeContact.name}</h2>
           </Components.nameContainer>
           <div
+            key={Math.random()}
             style={{
               width: "100%",
               overflowY: "scroll",
@@ -390,16 +410,18 @@ const Chat = ({
               paddingTop: "10px",
             }}
           >
-            {messages.map((message, index) => (
-              <Message
-                key={message.id}
-                sender={message.sender}
-                text={message.text}
-                timestamp={message.timestamp}
-                isOwnMessage={message.sender === "Tu"}
-                index={index}
-              />
-            ))}
+            {messages.length > 0
+              ? messages.map((message, index) => (
+                  <Message
+                    key={message.id}
+                    text={message.text}
+                    timestamp={message.timestamp}
+                    isOwnMessage={message.sender === "Tu"}
+                    index={index}
+                    deleteMessage={deleteMessage}
+                  />
+                ))
+              : null}
           </div>
           <Components.Input>
             <IconField style={{ width: "100%" }}>
