@@ -27,11 +27,11 @@ import Flatpickr from "react-flatpickr";
 // `
 
 export const Container = styled.div`
-  background-color: #fff;
+  background-color: var(--firstColor);
   border-radius: 10px;
   box-shadow:
-    0 14px 28px rgba(0, 0, 0, 0.25),
-    0 10px 10px rgba(0, 0, 0, 0.22);
+    0 14px 28px var(--shadowColor),
+    0 10px 10px var(--shadowColor);
   position: relative;
   overflow: hidden;
   width: 70vw;
@@ -46,7 +46,7 @@ export const sendingEmail = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: var(--firstColor);
   display: flex;
   align-content: center;
   justify-content: center;
@@ -56,7 +56,7 @@ export const sendingEmail = styled.div`
   font-family: "Montserrat", sans-serif;
   font-weight: bold;
   font-size: 1.25rem;
-  color: #333;
+  color: var(--contrastColor);
 `;
 
 export const AziendaContainer = styled.div`
@@ -91,7 +91,7 @@ export const StudenteContainer = styled.div`
 `;
 
 export const Form = styled.form`
-  background-color: #ffffff;
+  background-color: var(--firstColor);
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -105,6 +105,7 @@ export const Title = styled.h1`
   font-size: 3em;
   text-align: center;
   font-weight: bold;
+  color: var(--contrastColor);
   opacity: 1;
   transition: opacity 0.5s ease-in-out;
   ${(props) => props.visible === false && `display: none;`}
@@ -120,10 +121,11 @@ export const Heading = styled.div`
 `;
 
 export const Input = styled.input`
-  background-color: #ffffff;
-  border: 3px solid #eee;
+  background-color: var(--firstColor);
+  border: 3px solid var(--borderColor);
   padding: 0.75rem;
   width: 100%;
+  color: var(--contrastColor);
   border-radius: 15px;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
@@ -136,8 +138,8 @@ export const DataDiNascita = styled(Flatpickr)`
 `;
 
 export const Select = styled.select`
-  background-color: #ffffff;
-  border: 3px solid #eee;
+  background-color: var(--firstColor);
+  border: 3px solid var(--borderColor);
   padding: 0.75rem;
   width: 100%;
   border-radius: 15px;
@@ -148,9 +150,9 @@ export const Select = styled.select`
 
 export const Button = styled.button`
   border-radius: 20px;
-  border: 1px solid #5865f2;
-  background-color: #5865f2;
-  color: #ffffff;
+  border: 1px solid var(--thirdColor);
+  background-color: var(--thirdColor);
+  color: var(--contrastColor);
   font-size: 1rem;
   font-weight: bold;
   padding: 0.75rem 2.8125rem;
@@ -164,7 +166,7 @@ export const Button = styled.button`
   &:focus {
     outline: none;
   }
-  
+
   &:active {
     transform: scale(0.95);
   }
@@ -192,7 +194,8 @@ export const StepsNavButton = styled.button`
 export const GhostButton = styled(Button)`
   font-size: 1em;
   background-color: transparent;
-  border-color: #ffffff;
+  border-color: var(--borderColor);
+  color: #f2f2f2;
 `;
 
 export const OverlayContainer = styled.div`
@@ -233,7 +236,7 @@ export const Overlay = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: 0 0;
-  color: #ffffff;
+  color: #f2f2f2;
   position: relative;
   left: -100%;
   height: 100%;
@@ -281,8 +284,8 @@ export const Paragraph = styled.p`
 `;
 
 export const Header = styled.div`
-  background-color: white;
-  color: #ffffff;
+  background-color: var(--firstColor);
+  color: var(--contrastColor);
   padding: 0.625rem;
   text-align: center;
   border-radius: 10px 10px 0 0;
@@ -293,7 +296,7 @@ export const AlreadyRegistered = styled(Link)`
   font-weight: 100;
   line-height: 1.25rem;
   letter-spacing: 0.5px;
-  color: inherit; // Add this to keep the inherited color
+  color: var(--contrastColor);
   text-decoration: none; // Add this to remove the underline
   margin: 0.625rem 0 1.875rem;
 `;
@@ -304,7 +307,7 @@ export const UploadForm = styled.form`
   flex-direction: column;
   justify-content: center; /* Distribuisce equamente gli elementi verticalmente */
   align-items: center; /* Centra gli elementi orizzontalmente */
-  border: 2px dashed #1475cf;
+  border: 2px dashed var(--thirdColor);
   height: 16.875rem;
   width: 31.25rem;
   cursor: pointer;
@@ -342,9 +345,9 @@ export const AddressSelector = styled.div`
 
 export const MapButton = styled.button`
   border-radius: 20px;
-  border: 1px solid #5865f2;
-  background-color: #5865f2;
-  color: #ffffff;
+  border: 1px solid var(--thirdColor);
+  background-color: var(--thirdColor);
+  color: var(--contrastColor);
   font-size: 0.75rem;
   font-weight: bold;
   letter-spacing: 1px;

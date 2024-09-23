@@ -24,7 +24,7 @@ const arrowLeft = <FontAwesomeIcon icon={faChevronLeft} />;
 const arrowRight = <FontAwesomeIcon icon={faChevronRight} />;
 const save = <FontAwesomeIcon icon={faSave} />;
 const steps = ["Step0", "Step 1", "Step 2", "Step 3", "Step 4", "Step 5"];
-const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
+const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN;
 
 const responseView = (body) =>
   toast.success(body, {
@@ -118,7 +118,7 @@ function Register() {
     console.log(data);
 
     try {
-      const response = await fetch(prefix+"/register/azienda", {
+      const response = await fetch(prefix + "/register/azienda", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -161,7 +161,7 @@ function Register() {
     };
 
     try {
-      const response = await fetch(prefix+"/api/verify-email", {
+      const response = await fetch(prefix + "/api/verify-email", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -233,7 +233,7 @@ function Register() {
     console.log(password);
 
     try {
-      const response = await fetch(prefix+"/register/utente", {
+      const response = await fetch(prefix + "/register/utente", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -264,15 +264,12 @@ function Register() {
     }));
 
     try {
-      const response = await fetch(
-        prefix+"/api/set-user-competences",
-        {
-          method: "POST",
-          mode: "cors",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(competenze),
-        },
-      );
+      const response = await fetch(prefix + "/api/set-user-competences", {
+        method: "POST",
+        mode: "cors",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(competenze),
+      });
 
       if (!response.ok) {
         const errorData = await response.json();
@@ -286,7 +283,7 @@ function Register() {
 
   async function getCompetenzeFromDB() {
     try {
-      const response = await fetch(prefix+"/api/get-all-competenze", {
+      const response = await fetch(prefix + "/api/get-all-competenze", {
         method: "GET",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -459,7 +456,6 @@ function Register() {
 
   return (
     <>
-      <Components.Button onClick={getCompetenzeFromDB} >getcomp</Components.Button>
       <div style={{ scale: "0.9", marginTop: "-10em" }}>
         <PhotoProvider>
           <div
@@ -634,7 +630,9 @@ function Register() {
               >
                 <Components.Overlay signingIn={signIn}>
                   <Components.LeftOverlayPanel signingIn={signIn}>
-                    <Components.Title>Benvenuto!</Components.Title>
+                    <Components.Title style={{ color: "#f2f2f2" }}>
+                      Benvenuto!
+                    </Components.Title>
                     <Components.Paragraph>
                       Sei uno studente? Clicca qui sotto!
                     </Components.Paragraph>
@@ -649,7 +647,9 @@ function Register() {
                     </Components.GhostButton>
                   </Components.LeftOverlayPanel>
                   <Components.RightOverlayPanel signingIn={signIn}>
-                    <Components.Title>Benvenuto!</Components.Title>
+                    <Components.Title style={{ color: "#f2f2f2" }}>
+                      Benvenuto!
+                    </Components.Title>
                     <Components.Paragraph>
                       Sei un'azienda? Clicca qui sotto!
                     </Components.Paragraph>

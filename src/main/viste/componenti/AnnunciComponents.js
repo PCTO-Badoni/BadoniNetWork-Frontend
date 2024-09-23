@@ -180,7 +180,7 @@ export const Annuncio = styled.div`
   display: flex;
   flex-direction: row;
   border-radius: 12px;
-  background-color: var(--firstColor);
+  background-color: var(--lightFirstColor);
   -webkit-box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   padding: 1em;

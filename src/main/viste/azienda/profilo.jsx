@@ -129,7 +129,12 @@ const Profilo = ({
           </div>
         </Components.RecapInput>
         <Components.RecapInput>
-          <label htmlFor="telefono">Telefono</label>
+          <label
+            style={{ borderColor: `var(--borderColor)` }}
+            htmlFor="telefono"
+          >
+            Telefono
+          </label>
           <div style={{ position: "relative", width: "100%" }}>
             <Components.Input
               idtype="telefono"

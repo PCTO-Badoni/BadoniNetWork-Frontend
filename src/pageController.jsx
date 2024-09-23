@@ -25,12 +25,10 @@ import { students } from "./main/Components/students";
 import { ToastContainer } from "react-toastify";
 import { PrimeReactProvider, PrimeReactContext } from "primereact/api";
 import { useParams } from "react-router-dom";
-
 import "primereact/resources/themes/bootstrap4-light-blue/theme.css";
 
 import { Button } from "primereact/button";
 import { Toast } from "primereact/toast";
-
 import { Menu } from "primereact/menu";
 import { Badge } from "primereact/badge";
 import { Avatar } from "primereact/avatar";
@@ -137,12 +135,24 @@ function PageController() {
   let items = [
     {
       label: "Profilo",
+      color: "var(--contrastColor)",
+      backgroundColor: "var(--firstColor)",
+      style: {
+        backgroundColor: "var(--firstColor)",
+        color: "var(--contrastColor)",
+      },
       items: [
         {
+          backgroundColor: "var(--firstColor)",
           label: "Notifiche",
           icon: "pi pi-inbox",
+          color: "var(--contrastColor)",
           badge: notifications.length > 0 ? notifications.length : null,
           template: itemRenderer,
+          style: {
+            backgroundColor: "var(--firstColor)",
+            color: "var(--contrastColor)",
+          },
           command: (event) => {
             event.stopPropagation();
             setNotificationOpen(!isNotificationOpen);
@@ -153,6 +163,10 @@ function PageController() {
           icon: "pi pi-cog",
           shortcut: "⌘+O",
           template: itemRenderer,
+          style: {
+            backgroundColor: "var(--firstColor)",
+            color: "var(--contrastColor)",
+          },
           command: () => {
             navigate("/homepage#profilo");
           },
@@ -162,6 +176,10 @@ function PageController() {
           icon: "pi pi-sign-out",
           shortcut: "⌘+Q",
           template: itemRenderer,
+          style: {
+            backgroundColor: "var(--firstColor)",
+            color: "var(--contrastColor)",
+          },
           command: () => {
             navigate("/login");
           },
@@ -175,6 +193,10 @@ function PageController() {
       label: "Indietro",
       icon: "pi pi-arrow-left",
       template: itemRenderer,
+      style: {
+        backgroundColor: "var(--firstColor)",
+        color: "var(--contrastColor)",
+      },
       command: (event) => {
         event.stopPropagation();
         setNotificationOpen(false);
@@ -186,6 +208,10 @@ function PageController() {
         label: notification.text,
         icon: "pi pi-bell",
         template: itemRenderer,
+        style: {
+          backgroundColor: "var(--firstColor)",
+          color: "var(--contrastColor)",
+        },
         command: (event) => {
           event.stopPropagation();
           handleDeleteClick(notification.id);
@@ -198,7 +224,6 @@ function PageController() {
     <PrimeReactProvider>
       <>
         <Components.Header>
-          <Button onClick={handleThemeSwitch}>cambia tema</Button>
           <div
             style={{
               display: "flex",
@@ -209,15 +234,12 @@ function PageController() {
             }}
           >
             <Components.Logo />
-            <Link
-              to="/login"
-              style={{
-                textDecoration: "none",
-                color: "black",
-              }}
+            <h3
+              onClick={handleThemeSwitch}
+              style={{ color: `var(--contrastColor)` }}
             >
-              <h3 style={{ color: `var(--contrastColor)` }}>Badoni NetWork</h3>
-            </Link>
+              Badoni NetWork
+            </h3>
           </div>
           <div
             style={{
@@ -227,19 +249,29 @@ function PageController() {
               alignItems: "center",
               justifyContent: "center",
               paddingRight: "1%",
+              backgroundColor: "var(--firstColor)",
             }}
           >
             <Avatar
               className="p-overlay-badge"
               icon="pi pi-user"
               size="large"
-              style={{ borderRadius: "100px" }}
+              style={{
+                borderRadius: "100px",
+                backgroundColor: "var(--secondColor)",
+                color: "var(--contrastColor)",
+              }}
               onClick={(event) => menuRight.current.toggle(event)}
             >
               {notifications.length > 0 && (
                 <Badge
                   value=" "
-                  style={{ scale: "70%", marginTop: "6px", marginRight: "6px" }}
+                  style={{
+                    scale: "70%",
+                    marginTop: "6px",
+                    marginRight: "6px",
+                    backgroundColor: "var(--thirdColor)",
+                  }}
                 />
               )}
               <div className="card flex justify-content-center">
@@ -252,6 +284,8 @@ function PageController() {
                     maxHeight: "25em",
                     transition: "max-height 0.5s ease-in-out",
                     overflowY: "scroll",
+                    backgroundColor: "var(--firstColor)",
+                    color: "var(--contrastColor)",
                   }}
                 />
               </div>

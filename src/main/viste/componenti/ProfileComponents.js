@@ -16,16 +16,13 @@ export const contentContainer = styled.div`
   align-items: center;
   height: 95dvh;
   border-radius: 12px;
-  background-color: #fff;
+  background-color: var(--firstColor);
   width: 100%;
   max-width: 98.9%;
   overflow: hidden;
   box-sizing: border-box;
   padding: 20px;
-  margin-top: 0;
-  margin-right: auto;
-  margin-left: 15px;
-  margin-bottom: 0;
+  margin: 0 auto 0 15px;
 `;
 
 export const profileContainer = styled.div`
@@ -45,8 +42,8 @@ export const TopBar = styled.div`
 
 export const Button = styled.button`
   border-radius: 20px;
-  border: 1px solid #5865f2;
-  background-color: #5865f2;
+  border: 1px solid var(--thirdColor);
+  background-color: var(--thirdColor);
   color: #ffffff;
   font-size: 12px;
   font-weight: bold;
@@ -73,24 +70,27 @@ export const RecapInput = styled.div`
 `;
 
 export const Input = styled.input`
-  background-color: #ffffff;
-  border: 3px solid #eee;
+  background-color: var(--secondColor);
+  border: 3px solid var(--borderColor);
+  color: var(--contrastColor);
   padding: 0.75rem;
   width: 100%;
   border-radius: 15px;
   font-family: "Montserrat", sans-serif;
   font-size: 1rem;
-  outline: ${(props) => (props.error ? "solid red 2px" : null)};
+  outline: ${(props) => (props.error ? "solid red" : null)};
 `;
 
 export const RecapIcon = styled.i`
   margin-right: 10px;
   font-size: 18px;
   text-decoration: none;
+  color: var(--contrastColor);
 `;
 
 export const LabelContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin-bottom: 10px;
+  border-color: var(--borderColor);
 `;
