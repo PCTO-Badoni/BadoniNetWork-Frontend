@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import { getColors } from "../../../constants/colors";
-
-const colors = getColors();
 
 function getRandomColor() {
   const colors = ["green", "yellow", "red"];
@@ -17,7 +14,7 @@ export const cardProfilePic = styled.div`
   background-size: cover;
   background-position: center;
   margin: 10px auto 10px;
-  border: 2px solid ${colors.firstColor};
+  border: 2px solid var(--firstColor);
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
   &::after {
@@ -29,7 +26,7 @@ export const cardProfilePic = styled.div`
     height: 20px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor}; // Modifica qui
-    border: 2px solid ${colors.firstColor};
+    border: 2px solid var(--firstColor);
   }
 `;
 
@@ -37,6 +34,7 @@ export const studentName = styled.h2`
   font-size: 1rem; // Modifica qui
   margin: 0;
   text-align: center;
+  color: var(--contrastColor);
 `;
 
 export const studentDescription = styled.p`
@@ -44,6 +42,7 @@ export const studentDescription = styled.p`
   text-align: center;
   padding-right: 10px;
   padding-left: 10px;
+  color: var(--contrastColor);
 `;
 
 export const studentSkills = styled.div`
@@ -67,9 +66,10 @@ export const studentSkill = styled.span`
     margin-top: 5px;
     border-radius: 10px;
     background-color: rgba(20, 117, 207, 0.7);
-    color: ${colors.firstColor};
-    
-    &:first-child {
+    color: var(--contrastColor);
+
+
+  &:first-child {
         margin-left: 0;
     }
     
@@ -79,7 +79,7 @@ export const studentSkill = styled.span`
 
 export const studentButton = styled.button`
   background-color: rgba(20, 117, 207, 0.62);
-  color: ${colors.firstColor};
+  color: var(--contrastColor);
   border: none;
   border-radius: 10px;
   width: 85%;
@@ -105,7 +105,7 @@ export const customBanner = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  color: ${colors.firstColor};
+  color: var(--firstColor);
   font-size: 2rem;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);

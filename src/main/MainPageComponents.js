@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import { getColors } from "../constants/colors";
-
-const colors = getColors();
 
 export const Container = styled.div`
   display: flex;
@@ -24,7 +21,7 @@ export const contentContainer = styled.div`
 `;
 
 export const TopBar = styled.div`
-  background: ${colors.firstColor};
+  background: var(--firstColor);
   display: flex;
   flex-direction: column;
   align-items: start;
@@ -58,6 +55,7 @@ export const FilterButton = styled.button`
   font-size: 1em;
   font-family: "Montserrat", sans-serif;
   cursor: pointer;
+  color: var(--contrastColor);
 `;
 
 export const FilterContainer = styled.div`
@@ -70,7 +68,7 @@ export const FilterContainer = styled.div`
 `;
 
 export const Sidebar = styled.div`
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   width: 18dvw;
   height: 80dvh;
   padding: 15px;
@@ -83,7 +81,7 @@ export const Button = styled.button`
   border-radius: 20px;
   border: 1px solid #5865f2;
   background-color: #5865f2;
-  color: ${colors.firstColor}fff;
+  color: var(--contrastColor);
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -112,7 +110,7 @@ export const MenuContainer = styled.div`
 
 export const MenuItem = styled.div`
   cursor: pointer;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
   text-decoration: none;
   width: 100%;
   border-top-right-radius: 8px;
@@ -138,7 +136,7 @@ export const cardsContainer = styled.div`
 
   max-height: 95vh;
   border-radius: 12px;
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   overflow: scroll;
 `;
 
@@ -153,7 +151,7 @@ export const listContainer = styled.div`
   height: 150vh;
 
   border-radius: 12px;
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   overflow: scroll;
 `;
 
@@ -172,7 +170,7 @@ export const listItemProfilePic = styled.div`
   background-size: cover;
   background-position: center;
   margin: 10px auto 10px;
-  border: 2px solid ${colors.firstColor};
+  border: 2px solid var(--firstColor);
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
   &::after {
@@ -184,7 +182,7 @@ export const listItemProfilePic = styled.div`
     height: 10px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor};
-    border: 2px solid ${colors.firstColor};
+    border: 2px solid var(--firstColor);
   }
 `;
 
@@ -220,7 +218,7 @@ export const ListItemSkill = styled.div`
   margin-top: 5px;
   border-radius: 10px;
   background-color: rgba(20, 117, 207, 0.7);
-  color: ${colors.firstColor};
+  color: var(--firstColor);
 
   &:first-child {
     margin-left: 0;

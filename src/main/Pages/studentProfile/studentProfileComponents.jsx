@@ -1,11 +1,8 @@
 import styled from "styled-components";
 import React from "react";
-import { getColors } from "../../../constants/colors";
-
-const colors = getColors();
 
 export const Container = styled.div`
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   padding: 30px 30px 10px;
   border-radius: 12px;
   width: 100%;
@@ -43,8 +40,8 @@ export const studentSkill = styled.span`
   margin-left: 5px;
   margin-top: 5px;
   border-radius: 20px;
-  background-color: ${colors.thirdColor}
-  color: ${colors.firstColor};
+  background-color: var(--thirdColor);
+  color: var(--firstColor);
 
   &:first-child {
     margin-left: 0;
@@ -56,8 +53,8 @@ export const studentSkill = styled.span`
 `;
 
 export const studentButton = styled.button`
-  background-color: ${colors.thirdColor};
-  color: ${colors.firstColor};
+  background-color: var(--thirdColor);
+  color: var(--firstColor);
   border: none;
   border-radius: 10px;
   width: 85%;
@@ -86,7 +83,7 @@ export const customBanner = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  color: ${colors.firstColor};
+  color: var(--firstColor);
   padding-left: 35px;
   font-size: 2rem;
   font-weight: bold;
@@ -103,7 +100,7 @@ export const cardProfilePic = styled.div`
   background-size: cover;
   background-position: center;
   margin: 10px auto 10px;
-  border: 2px solid ${colors.firstColor};
+  border: 2px solid var(--firstColor);
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
   position: relative;
 
@@ -116,7 +113,7 @@ export const cardProfilePic = styled.div`
     height: 30px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor};
-    border: 2px solid ${colors.firstColor};
+    border: 2px solid var(--firstColor);
   }
 `;
 
@@ -186,7 +183,7 @@ export const linksContainer = styled.div`
   align-items: center;
   width: 100%;
   border-radius: 12px;
-  background-color: ${colors.secondColor};
+  background-color: var(--secondColor);
 `;
 
 export const portfolioLinkContainer = styled.div`
@@ -223,14 +220,14 @@ export const SocialLink = styled.div`
   height: 50px;
   width: 50px;
   border-radius: 50%;
-  background-color: ${colors.firstColor};
-  color: ${colors.thirdColor};
+  background-color: var(--firstColor);
+  color: var(--thirdColor);
   padding: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 
   &:hover {
-    background-color: ${colors.thirdColor};
-    color: ${colors.firstColor};
+    background-color: var(--thirdColor);
+    color: var(--firstColor);
     scale: 1.05;
     transition: all 0.6s;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -257,11 +254,11 @@ export const portfolioLink = styled.a`
   text-align: start;
   text-anchor: start;
   height: 2.5em;
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   &:hover {
-    background-color: ${colors.thirdColor};
-    color: ${colors.firstColor};
+    background-color: var(--thirdColor);
+    color: var(--firstColor);
     scale: 1.05;
     transition: all 0.6s;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -277,13 +274,13 @@ export const Contacts = styled.div`
   padding-top: 20px;
   width: 100%;
   border-radius: 12px;
-  background-color: ${colors.secondColor};
+  background-color: var(--secondColor);
   height: 100%; // Assicurati che sia abbastanza alta, o regola secondo necessità
 `;
 
 export const ChatButton = styled.button`
   background-color: rgba(20, 117, 207, 0.62);
-  color: ${colors.firstColor};
+  color: var(--firstColor);
   border: none;
   border-radius: 10px;
   width: 85%;
@@ -308,7 +305,7 @@ export const EmailContainer = styled.div`
   align-items: flex-start;
   width: 100%;
   border-radius: 12px;
-  background-color: ${colors.secondColor};
+  background-color: var(--secondColor);
   height: 100%; // Assicurati che sia abbastanza alta, o regola secondo necessità
 
   padding-right: 20px;
@@ -316,7 +313,7 @@ export const EmailContainer = styled.div`
 `;
 
 export const EmailTitleInput = styled.input`
-  background-color: ${colors.firstColor}fff;
+  background-color: var(--firstColor);
   border: 2px solid #aaa;
   outline-offset: -2px;
   padding: 0.5rem;
@@ -328,12 +325,12 @@ export const EmailTitleInput = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 4px ${colors.thirdColor};
+    box-shadow: 0 0 4px var(--thirdColor);
   }
 `;
 
 export const EmailAziendale = styled.input`
-  background-color: ${colors.firstColor}fff;
+  background-color: var(--firstColor);
   border: 2px solid #aaa;
   outline-offset: -2px;
   padding: 0.5rem;
@@ -344,12 +341,12 @@ export const EmailAziendale = styled.input`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 4px ${colors.thirdColor};
+    box-shadow: 0 0 4px var(--thirdColor);
   }
 `;
 
 export const EmailContentInput = styled.textarea`
-  background-color: ${colors.firstColor}fff;
+  background-color: var(--firstColor);
   border: 2px solid #aaa;
   outline-offset: -2px;
   padding: 0.5rem;
@@ -363,7 +360,7 @@ export const EmailContentInput = styled.textarea`
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 4px ${colors.thirdColor};
+    box-shadow: 0 0 4px var(--thirdColor);
   }
 `;
 
@@ -380,8 +377,8 @@ export const EmailForm = styled.form`
 export const EmailButton = styled.button`
   width: 50px;
   height: 50px;
-  background-color: ${colors.firstColor};
-  color: ${colors.thirdColor};
+  background-color: var(--firstColor);
+  color: var(--thirdColor);
   border: 2px solid #aaa;
   outline-offset: -2px;
   border-radius: 12px;
@@ -392,8 +389,8 @@ export const EmailButton = styled.button`
   cursor: pointer;
 
   &:hover {
-    background-color: ${colors.thirdColor};
-    color: ${colors.firstColor};
+    background-color: var(--thirdColor);
+    color: var(--firstColor);
     scale: 1.05;
     transition: all 0.6s;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
@@ -490,8 +487,8 @@ export const CVContent = styled.div`
 `;
 
 export const CVDownloader = styled.button`
-  background-color: ${colors.thirdColor};
-  color: ${colors.firstColor};
+  background-color: var(--thirdColor);
+  color: var(--firstColor);
   border: none;
   border-radius: 10px;
   width: 85%;

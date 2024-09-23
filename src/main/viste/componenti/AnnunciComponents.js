@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import { getColors } from "../../../constants/colors";
-
-const colors = getColors();
 
 export const Container = styled.div`
   display: flex;
@@ -24,7 +21,7 @@ export const contentContainer = styled.div`
 `;
 
 export const TopBar = styled.div`
-  background: ${colors.firstColor};
+  background: var(--firstColor);
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -47,7 +44,7 @@ export const SearchBar = styled.input.attrs({
   font-family: "Montserrat", sans-serif;
   font-size: 0.9em;
   width: 100%;
-  outline-color: ${colors.firstColor};
+  outline-color: var(--firstColor);
 `;
 
 export const FilterButton = styled.button`
@@ -77,7 +74,7 @@ export const InfoAnnunciElement = styled.div`
   justify-content: center;
   align-items: center;
   width: 30%;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
 
   h1:first-child {
     margin-bottom: 0.25em; // Riduci il margine inferiore del primo elemento h1
@@ -93,7 +90,7 @@ export const Button = styled.button`
   border-radius: 20px;
   border: 1px solid #5865f2;
   background-color: #5865f2;
-  color: ${colors.firstColor};
+  color: var(--firstColor);
   font-size: 12px;
   font-weight: bold;
   padding: 12px 45px;
@@ -122,7 +119,7 @@ export const MenuContainer = styled.div`
 
 export const MenuItem = styled.div`
   cursor: pointer;
-  color: ${colors.firstColor};
+  color: var(--firstColor);
   text-decoration: none;
   width: 100%;
   border-top-right-radius: 8px;
@@ -148,7 +145,7 @@ export const AnnunciContainer = styled.div`
   height: 95vh;
   border-radius: 12px;
   overflow: scroll;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
 `;
 
 export const ListaAnnunci = styled.div`
@@ -157,13 +154,13 @@ export const ListaAnnunci = styled.div`
   justify-content: start;
   align-items: center;
   border-radius: 12px;
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   padding: 20px;
   flex: 2;
   height: 100%;
   overflow: auto;
   gap: 15px;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
 `;
 
 export const NuovoAnnuncio = styled.div`
@@ -173,23 +170,23 @@ export const NuovoAnnuncio = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 12px;
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   padding: 20px;
   height: 100%;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
 `;
 
 export const Annuncio = styled.div`
   display: flex;
   flex-direction: row;
   border-radius: 12px;
-  background-color: ${colors.firstColor};
+  background-color: var(--firstColor);
   -webkit-box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   padding: 1em;
   width: 100%;
   height: 7em;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
 
   &:hover {
     cursor: pointer;
@@ -205,14 +202,14 @@ export const AnnuncioImage = styled.div`
   background-image: url("https://t3.ftcdn.net/jpg/00/64/67/52/360_F_64675209_7ve2XQANuzuHjMZXP3aIYIpsDKEbF5dD.jpg");
   background-size: cover;
   background-position: center;
-  border: 2px solid ${colors.firstColor};
+  border: 2px solid var(--firstColor);
 `;
 
 export const AnnuncioInfo = styled.div`
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 255, 0.3);
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
   margin-left: 15px;
   display: flex;
   flex-direction: column;
@@ -224,7 +221,7 @@ export const AnnuncioInfo = styled.div`
 
 export const AnnuncioTitolo = styled.div`
   width: 100%;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
   font-size: 1.2em;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -239,7 +236,7 @@ export const AnnuncioButtons = styled.div`
   flex-direction: column;
   height: 100%;
   background-color: rgba(255, 0, 0, 0.44);
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
 `;
 export const listItemProfilePic = styled.div`
   position: relative;
@@ -250,7 +247,7 @@ export const listItemProfilePic = styled.div`
   background-size: cover;
   background-position: center;
   margin: 10px auto 10px;
-  border: 2px solid ${colors.firstColor};
+  border: 2px solid var(--firstColor);
   box-shadow: 0 0 23px -3px rgba(0, 0, 0, 0.4);
 
   &::after {
@@ -262,7 +259,7 @@ export const listItemProfilePic = styled.div`
     height: 10px;
     border-radius: 50%;
     background-color: ${(props) => props.dotColor};
-    border: 2px solid ${colors.firstColor};
+    border: 2px solid var(--firstColor);
   }
 `;
 
@@ -298,7 +295,7 @@ export const ListItemSkill = styled.div`
   margin-top: 5px;
   border-radius: 10px;
   background-color: rgba(20, 117, 207, 0.7);
-  color: ${colors.firstColor};
+  color: var(--firstColor);
 
   &:first-child {
     margin-left: 0;
@@ -322,7 +319,7 @@ export const ViewModeButton = styled.button`
   background: none;
   border: none;
   font-size: 20px;
-  color: ${colors.firstColor};
+  color: var(--firstColor);
   letter-spacing: 1px;
   text-transform: uppercase;
   text-decoration: none;
@@ -340,7 +337,7 @@ export const DisponibilityButton = styled.button`
   background: none;
   border: none;
   font-size: 15px;
-  color: ${colors.contrastColor};
+  color: var(--contrastColor);
   text-decoration: none;
   font-family: "Montserrat", sans-serif;
 
@@ -351,7 +348,7 @@ export const DisponibilityButton = styled.button`
 
 export const VerticalSeparator = styled.div`
   height: 20px;
-  border-left: 1px solid ${colors.firstColor};
+  border-left: 1px solid var(--firstColor);
   margin-left: 10px;
   margin-right: 10px;
 `;

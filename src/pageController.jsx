@@ -41,8 +41,13 @@ import "primereact/resources/primereact.css";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css";
-import { getColors, switchTheme } from "./constants/colors";
-setCssVariables();
+import { setCSSVariables, switchTheme } from "./constants/colors";
+
+document.addEventListener("DOMContentLoaded", () => {
+  setCSSVariables();
+
+  setCssVariables();
+});
 
 async function fetchNotifications() {
   return [
@@ -86,10 +91,7 @@ function PageController() {
 
   const handleThemeSwitch = () => {
     switchTheme(); // Cambia il tema nel file colors.js
-    setForceUpdate((prev) => !prev); // Forza il re-render
   };
-
-  const colors = getColors(); // Ottieni i colori aggiornati dal file colors.js
 
   useEffect(() => {
     fetchNotifications().then(setNotifications);
@@ -214,9 +216,7 @@ function PageController() {
                 color: "black",
               }}
             >
-              <h3 style={{ color: `${colors.contrastColor}` }}>
-                Badoni NetWork
-              </h3>
+              <h3 style={{ color: `var(--contrastColor)` }}>Badoni NetWork</h3>
             </Link>
           </div>
           <div
@@ -279,6 +279,7 @@ root.render(
       }}
     >
       <Routes>
+        <Route path="/" element={<Navigate to="/azienda/home" />} />
         <Route path="/azienda/:parametro" element={<MainPage />} />{" "}
         <Route path="/register" element={<Register />} />
         <Route path="/OTP" element={<OTP />} />

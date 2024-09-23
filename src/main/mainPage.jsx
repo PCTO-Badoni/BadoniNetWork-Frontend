@@ -20,13 +20,11 @@ import Chat from "./viste/azienda/chat";
 import HomePage from "./viste/azienda/home";
 import Annunci from "./viste/azienda/annunci";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getColors } from "../constants/colors";
 import { useParams } from "react-router-dom";
 
 const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />;
 
 function MainPage() {
-  const colors = getColors();
   const { parametro } = useParams(); // Ottieni il parametro dalla rotta
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -188,11 +186,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === ("home" || "logout")
-                      ? `${colors.secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === ("home" || "logout")
-                      ? `2px solid ${colors.contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -204,11 +202,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "lista"
-                      ? `${colors.secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === "lista"
-                      ? `2px solid ${colors.contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -220,11 +218,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "chat"
-                      ? `${colors.secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === "chat"
-                      ? `2px solid ${colors.contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -236,11 +234,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "annunci"
-                      ? `${colors.secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === "annunci"
-                      ? `2px solid ${colors.contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -252,11 +250,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "profilo"
-                      ? `${colors.secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === "profilo"
-                      ? `2px solid ${colors.contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -271,7 +269,7 @@ function MainPage() {
                   borderRadius: "8px",
                   backgroundColor:
                     activeButton === "logout"
-                      ? `${colors.secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                 }}
               >

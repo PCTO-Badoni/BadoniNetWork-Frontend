@@ -5,7 +5,7 @@
 }
 
 body {
-  background: var(--second-color);;
+  background: var(--secondColor);;
   display: flex;
   justify-content: center;
   align-items: center;
