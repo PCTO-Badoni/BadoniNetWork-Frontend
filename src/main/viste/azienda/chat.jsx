@@ -228,13 +228,26 @@ const Chat = ({
   }, [messages]);
 
   const Message = ({ sender, text, timestamp, isOwnMessage }) => {
+    const [isTouched, setIsTouched] = useState(false);
+
+    const handleMouseEnter = () => {
+      setIsTouched(true);
+    };
+
+    const handleMouseLeave = () => {
+      setIsTouched(false);
+    };
+
     return (
       <div
         style={{
           textAlign: isOwnMessage ? "right" : "left",
           marginBottom: "10px",
           width: "100%",
+          position: "relative",
         }}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         <div
           style={{
@@ -245,20 +258,36 @@ const Chat = ({
             color: isOwnMessage ? "#000" : `var(--contrastColor)`,
             padding: "10px",
             borderRadius: "10px",
-            maxWidth: "70%", // Limita la larghezza del messaggio
-            wordWrap: "break-word", // Permette di spezzare parole lunghe
-            overflowWrap: "break-word", // Garantisce che parole lunghe vengano spezzate
-            whiteSpace: "pre-wrap", // Mantiene spazi e line breaks
-            wordBreak: "break-all", // Spezza anche parole molto lunghe senza spazi
+            maxWidth: "70%",
+            wordWrap: "break-word",
+            overflowWrap: "break-word",
+            whiteSpace: "pre-wrap",
+            wordBreak: "break-all",
+            position: "relative",
           }}
+          className="message-container"
         >
-          <p style={{ margin: 0 }}></p>
           <p style={{ margin: 0 }}>{text}</p>
           <p
             style={{ fontSize: "0.8em", color: isOwnMessage ? "#000" : "#888" }}
           >
             {timestamp}
           </p>
+          <i
+            className="pi pi-angle-down"
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "10px",
+              width: "40px", // dimensione aumentata per visibilità
+              height: "30px",
+              background: `linear-gradient(to left, 
+                 ${isOwnMessage ? `var(--thirdColor)` : `var(--secondColor)`} 50%, 
+                 rgba(255, 255, 255, 0) 100%)`, // Sfumatura verso sinistra
+              display: isTouched && isOwnMessage ? "block" : "none",
+              pointerEvents: "none", // Evita che l'icona interferisca con il mouse
+            }}
+          />
         </div>
       </div>
     );
