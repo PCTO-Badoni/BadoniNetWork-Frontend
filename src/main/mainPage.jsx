@@ -20,85 +20,42 @@ import Chat from "./viste/azienda/chat";
 import HomePage from "./viste/azienda/home";
 import Annunci from "./viste/azienda/annunci";
 import { useNavigate, useLocation } from "react-router-dom";
+import {
+  contrastColor,
+  fourthColor,
+  secondColor,
+  secondColorDarker,
+} from "../constants/colors";
 import { useParams } from "react-router-dom";
-
+const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
 const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />;
 
 function MainPage() {
-  const { parametro } = useParams(); // Ottieni il parametro dalla rotta
+    const [searchTerm, setSearchTerm] = useState("");
+    const [selectedChips, setSelectedChips] = useState([]);
+    const [selectedCompetenze, setSelectedCompetenze] = useState([]);
+    const [selectedLingue, setSelectedLingue] = useState([]);
+    const [chips, setChips] = useState([]);
+    const [competenze, setCompetenze] = useState([]);
+    const [lingue, setLingue] = useState([]);
+    const [isFilterOpen, setFilterOpen] = useState(false);
+    const [viewMode, setViewMode] = useState('cards');
+    const [activeButton, setActiveButton] = useState('home');
+    const navigate = useNavigate();
 
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedChips, setSelectedChips] = useState([]);
-  const [selectedCompetenze, setSelectedCompetenze] = useState([]);
-  const [selectedLingue, setSelectedLingue] = useState([]);
-  const [chips] = useState([
-    { id: 1, descrizione: "Informatica" },
-    { id: 2, descrizione: "Scientifico" },
-    { id: 3, descrizione: "Meccanica" },
-    { id: 4, descrizione: "Meccatronica" },
-    { id: 5, descrizione: "Telecomunicazioni" },
-    { id: 6, descrizione: "Automazione" },
-    { id: 7, descrizione: "Elettrotecnica" },
-    { id: 8, descrizione: "Elettronica" },
-    { id: 9, descrizione: "Energia" },
-  ]);
-  const [competenze] = useState([
-    { id: 1, descrizione: "Java" },
-    { id: 2, descrizione: "JavaFX" },
-    { id: 3, descrizione: "JavaScript" },
-    { id: 4, descrizione: "Python" },
-    { id: 5, descrizione: "C" },
-    { id: 6, descrizione: "C++" },
-    { id: 7, descrizione: "C#" },
-    { id: 8, descrizione: "MongoDB" },
-    { id: 9, descrizione: "SceneBuilder" },
-    { id: 10, descrizione: "HTML" },
-    { id: 11, descrizione: "Packet Tracer" },
-    { id: 12, descrizione: "Cisco" },
-    { id: 13, descrizione: "CAD" },
-    { id: 14, descrizione: "CSS" },
-    { id: 15, descrizione: "Sistemi" },
-    { id: 16, descrizione: "Arduino" },
-    { id: 17, descrizione: "PHP" },
-    { id: 18, descrizione: "Database" },
-    { id: 19, descrizione: "LabView" },
-    { id: 20, descrizione: "Impianti" },
-    { id: 21, descrizione: "Excel" },
-    { id: 22, descrizione: "FlowGorithm" },
-    { id: 23, descrizione: "Circuiti" },
-    { id: 24, descrizione: "Sicurezza" },
-    { id: 25, descrizione: "Assembly" },
-    { id: 26, descrizione: "React" },
-    { id: 27, descrizione: "Angular" },
-    { id: 28, descrizione: "Go" },
-    { id: 29, descrizione: "Gimp" },
-    { id: 30, descrizione: "Cyber Security" },
-    { id: 31, descrizione: "Tornio" },
-    { id: 32, descrizione: "Fresa" },
-    { id: 33, descrizione: "Word" },
-    { id: 34, descrizione: "Multisim" },
-    { id: 35, descrizione: "Powerpoint" },
-    { id: 36, descrizione: "Latex" },
-    { id: 37, descrizione: "Plc" },
-    { id: 38, descrizione: "Sensori" },
-    { id: 39, descrizione: "Cablaggio" },
-  ]);
-  const [lingue] = useState([
-    { id: 1, descrizione: "Inglese" },
-    { id: 2, descrizione: "Francese" },
-    { id: 3, descrizione: "Tedesco" },
-    { id: 4, descrizione: "Giapponese" },
-    { id: 5, descrizione: "Spagnolo" },
-    { id: 6, descrizione: "Serbo" },
-    { id: 7, descrizione: "Arabo" },
-    { id: 8, descrizione: "Cinese" },
-    { id: 9, descrizione: "Portoghese" },
-  ]);
-  const [isFilterOpen, setFilterOpen] = useState(false);
-  const [viewMode, setViewMode] = useState("cards");
-  const [activeButton, setActiveButton] = useState(parametro);
-  const navigate = useNavigate();
-  const location = useLocation();
+    useEffect(() => {
+        Promise.all([
+          fetch(prefix+'/api/get-all-articolazioni').then(response => response.json()),
+          fetch(prefix+'/api/get-all-competenze').then(response => response.json()),
+          fetch(prefix+'/api/get-all-lingue').then(response => response.json())
+        ])
+          .then(([chipsData, competenzeData, lingueData]) => {
+            setChips(chipsData);
+            setCompetenze(competenzeData);
+            setLingue(lingueData);
+          })
+          .catch(error => console.error('Errore in una delle chiamate:', error));
+    }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -186,11 +143,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === ("home" || "logout")
-                      ? `var(--secondColor)`
+                      ? `${secondColor}`
                       : "transparent",
                   borderLeft:
                     activeButton === ("home" || "logout")
-                      ? `2px solid var(--contrastColor)`
+                      ? `2px solid ${contrastColor}`
                       : null,
                 }}
               >
@@ -201,12 +158,10 @@ function MainPage() {
                 onClick={() => handleButtonClick("lista")}
                 style={{
                   backgroundColor:
-                    activeButton === "lista"
-                      ? `var(--secondColor)`
-                      : "transparent",
+                    activeButton === "lista" ? `${secondColor}` : "transparent",
                   borderLeft:
                     activeButton === "lista"
-                      ? `2px solid var(--contrastColor)`
+                      ? `2px solid ${contrastColor}`
                       : null,
                 }}
               >
@@ -217,12 +172,10 @@ function MainPage() {
                 onClick={() => handleButtonClick("chat")}
                 style={{
                   backgroundColor:
-                    activeButton === "chat"
-                      ? `var(--secondColor)`
-                      : "transparent",
+                    activeButton === "chat" ? `${secondColor}` : "transparent",
                   borderLeft:
                     activeButton === "chat"
-                      ? `2px solid var(--contrastColor)`
+                      ? `2px solid ${contrastColor}`
                       : null,
                 }}
               >
@@ -234,11 +187,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "annunci"
-                      ? `var(--secondColor)`
+                      ? `${secondColor}`
                       : "transparent",
                   borderLeft:
                     activeButton === "annunci"
-                      ? `2px solid var(--contrastColor)`
+                      ? `2px solid ${contrastColor}`
                       : null,
                 }}
               >
@@ -250,11 +203,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "profilo"
-                      ? `var(--secondColor)`
+                      ? `${secondColor}`
                       : "transparent",
                   borderLeft:
                     activeButton === "profilo"
-                      ? `2px solid var(--contrastColor)`
+                      ? `2px solid ${contrastColor}`
                       : null,
                 }}
               >
@@ -269,7 +222,7 @@ function MainPage() {
                   borderRadius: "8px",
                   backgroundColor:
                     activeButton === "logout"
-                      ? `var(--secondColor)`
+                      ? `${secondColor}`
                       : "transparent",
                 }}
               >
