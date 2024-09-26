@@ -20,42 +20,39 @@ import Chat from "./viste/azienda/chat";
 import HomePage from "./viste/azienda/home";
 import Annunci from "./viste/azienda/annunci";
 import { useNavigate, useLocation } from "react-router-dom";
-import {
-  contrastColor,
-  fourthColor,
-  secondColor,
-  secondColorDarker,
-} from "../constants/colors";
 import { useParams } from "react-router-dom";
 const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
 const logoutIcon = <FontAwesomeIcon icon={faRightFromBracket} />;
 
 function MainPage() {
-    const [searchTerm, setSearchTerm] = useState("");
-    const [selectedChips, setSelectedChips] = useState([]);
-    const [selectedCompetenze, setSelectedCompetenze] = useState([]);
-    const [selectedLingue, setSelectedLingue] = useState([]);
-    const [chips, setChips] = useState([]);
-    const [competenze, setCompetenze] = useState([]);
-    const [lingue, setLingue] = useState([]);
-    const [isFilterOpen, setFilterOpen] = useState(false);
-    const [viewMode, setViewMode] = useState('cards');
-    const [activeButton, setActiveButton] = useState('home');
-    const navigate = useNavigate();
+  const { parametro } = useParams(); // Ottieni il parametro dalla rotta
 
-    useEffect(() => {
-        Promise.all([
-          fetch(prefix+'/api/get-all-articolazioni').then(response => response.json()),
-          fetch(prefix+'/api/get-all-competenze').then(response => response.json()),
-          fetch(prefix+'/api/get-all-lingue').then(response => response.json())
-        ])
-          .then(([chipsData, competenzeData, lingueData]) => {
-            setChips(chipsData);
-            setCompetenze(competenzeData);
-            setLingue(lingueData);
-          })
-          .catch(error => console.error('Errore in una delle chiamate:', error));
-    }, []);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedChips, setSelectedChips] = useState([]);
+  const [selectedCompetenze, setSelectedCompetenze] = useState([]);
+  const [selectedLingue, setSelectedLingue] = useState([]);
+  const [chips, setChips] = useState([]);;
+  const [competenze, setCompetenze] = useState([]);
+  const [lingue, setLingue] = useState([]);
+  const [isFilterOpen, setFilterOpen] = useState(false);
+  const [viewMode, setViewMode] = useState("cards");
+  const [activeButton, setActiveButton] = useState(parametro);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    Promise.all([
+      fetch(prefix+'/api/get-all-articolazioni').then(response => response.json()),
+      fetch(prefix+'/api/get-all-competenze').then(response => response.json()),
+      fetch(prefix+'/api/get-all-lingue').then(response => response.json())
+    ])
+      .then(([chipsData, competenzeData, lingueData]) => {
+        setChips(chipsData);
+        setCompetenze(competenzeData);
+        setLingue(lingueData);
+      })
+      .catch(error => console.error('Errore in una delle chiamate:', error));
+  }, []);
 
   useEffect(() => {
     const handleHashChange = () => {
@@ -143,11 +140,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === ("home" || "logout")
-                      ? `${secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === ("home" || "logout")
-                      ? `2px solid ${contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -158,10 +155,12 @@ function MainPage() {
                 onClick={() => handleButtonClick("lista")}
                 style={{
                   backgroundColor:
-                    activeButton === "lista" ? `${secondColor}` : "transparent",
+                    activeButton === "lista"
+                      ? `var(--secondColor)`
+                      : "transparent",
                   borderLeft:
                     activeButton === "lista"
-                      ? `2px solid ${contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -172,10 +171,12 @@ function MainPage() {
                 onClick={() => handleButtonClick("chat")}
                 style={{
                   backgroundColor:
-                    activeButton === "chat" ? `${secondColor}` : "transparent",
+                    activeButton === "chat"
+                      ? `var(--secondColor)`
+                      : "transparent",
                   borderLeft:
                     activeButton === "chat"
-                      ? `2px solid ${contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -187,11 +188,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "annunci"
-                      ? `${secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === "annunci"
-                      ? `2px solid ${contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -203,11 +204,11 @@ function MainPage() {
                 style={{
                   backgroundColor:
                     activeButton === "profilo"
-                      ? `${secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                   borderLeft:
                     activeButton === "profilo"
-                      ? `2px solid ${contrastColor}`
+                      ? `2px solid var(--contrastColor)`
                       : null,
                 }}
               >
@@ -222,7 +223,7 @@ function MainPage() {
                   borderRadius: "8px",
                   backgroundColor:
                     activeButton === "logout"
-                      ? `${secondColor}`
+                      ? `var(--secondColor)`
                       : "transparent",
                 }}
               >
