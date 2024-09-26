@@ -17,7 +17,7 @@ import "../chat.css";
 import { IconField } from "primereact/iconfield";
 import { InputIcon } from "primereact/inputicon";
 import { InputText } from "primereact/inputtext";
-
+import { ContextMenu } from "primereact/contextmenu";
 const Chat = ({
   searchTerm,
   setSearchTerm,
@@ -227,8 +227,16 @@ const Chat = ({
     }
   }, [messages]);
 
-  const Message = ({ sender, text, timestamp, isOwnMessage }) => {
+  const Message = ({
+    sender,
+    text,
+    timestamp,
+    isOwnMessage,
+    isContextMenuOpen,
+    onContextMenuOpen,
+  }) => {
     const [isTouched, setIsTouched] = useState(false);
+    const cm = useRef(null);
 
     const handleMouseEnter = () => {
       setIsTouched(true);
@@ -238,63 +246,93 @@ const Chat = ({
       setIsTouched(false);
     };
 
+    const handleContextMenu = (event) => {
+      event.preventDefault();
+      onContextMenuOpen();
+      cm.current.show(event);
+    };
+
+    const items = [
+      { label: "Copy", icon: "pi pi-copy" },
+      { label: "Rename", icon: "pi pi-file-edit" },
+    ];
+
+    useEffect(() => {
+      if (!isContextMenuOpen && cm.current) {
+        cm.current.hide();
+      }
+    }, [isContextMenuOpen]);
+
     return (
-      <div
-        style={{
-          textAlign: isOwnMessage ? "right" : "left",
-          marginBottom: "10px",
-          width: "100%",
-          position: "relative",
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
+      <>
         <div
           style={{
-            display: "inline-block",
-            backgroundColor: isOwnMessage
-              ? `var(--thirdColor)`
-              : `var(--secondColor)`,
-            color: isOwnMessage ? "#000" : `var(--contrastColor)`,
-            padding: "10px",
-            borderRadius: "10px",
-            maxWidth: "70%",
-            wordWrap: "break-word",
-            overflowWrap: "break-word",
-            whiteSpace: "pre-wrap",
-            wordBreak: "break-all",
+            textAlign: isOwnMessage ? "right" : "left",
+            marginBottom: "10px",
+            width: "100%",
             position: "relative",
           }}
-          className="message-container"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          onContextMenu={handleContextMenu}
         >
-          <p style={{ margin: 0 }}>{text}</p>
-          <p
-            style={{ fontSize: "0.8em", color: isOwnMessage ? "#000" : "#888" }}
-          >
-            {timestamp}
-          </p>
-          <i
-            className="pi pi-angle-down"
+          <div
             style={{
-              position: "absolute",
-              top: "10px",
-              right: "10px",
-              width: "40px", // dimensione aumentata per visibilità
-              height: "30px",
-              background: `linear-gradient(to left, 
-                 ${isOwnMessage ? `var(--thirdColor)` : `var(--secondColor)`} 50%, 
-                 rgba(255, 255, 255, 0) 100%)`, // Sfumatura verso sinistra
-              display: isTouched && isOwnMessage ? "block" : "none",
-              pointerEvents: "none", // Evita che l'icona interferisca con il mouse
+              display: "inline-block",
+              backgroundColor: isOwnMessage
+                ? `var(--thirdColor)`
+                : `var(--secondColor)`,
+              color: isOwnMessage ? "#000" : `var(--contrastColor)`,
+              padding: "10px",
+              borderRadius: "10px",
+              maxWidth: "70%",
+              wordWrap: "break-word",
+              overflowWrap: "break-word",
+              whiteSpace: "pre-wrap",
+              wordBreak: "break-all",
+              position: "relative",
             }}
-          />
+            className="message-container"
+          >
+            <p style={{ margin: 0 }}>{text}</p>
+            <p
+              style={{
+                fontSize: "0.8em",
+                color: isOwnMessage ? "#000" : "#888",
+              }}
+            >
+              {timestamp}
+            </p>
+            <ContextMenu model={items} ref={cm} breakpoint="767px" />
+            <i
+              className="pi pi-angle-down"
+              style={{
+                position: "absolute",
+                top: "10px",
+                right: "10px",
+                width: "40px",
+                height: "30px",
+                background: `linear-gradient(to left,
+               ${isOwnMessage ? `var(--thirdColor)` : `var(--secondColor)`} 50%,
+               rgba(255, 255, 255, 0) 100%)`,
+                display: isTouched && isOwnMessage ? "block" : "none",
+                pointerEvents: "none",
+              }}
+            />
+          </div>
         </div>
-      </div>
+      </>
     );
   };
 
   const handleContactClick = (contact) => {
     setActiveContact(contact);
+  };
+
+  const [openContextMenu, setOpenContextMenu] = useState(null);
+
+  const handleContextMenuOpen = (id) => {
+    setOpenContextMenu(id);
   };
 
   return (
@@ -356,6 +394,8 @@ const Chat = ({
                 text={message.text}
                 timestamp={message.timestamp}
                 isOwnMessage={message.sender === "Tu"}
+                isContextMenuOpen={openContextMenu === message.id}
+                onContextMenuOpen={() => handleContextMenuOpen(message.id)}
               />
             ))}
           </div>
