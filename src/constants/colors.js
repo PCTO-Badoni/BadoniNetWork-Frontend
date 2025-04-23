@@ -1,4 +1,4 @@
-export let theme = "dark";
+export let theme = "light";
 
 export const setCSSVariables = () => {
   const root = document.documentElement;

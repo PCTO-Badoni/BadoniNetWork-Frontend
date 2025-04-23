@@ -235,7 +235,6 @@ function PageController() {
           >
             <Components.Logo />
             <h3
-              onClick={handleThemeSwitch}
               style={{ color: `var(--contrastColor)` }}
             >
               Badoni NetWork
