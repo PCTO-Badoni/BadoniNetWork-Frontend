@@ -36,7 +36,6 @@ const Annunci = ({}) => {
       <Components.AnnunciContainer>
         <ListaAnnunciAzienda />
 
-        <Components.NuovoAnnuncio></Components.NuovoAnnuncio>
       </Components.AnnunciContainer>
     </Components.contentContainer>
   );

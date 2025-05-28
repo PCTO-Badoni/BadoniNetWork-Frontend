@@ -5,7 +5,7 @@ import { FooterIcon } from "../../../../FooterComponents";
 import ReactDOM from "react-dom";
 
 // Componente checkbox personalizzato per garantire allineamento perfetto
-const CustomCheckbox = ({ id, label, checked, onChange }) => {
+const CustomRadio = ({ id, label, checked, onChange, name }) => {
   return (
     <div style={{
       display: "flex",
@@ -17,43 +17,44 @@ const CustomCheckbox = ({ id, label, checked, onChange }) => {
           width: "22px",
           height: "22px",
           border: "1px solid #ccc",
-          borderRadius: "4px",
-          backgroundColor: checked ? "#4a90e2" : "white",
+          borderRadius: "50%", // Cambiato da 4px a 50% per renderlo circolare
+          backgroundColor: "white",
           marginRight: "10px",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
           cursor: "pointer",
-          flexShrink: 0
+          flexShrink: 0,
+          position: "relative"
         }}
-        onClick={() => onChange(!checked)}
+        onClick={() => onChange(id, name)}
       >
         {checked && (
-          <span
+          <div
             style={{
-              color: "white",
-              fontSize: "16px",
-              fontWeight: "bold",
+              backgroundColor: "#4a90e2",
+              borderRadius: "50%",
+              width: "12px",
+              height: "12px",
+              position: "absolute"
             }}
-          >
-            ✓
-          </span>
+          />
         )}
       </div>
-      <div  // Cambiato da label a div
+      <div
         style={{
           cursor: "pointer",
           userSelect: "none",
           fontSize: "16px",
-          position: "static",  // Neutralizza position: relative
-          left: "auto",        // Neutralizza left: 10px
-          top: "auto",         // Neutralizza top: 15px
-          padding: "0",        // Neutralizza padding: 5px
-          textShadow: "none",  // Neutralizza text-shadow
-          display: "block",    // Neutralizza display: flex
-          margin: "0"          // Neutralizza eventuali margini
+          position: "static",
+          left: "auto",
+          top: "auto",
+          padding: "0",
+          textShadow: "none",
+          display: "block",
+          margin: "0"
         }}
-        onClick={() => onChange(!checked)}
+        onClick={() => onChange(id, name)}
       >
         {label}
       </div>
@@ -75,20 +76,21 @@ const ListaAnnunciAzienda = ({}) => {
     retribuzione: ""
   });
   
-  // Stato per gestire i checkbox
   const [contratto, setContratto] = useState({
-    indeterminato: false,
-    determinato: false,
-    stage: false,
-    freelance: false,
-    daDefinire: false
+    tipo: null 
   });
   
   const [modalita, setModalita] = useState({
-    inSede: false,
-    ibrida: false,
-    remoto: false
+    tipo: null 
   });
+
+  const handleContrattoChange = (value) => {
+    setContratto({ tipo: value });
+  };
+  
+  const handleModalitaChange = (value) => {
+    setModalita({ tipo: value });
+  };
 
   // Stato per gestire la lista degli annunci
   const [annunci, setAnnunci] = useState([
@@ -143,9 +145,27 @@ const ListaAnnunciAzienda = ({}) => {
   
   // Gestione del cambio di step nel form
   const handleNextStep = () => {
-    // Verifica che ci sia una descrizione prima di procedere
-    if (!nuovoAnnuncio.descrizione || nuovoAnnuncio.descrizione.trim() === "") {
-      alert("Per favore, inserisci una descrizione per l'annuncio");
+    // Validazione base dei dati
+    if (!nuovoAnnuncio.ruolo || nuovoAnnuncio.ruolo.trim() === "") {
+      alert("Per favore, inserisci un ruolo per l'annuncio");
+      return;
+    }
+    
+    // Controllo che ci sia un tipo di contratto selezionato
+    if (!contratto.tipo) {
+      alert("Per favore, seleziona un tipo di contratto");
+      return;
+    }
+    
+    // Controllo che ci sia una modalità di lavoro selezionata
+    if (!modalita.tipo) {
+      alert("Per favore, seleziona una modalità di lavoro");
+      return;
+    }
+    
+    // Assicurati che ci sia una retribuzione indicata
+    if (!nuovoAnnuncio.retribuzione || nuovoAnnuncio.retribuzione.trim() === "") {
+      alert("Per favore, indica la retribuzione per l'annuncio");
       return;
     }
     
@@ -158,32 +178,12 @@ const ListaAnnunciAzienda = ({}) => {
   
   // Gestione dell'invio del form
   const handleSubmit = () => {
-    // Validazione base dei dati
-    if (!nuovoAnnuncio.ruolo || nuovoAnnuncio.ruolo.trim() === "") {
-      alert("Per favore, inserisci un ruolo per l'annuncio");
+    // Verifica che ci sia una descrizione prima di procedere
+    if (!nuovoAnnuncio.descrizione || nuovoAnnuncio.descrizione.trim() === "") {
+      alert("Per favore, inserisci una descrizione per l'annuncio");
       return;
     }
-    
-    // Controllo che ci sia almeno un tipo di contratto selezionato
-    const contrattiSelezionati = Object.values(contratto).filter(Boolean);
-    if (contrattiSelezionati.length === 0) {
-      alert("Per favore, seleziona almeno un tipo di contratto");
-      return;
-    }
-    
-    // Controllo che ci sia almeno una modalità di lavoro selezionata
-    const modalitaSelezionate = Object.values(modalita).filter(Boolean);
-    if (modalitaSelezionate.length === 0) {
-      alert("Per favore, seleziona almeno una modalità di lavoro");
-      return;
-    }
-    
-    // Assicurati che ci sia una retribuzione indicata
-    if (!nuovoAnnuncio.retribuzione || nuovoAnnuncio.retribuzione.trim() === "") {
-      alert("Per favore, indica la retribuzione per l'annuncio");
-      return;
-    }
-    
+
     // Crea un nuovo annuncio con ID unico
     const newId = annunci.length > 0 ? Math.max(...annunci.map(a => a.id)) + 1 : 1;
     
@@ -192,8 +192,8 @@ const ListaAnnunciAzienda = ({}) => {
       id: newId,
       titolo: nuovoAnnuncio.ruolo,
       descrizione: nuovoAnnuncio.descrizione,
-      contratto: Object.keys(contratto).filter(key => contratto[key]),
-      modalitaLavoro: Object.keys(modalita).filter(key => modalita[key]),
+      contratto: [contratto.tipo], // passa come array con un singolo valore
+      modalitaLavoro: [modalita.tipo], // passa come array con un singolo valore
       retribuzione: nuovoAnnuncio.retribuzione
     };
     
@@ -211,16 +211,10 @@ const ListaAnnunciAzienda = ({}) => {
       retribuzione: ""
     });
     setContratto({
-      indeterminato: false,
-      determinato: false,
-      stage: false,
-      freelance: false,
-      daDefinire: false
+      tipo: null
     });
     setModalita({
-      inSede: false,
-      ibrida: false,
-      remoto: false
+      tipo: null
     });
     setFormStep(1);
     
@@ -432,29 +426,6 @@ const ListaAnnunciAzienda = ({}) => {
           <>
             <h2 style={titleStyle}>CREA NUOVO ANNUNCIO</h2>
             <div>
-              <h3 style={labelStyle}>DESCRIZIONE:</h3>
-              <textarea 
-                style={textareaStyle} 
-                placeholder="Aggiungi una descrizione..." 
-                value={nuovoAnnuncio.descrizione}
-                onChange={(e) => setNuovoAnnuncio({...nuovoAnnuncio, descrizione: e.target.value})}
-              />
-            </div>
-            <div style={{display: "flex", justifyContent: "space-between", marginTop: "20px"}}>
-              <button style={buttonStyle}>←</button>
-              <button 
-                style={buttonStyle} 
-                onClick={handleNextStep}
-              >
-                Avanti →
-              </button>
-            </div>
-          </>
-        ) : (
-          // Step 2: Dettagli aggiuntivi
-          <>
-            <h2 style={titleStyle}>CREA UN NUOVO ANNUNCIO</h2>
-            <div>
               <h3 style={labelStyle}>RUOLO:</h3>
               <input 
                 type="text" 
@@ -467,36 +438,41 @@ const ListaAnnunciAzienda = ({}) => {
             
             <div>
               <h3 style={labelStyle}>CONTRATTO:</h3>
-              <div style={checkboxContainerStyle}>
-                <CustomCheckbox 
+             <div style={checkboxContainerStyle}>
+                <CustomRadio 
                   id="indeterminato"
+                  name="contratto"
                   label="TEMPO INDETERMINATO"
-                  checked={contratto.indeterminato}
-                  onChange={(checked) => setContratto({...contratto, indeterminato: checked})}
+                  checked={contratto.tipo === "indeterminato"}
+                  onChange={handleContrattoChange}
                 />
-                <CustomCheckbox 
+                <CustomRadio 
                   id="determinato"
+                  name="contratto"
                   label="TEMPO DETERMINATO"
-                  checked={contratto.determinato}
-                  onChange={(checked) => setContratto({...contratto, determinato: checked})}
+                  checked={contratto.tipo === "determinato"}
+                  onChange={handleContrattoChange}
                 />
-                <CustomCheckbox 
+                <CustomRadio 
                   id="stage"
+                  name="contratto"
                   label="STAGE"
-                  checked={contratto.stage}
-                  onChange={(checked) => setContratto({...contratto, stage: checked})}
+                  checked={contratto.tipo === "stage"}
+                  onChange={handleContrattoChange}
                 />
-                <CustomCheckbox 
+                <CustomRadio 
                   id="freelance"
+                  name="contratto"
                   label="FREELANCE"
-                  checked={contratto.freelance}
-                  onChange={(checked) => setContratto({...contratto, freelance: checked})}
+                  checked={contratto.tipo === "freelance"}
+                  onChange={handleContrattoChange}
                 />
-                <CustomCheckbox 
+                <CustomRadio 
                   id="daDefinire"
+                  name="contratto"
                   label="CONTRATTO DA DEFINIRE"
-                  checked={contratto.daDefinire}
-                  onChange={(checked) => setContratto({...contratto, daDefinire: checked})}
+                  checked={contratto.tipo === "daDefinire"}
+                  onChange={handleContrattoChange}
                 />
               </div>
             </div>
@@ -504,23 +480,26 @@ const ListaAnnunciAzienda = ({}) => {
             <div>
               <h3 style={labelStyle}>MODALITÀ DI LAVORO:</h3>
               <div style={checkboxContainerStyle}>
-                <CustomCheckbox 
+                <CustomRadio 
                   id="inSede"
+                  name="modalita"
                   label="IN SEDE"
-                  checked={modalita.inSede}
-                  onChange={(checked) => setModalita({...modalita, inSede: checked})}
+                  checked={modalita.tipo === "inSede"}
+                  onChange={handleModalitaChange}
                 />
-                <CustomCheckbox 
+                <CustomRadio 
                   id="ibrida"
+                  name="modalita"
                   label="IBRIDA"
-                  checked={modalita.ibrida}
-                  onChange={(checked) => setModalita({...modalita, ibrida: checked})}
+                  checked={modalita.tipo === "ibrida"}
+                  onChange={handleModalitaChange}
                 />
-                <CustomCheckbox 
+                <CustomRadio 
                   id="remoto"
+                  name="modalita"
                   label="DA REMOTO"
-                  checked={modalita.remoto}
-                  onChange={(checked) => setModalita({...modalita, remoto: checked})}
+                  checked={modalita.tipo === "remoto"}
+                  onChange={handleModalitaChange}
                 />
               </div>
             </div>
@@ -546,86 +525,107 @@ const ListaAnnunciAzienda = ({}) => {
               <div style={{width: "20px"}}></div>
               <button 
                 style={{...buttonStyle, width: "100px"}} 
+                onClick={handleNextStep}
+              >
+                Avanti →
+              </button>
+            </div>
+          </>
+        ) : (
+          // Step 2: Dettagli aggiuntivi
+          <>
+            <h2 style={titleStyle}>CREA UN NUOVO ANNUNCIO</h2>
+            <div>
+              <h3 style={labelStyle}>DESCRIZIONE:</h3>
+              <textarea 
+                style={textareaStyle} 
+                placeholder="Aggiungi una descrizione..." 
+                value={nuovoAnnuncio.descrizione}
+                onChange={(e) => setNuovoAnnuncio({...nuovoAnnuncio, descrizione: e.target.value})}
+              />
+            </div>
+            <div style={{display: "flex", justifyContent: "space-between", marginTop: "20px"}}>
+              <button style={buttonStyle}>←</button>
+              <button 
+                style={buttonStyle} 
                 onClick={handleSubmit}
               >
                 Crea +
               </button>
             </div>
+            
           </>
         )}
       </div>
     );
   };
 
-  return (
-    <>
-      {renderOverlay()}
-      {renderPopup()}
-      
-      <div style={{
-        display: "flex", 
-        width: "100%", 
-        gap: "20px", 
-        height: "95vh",
-      }}>
-        <Components.ListaAnnunci style={{flex: 2}}>
-          <div
-            style={{
-              borderBottom: "1px solid #ccc",
-              paddingBottom: "15px",
-              width: "100%",
-              display: "flex",
-              flexDirection: "row",
-              paddingLeft: "10px",
-              paddingRight: "10px",
-            }}
-          >
-            <Components.SearchBar></Components.SearchBar>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-              flexWrap: "wrap",
-              width: "100%",
-              gap: "15px",
-              maxHeight: "95vh",
-              borderRadius: "12px",
-              overflow: "scroll",
-              padding: "10px",
-              position: "relative",
-            }}
-          >
-            {annunci.map((annuncio) => (
-              <Components.Annuncio
-                key={annuncio.id}
-                onClick={() => handleAnnuncioClick(annuncio.id)}
-              >
-                <Components.AnnuncioImage />
-                <Components.AnnuncioInfo>
-                  <Components.AnnuncioTitolo>{annuncio.titolo}</Components.AnnuncioTitolo>
-                </Components.AnnuncioInfo>
-                <Components.AnnuncioButtons>
-                  <FooterIcon
-                    className="pi pi-trash"
-                    style={{ color: "red", margin: "auto" }}
-                    onClick={(e) => handleDeleteAnnuncio(annuncio.id, e)}
-                  ></FooterIcon>
-                </Components.AnnuncioButtons>
-              </Components.Annuncio>
-            ))}
-          </div>
-        </Components.ListaAnnunci>
-
-        {/* Form per la creazione di un nuovo annuncio */}
-        <div style={{flex: 1, height: "100%"}}>
-          {renderFormNuovoAnnuncio()}
+  
+return (
+  <>
+    {renderOverlay()}
+    {renderPopup()}
+    
+    <div style={{
+      display: "flex", 
+      width: "100%", 
+      gap: "20px", 
+      height: "95vh"
+      // Rimosso "scroll: overflow" che non è una proprietà CSS valida
+    }}>
+      <Components.ListaAnnunci 
+        style={{
+          flex: 2,
+          display: "flex",
+          flexDirection: "column"
+        }}
+      >
+        <div
+          style={{
+            borderBottom: "1px solid #ccc",
+            paddingBottom: "15px",
+            width: "100%",
+            display: "flex",
+            flexDirection: "row",
+            paddingLeft: "10px",
+            paddingRight: "10px",
+          }}
+        >
+          <Components.SearchBar></Components.SearchBar>
         </div>
+        
+        {/* Sposta gli stili direttamente nel ListaAnnunci e rimuovi il div extra */}
+        {annunci.map((annuncio) => (
+          <Components.Annuncio
+            key={annuncio.id}
+            onClick={() => handleAnnuncioClick(annuncio.id)}
+            style={{
+              margin: "10px",
+              flexBasis: "calc(33.333% - 20px)",  // Per mantenere il layout a griglia
+            }}
+          >
+            <Components.AnnuncioImage />
+            <Components.AnnuncioInfo>
+              <Components.AnnuncioTitolo>{annuncio.titolo}</Components.AnnuncioTitolo>
+            </Components.AnnuncioInfo>
+            <Components.AnnuncioButtons>
+              <FooterIcon
+                className="pi pi-trash"
+                style={{ color: "red", margin: "auto" }}
+                onClick={(e) => handleDeleteAnnuncio(annuncio.id, e)}
+              ></FooterIcon>
+            </Components.AnnuncioButtons>
+          </Components.Annuncio>
+        ))}
+      </Components.ListaAnnunci>
+
+      {/* Form per la creazione di un nuovo annuncio */}
+      <div style={{flex: 1, height: "100%"}}>
+        {renderFormNuovoAnnuncio()}
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 };
 
 export default ListaAnnunciAzienda;
