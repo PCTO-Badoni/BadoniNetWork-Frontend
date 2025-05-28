@@ -1,631 +1,686 @@
-import React, { useState, useEffect } from "react";
-import * as Components from "../AnnunciComponents";
-import "primeicons/primeicons.css";
-import { FooterIcon } from "../../../../FooterComponents";
-import ReactDOM from "react-dom";
+import React, { useState, useEffect, useCallback } from "react";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faPlus, faEdit } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
+import { v4 as uuidv4 } from 'uuid';
 
-// Componente checkbox personalizzato per garantire allineamento perfetto
-const CustomRadio = ({ id, label, checked, onChange, name }) => {
+const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN;
+
+// Stili per il componente (invariati)
+const AnnunciContainer = styled.div`
+  display: flex;
+  width: 100%;
+  padding: 20px 0;
+`;
+
+const AnnunciListaContainer = styled.div`
+  flex: 1;
+  padding-right: 20px;
+`;
+
+const FormSideContainer = styled.div`
+  width: 400px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 20px;
+  align-self: flex-start;
+  margin-left: 20px;
+  min-height: 400px;
+`;
+
+const AnnuncioCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  position: relative;
+`;
+
+const AnnuncioHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+`;
+
+const TitoloAnnuncio = styled.h3`
+  margin: 0;
+  color: var(--contrastColor);
+`;
+
+const DettagliAnnuncio = styled.div`
+  margin-top: 10px;
+`;
+
+const Tag = styled.span`
+  background-color: #f0f0f0;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-right: 8px;
+  margin-bottom: 8px;
+  display: inline-block;
+  font-size: 12px;
+`;
+
+const TagContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+`;
+
+const Button = styled.button`
+  background-color: var(--contrastColor);
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+
+  &:hover {
+    opacity: 0.9;
+  }
+`;
+
+const FormTitle = styled.h2`
+  margin-bottom: 20px;
+  color: var(--contrastColor);
+`;
+
+const FormLabel = styled.h3`
+  margin-top: 15px;
+  margin-bottom: 5px;
+`;
+
+const FormInput = styled.input`
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+`;
+
+const FormTextArea = styled.textarea`
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 100px;
+`;
+
+const RadioOptionContainer = styled.div`
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+`;
+
+const RadioButton = styled.div`
+  width: 22px;
+  height: 22px;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  background-color: white;
+  margin-right: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+`;
+
+const RadioIndicator = styled.div`
+  background-color: #4a90e2;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+`;
+
+const RadioLabel = styled.div`
+  cursor: pointer;
+  user-select: none;
+  font-size: 16px;
+`;
+
+const ButtonGroup = styled.div`
+  margin-top: 20px;
+  display: flex;
+`;
+
+const OptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+// Componente radio button semplificato
+const RadioOption = ({ id, label, checked, onChange }) => {
   return (
-    <div style={{
-      display: "flex",
-      alignItems: "center",
-      margin: "10px 0"
-    }}>
-      <div 
-        style={{
-          width: "22px",
-          height: "22px",
-          border: "1px solid #ccc",
-          borderRadius: "50%", // Cambiato da 4px a 50% per renderlo circolare
-          backgroundColor: "white",
-          marginRight: "10px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          cursor: "pointer",
-          flexShrink: 0,
-          position: "relative"
-        }}
-        onClick={() => onChange(id, name)}
-      >
-        {checked && (
-          <div
-            style={{
-              backgroundColor: "#4a90e2",
-              borderRadius: "50%",
-              width: "12px",
-              height: "12px",
-              position: "absolute"
-            }}
-          />
-        )}
-      </div>
-      <div
-        style={{
-          cursor: "pointer",
-          userSelect: "none",
-          fontSize: "16px",
-          position: "static",
-          left: "auto",
-          top: "auto",
-          padding: "0",
-          textShadow: "none",
-          display: "block",
-          margin: "0"
-        }}
-        onClick={() => onChange(id, name)}
-      >
-        {label}
-      </div>
-    </div>
+    <RadioOptionContainer onClick={() => onChange(id)}>
+      <RadioButton>
+        {checked && <RadioIndicator />}
+      </RadioButton>
+      <RadioLabel>{label}</RadioLabel>
+    </RadioOptionContainer>
   );
 };
 
-const ListaAnnunciAzienda = ({}) => {
-  // Stato per tenere traccia dell'annuncio espanso (null se nessuno è espanso)
-  const [expandedAnnuncioId, setExpandedAnnuncioId] = useState(null);
-  
-  // Stato per gestire il form di creazione annuncio
-  const [formStep, setFormStep] = useState(1); // Step 1 o 2 del form
-  const [nuovoAnnuncio, setNuovoAnnuncio] = useState({
-    descrizione: "",
+const ListaAnnunciAzienda = ({ onAnnuncioAggiunto, onAnnuncioRimosso, onAnnunciCountUpdate }) => {
+  // Stato base
+  const [listaAnnunci, setListaAnnunci] = useState([]);
+  const [formData, setFormData] = useState({
     ruolo: "",
-    contratto: "",
-    modalitaLavoro: "",
-    retribuzione: ""
+    descrizione: "",
+    retribuzione: "",
+    contratto: null,
+    modalita: null
   });
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [logMessage, setLogMessage] = useState("");
   
-  const [contratto, setContratto] = useState({
-    tipo: null 
-  });
-  
-  const [modalita, setModalita] = useState({
-    tipo: null 
-  });
-
-  const handleContrattoChange = (value) => {
-    setContratto({ tipo: value });
+  // Funzione per il logging
+  const logAction = (message) => {
+    console.log(message);
+    setLogMessage(message);
   };
   
-  const handleModalitaChange = (value) => {
-    setModalita({ tipo: value });
-  };
-
-  // Stato per gestire la lista degli annunci
-  const [annunci, setAnnunci] = useState([
-    { id: 1, titolo: "Ingegnere" },
-    { id: 2, titolo: "Sviluppatore" },
-    { id: 3, titolo: "Designer" },
-    { id: 4, titolo: "Marketing" },
-    { id: 5, titolo: "HR" },
-    { id: 6, titolo: "Finanza" },
-    { id: 7, titolo: "Amministratore" }
-  ]);
-
-  // Quando un annuncio è espanso, blocca lo scrolling del body
+  // Carica gli annunci esistenti all'avvio
   useEffect(() => {
-    if (expandedAnnuncioId) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'auto';
-    }
-
-    // Cleanup function
-    return () => {
-      document.body.style.overflow = 'auto';
+    const caricaAnnunci = async () => {
+      try {
+        setIsLoading(true);
+        logAction('Caricamento annunci dal server...');
+        
+        const emailAzienda = sessionStorage.getItem('email') || 
+                            sessionStorage.getItem('userEmail') || 
+                            sessionStorage.getItem('azienda_email') || 
+                            localStorage.getItem('email') || 
+                            "";
+        
+        if (!emailAzienda) {
+          setError("Email dell'azienda non trovata nella sessione. Effettua nuovamente il login.");
+          setIsLoading(false);
+          return;
+        }
+        
+        const url = new URL(`${prefix}/api/get-annuncio`);
+        url.searchParams.append('email', emailAzienda);
+        
+        const token = sessionStorage.getItem('token') || localStorage.getItem('token');
+        if (token) {
+          url.searchParams.append('token', token);
+        }
+        
+        console.log('URL chiamata API:', url.toString());
+        console.log('Email azienda per filtro:', emailAzienda);
+        
+        const response = await fetch(url, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+        
+        if (!response.ok) {
+          throw new Error(`Errore nel caricamento annunci: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Annunci ricevuti per azienda:', data);
+        
+        if (Array.isArray(data)) {
+          const annunciFormattati = data.map(annuncio => ({
+            id: annuncio.id || uuidv4(),
+            titolo: annuncio.ruolo,
+            descrizione: annuncio.descrizione || "",
+            contratto: [mapContrattoFromAPI(annuncio.contratto)],
+            modalitaLavoro: [mapModalitaFromAPI(annuncio.modalita)],
+            retribuzione: annuncio.retribuzione ? `€${annuncio.retribuzione}` : ""
+          }));
+          
+          setListaAnnunci(annunciFormattati);
+          
+          if (onAnnunciCountUpdate) {
+            onAnnunciCountUpdate(annunciFormattati.length);
+          }
+          
+          logAction(`Caricati ${annunciFormattati.length} annunci per l'azienda ${emailAzienda}`);
+        } else {
+          setListaAnnunci([]);
+          if (onAnnunciCountUpdate) {
+            onAnnunciCountUpdate(0);
+          }
+          logAction('Nessun annuncio trovato per questa azienda');
+        }
+      } catch (error) {
+        console.error('Errore nel caricamento annunci:', error);
+        setError('Impossibile caricare gli annunci. Riprova più tardi.');
+      } finally {
+        setIsLoading(false);
+      }
     };
-  }, [expandedAnnuncioId]);
-
-  const handleAnnuncioClick = (id) => {
-    // Toggle: se l'annuncio è già espanso, lo chiude, altrimenti lo espande
-    setExpandedAnnuncioId(expandedAnnuncioId === id ? null : id);
-    console.log(`Annuncio ${id} ${expandedAnnuncioId === id ? "chiuso" : "espanso"}`);
-  }
-
-  const handleDeleteAnnuncio = (id, e) => {
-    // Previeni la propagazione dell'evento
-    e.stopPropagation();
     
-    const conferma = window.confirm("Sei sicuro di voler eliminare questo annuncio?");
+    caricaAnnunci();
+  }, [onAnnunciCountUpdate]);
+  
+  // Mappature
+  const mapContrattoFromAPI = (codice) => {
+    const mappa = {
+      'I': 'indeterminato',
+      'D': 'determinato',
+      'S': 'stage',
+      'F': 'freelance',
+      'X': 'daDefinire'
+    };
+    return mappa[codice] || 'daDefinire';
+  };
+  
+  const mapModalitaFromAPI = (codice) => {
+    const mappa = {
+      'S': 'inSede',
+      'I': 'ibrida',
+      'R': 'remoto'
+    };
+    return mappa[codice] || 'inSede';
+  };
+  
+  // Effetto per notificare il genitore
+  useEffect(() => {
+    if (onAnnunciCountUpdate) {
+      logAction(`Notifica genitore: ${listaAnnunci.length} annunci`);
+      onAnnunciCountUpdate(listaAnnunci.length);
+    }
+  }, [listaAnnunci.length, onAnnunciCountUpdate]);
+  
+  // Funzioni per gestire il form
+  const updateField = (field, value) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
+  };
+  
+  const resetForm = () => {
+    setFormData({
+      ruolo: "",
+      descrizione: "",
+      retribuzione: "",
+      contratto: null,
+      modalita: null
+    });
+    setError(null);
+  };
+  
+  const handleContrattoChange = useCallback((tipo) => {
+    updateField("contratto", tipo);
+  }, []);
+  
+  const handleModalitaChange = useCallback((tipo) => {
+    updateField("modalita", tipo);
+  }, []);
+  
+  const addAnnuncio = useCallback(() => {
+    if (!formData.ruolo?.trim()) {
+      setError("Per favore, inserisci il ruolo");
+      return;
+    }
     
-    if (conferma) {
-      // Filtra l'array di annunci per rimuovere quello selezionato
-      const nuoviAnnunci = annunci.filter(annuncio => annuncio.id !== id);
-      setAnnunci(nuoviAnnunci);
+    if (!formData.contratto) {
+      setError("Per favore, seleziona un tipo di contratto");
+      return;
+    }
+    
+    if (!formData.modalita) {
+      setError("Per favore, seleziona una modalità di lavoro");
+      return;
+    }
+    
+    setIsLoading(true);
+    setError(null);
+    
+    try {
+      const contrattoMap = {
+        "indeterminato": "TI", 
+        "determinato": "TD",
+        "stage": "S",
+        "freelance": "F",
+        "daDefinire": "CDD"
+      };
       
-      // Se l'annuncio eliminato è quello espanso, chiudi il popup
-      if (expandedAnnuncioId === id) {
-        setExpandedAnnuncioId(null);
+      const modalitaMap = {
+        "inSede": "S",
+        "ibrida": "I",
+        "remoto": "R"
+      };
+      
+      const retribuzione = formData.retribuzione ? 
+        parseInt(formData.retribuzione.replace(/[^0-9]/g, '')) || 0 : 
+        0;
+      
+      const emailAzienda = sessionStorage.getItem('email') || 
+                          sessionStorage.getItem('userEmail') || 
+                          sessionStorage.getItem('azienda_email') || 
+                          localStorage.getItem('email') || 
+                          "";
+      
+      if (!emailAzienda) {
+        setError("Email dell'azienda non trovata nella sessione. Effettua nuovamente il login.");
+        setIsLoading(false);
+        return;
       }
       
-      console.log(`Eliminato annuncio con ID: ${id}`);
+      const datiPerAPI = {
+        ruolo: formData.ruolo.trim(),
+        contratto: contrattoMap[formData.contratto] || "CDD",
+        modalita: modalitaMap[formData.modalita] || "S",
+        retribuzione: retribuzione,
+        descrizione: formData.descrizione || "",
+        email_azienda: emailAzienda
+      };
+      
+      console.log("Invio dati all'API:", datiPerAPI);
+      console.log("Email azienda dalla sessione:", emailAzienda);
+      
+      fetch(`${prefix}/api/add-annuncio`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
+        body: JSON.stringify(datiPerAPI)
+      })
+      .then(response => {
+        if (!response.ok) {
+          console.error(`Errore HTTP: ${response.status}`);
+          return response.text().then(text => {
+            console.error("Risposta server:", text);
+            throw new Error(`Errore dal server: ${response.status}`);
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log("Risposta API:", data);
+        
+        if (data && (data.message || data.id)) {
+          const nuovoAnnuncio = {
+            id: data.id || uuidv4(),
+            titolo: formData.ruolo.trim(),
+            descrizione: formData.descrizione || "",
+            contratto: [formData.contratto],
+            modalitaLavoro: [formData.modalita],
+            retribuzione: formData.retribuzione || ""
+          };
+          
+          setListaAnnunci(prevList => [nuovoAnnuncio, ...prevList]);
+          
+          if (onAnnuncioAggiunto) {
+            onAnnuncioAggiunto();
+          }
+          
+          resetForm();
+        }
+      })
+      .catch(error => {
+        console.error("Errore nella chiamata API:", error);
+        setError(`Errore nell'invio dell'annuncio: ${error.message}`);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+      
+    } catch (error) {
+      setError(`Errore: ${error.message}`);
+      console.error("Errore nell'aggiunta:", error);
+      setIsLoading(false);
     }
-  }
-  
-  // Gestione del cambio di step nel form
-  const handleNextStep = () => {
-    // Validazione base dei dati
-    if (!nuovoAnnuncio.ruolo || nuovoAnnuncio.ruolo.trim() === "") {
-      alert("Per favore, inserisci un ruolo per l'annuncio");
-      return;
-    }
-    
-    // Controllo che ci sia un tipo di contratto selezionato
-    if (!contratto.tipo) {
-      alert("Per favore, seleziona un tipo di contratto");
-      return;
-    }
-    
-    // Controllo che ci sia una modalità di lavoro selezionata
-    if (!modalita.tipo) {
-      alert("Per favore, seleziona una modalità di lavoro");
-      return;
-    }
-    
-    // Assicurati che ci sia una retribuzione indicata
-    if (!nuovoAnnuncio.retribuzione || nuovoAnnuncio.retribuzione.trim() === "") {
-      alert("Per favore, indica la retribuzione per l'annuncio");
-      return;
-    }
-    
-    setFormStep(2);
-  }
-  
-  const handlePrevStep = () => {
-    setFormStep(1);
-  }
-  
-  // Gestione dell'invio del form
-  const handleSubmit = () => {
-    // Verifica che ci sia una descrizione prima di procedere
-    if (!nuovoAnnuncio.descrizione || nuovoAnnuncio.descrizione.trim() === "") {
-      alert("Per favore, inserisci una descrizione per l'annuncio");
-      return;
-    }
+  }, [formData, onAnnuncioAggiunto]);
 
-    // Crea un nuovo annuncio con ID unico
-    const newId = annunci.length > 0 ? Math.max(...annunci.map(a => a.id)) + 1 : 1;
-    
-    // Genera un oggetto completo per il nuovo annuncio
-    const nuovoAnnuncioCompleto = {
-      id: newId,
-      titolo: nuovoAnnuncio.ruolo,
-      descrizione: nuovoAnnuncio.descrizione,
-      contratto: [contratto.tipo], // passa come array con un singolo valore
-      modalitaLavoro: [modalita.tipo], // passa come array con un singolo valore
-      retribuzione: nuovoAnnuncio.retribuzione
+  // Funzione per eliminare un singolo annuncio
+  const removeAnnuncio = useCallback(async (id) => {
+    if (window.confirm("Sicuro di voler eliminare questo annuncio?")) {
+      try {
+        setIsLoading(true);
+        logAction(`Eliminazione annuncio: ${id}`);
+        
+        const response = await fetch(`${prefix}/api/remove-annuncio?id=${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        });
+        
+        if (!response.ok) {
+          console.error(`Errore HTTP: ${response.status}`);
+          const errorText = await response.text();
+          console.error("Risposta server:", errorText);
+          throw new Error(`Errore dal server: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log("Risposta eliminazione:", data);
+        
+        if (data && (data.message || data.success !== false)) {
+          setListaAnnunci(prev => prev.filter(item => item.id !== id));
+          
+          if (onAnnuncioRimosso) {
+            onAnnuncioRimosso();
+          }
+          
+          logAction(`Annuncio ${id} eliminato con successo`);
+        } else {
+          throw new Error("Il server ha restituito un errore nell'eliminazione");
+        }
+        
+      } catch (error) {
+        console.error("Errore nell'eliminazione annuncio:", error);
+        setError(`Errore nell'eliminazione dell'annuncio: ${error.message}`);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+  }, [onAnnuncioRimosso]);
+  
+  // RIMOSSA: funzione removeAllAnnunci
+  
+  // Funzioni ausiliarie per i label
+  const getContrattoLabel = (tipo) => {
+    const labels = {
+      indeterminato: "Tempo indeterminato",
+      determinato: "Tempo determinato",
+      stage: "Stage",
+      freelance: "Freelance", 
+      daDefinire: "Contratto da definire"
     };
-    
-    // Aggiungi il nuovo annuncio alla lista
-    const nuoviAnnunci = [...annunci, nuovoAnnuncioCompleto];
-    setAnnunci(nuoviAnnunci);
-    console.log("Nuovo annuncio aggiunto:", nuovoAnnuncioCompleto);
-    
-    // Reset del form
-    setNuovoAnnuncio({
-      descrizione: "",
-      ruolo: "",
-      contratto: "",
-      modalitaLavoro: "",
-      retribuzione: ""
-    });
-    setContratto({
-      tipo: null
-    });
-    setModalita({
-      tipo: null
-    });
-    setFormStep(1);
-    
-    // Feedback visivo per l'utente
-    alert("Annuncio creato con successo!");
-  }
-
-  // Renderizza l'overlay e il popup direttamente nel body usando portali
-  const renderOverlay = () => {
-    if (!expandedAnnuncioId) return null;
-    
-    return ReactDOM.createPortal(
-      <div 
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "rgba(0,0,0,0.5)",
-          zIndex: 99998, // z-index estremamente alto
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-        onClick={() => setExpandedAnnuncioId(null)}
-      />,
-      document.body
-    );
+    return labels[tipo] || tipo;
+  };
+  
+  const getModalitaLabel = (tipo) => {
+    const labels = {
+      inSede: "In sede",
+      ibrida: "Ibrida",
+      remoto: "Da remoto"
+    };
+    return labels[tipo] || tipo;
   };
 
-  // Renderizza il contenuto del popup
-  const renderPopup = () => {
-    if (!expandedAnnuncioId) return null;
-    
-    // Trova l'annuncio selezionato
-    const annuncioSelezionato = annunci.find(a => a.id === expandedAnnuncioId);
-    
-    if (!annuncioSelezionato) return null;
-    
-    return ReactDOM.createPortal(
-      <div 
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          zIndex: 99999, // z-index più alto dell'overlay
-          width: "70%",
-          maxWidth: "800px",
-          maxHeight: "80vh",
-          backgroundColor: "var(--lightFirstColor)",
-          borderRadius: "12px",
-          boxShadow: "0 0 20px rgba(0,0,0,0.5)",
-          padding: "20px",
-          animation: "popIn 0.3s ease",
-          overflowY: "auto",
-        }}
-      >
-        <style dangerouslySetInnerHTML={{
-          __html: `
-            @keyframes popIn {
-              0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
-              100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-            }
-          `
-        }} />
+  return (
+    <AnnunciContainer>
+      <AnnunciListaContainer>
+        <h2 style={{ margin: '0 0 20px 0' }}>
+          I tuoi annunci {listaAnnunci.length > 0 && `(${listaAnnunci.length})`}
+        </h2>
         
-        <div key={annuncioSelezionato.id} style={{ display: "flex", flexDirection: "column" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "15px" }}>
-            <Components.AnnuncioTitolo>{annuncioSelezionato.titolo}</Components.AnnuncioTitolo>
-            <FooterIcon 
-              className="pi pi-times" 
-              style={{ cursor: "pointer", color: "red" }} 
-              onClick={(e) => {
-                e.stopPropagation();
-                setExpandedAnnuncioId(null);
-              }}
-            />
-          </div>
-          <div style={{ display: "flex", gap: "15px" }}>
-            <Components.AnnuncioImage style={{ width: "100px", height: "100px", flexShrink: 0 }} />
-            <div style={{ flex: 1, overflow: "auto" }}>
-              <h3>Dettagli Annuncio</h3>
-              <p>{annuncioSelezionato.descrizione || "Nessuna descrizione disponibile."}</p>
-              
-              {annuncioSelezionato.contratto && annuncioSelezionato.contratto.length > 0 && (
-                <div>
-                  <h4 style={{ marginTop: "15px", marginBottom: "5px" }}>Tipo di contratto:</h4>
-                  <ul style={{ margin: "0", paddingLeft: "20px" }}>
-                    {annuncioSelezionato.contratto.map((tipo, index) => (
-                      <li key={index}>{tipo === "indeterminato" ? "TEMPO INDETERMINATO" : 
-                                      tipo === "determinato" ? "TEMPO DETERMINATO" : 
-                                      tipo === "stage" ? "STAGE" :
-                                      tipo === "freelance" ? "FREELANCE" : 
-                                      "CONTRATTO DA DEFINIRE"}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              {annuncioSelezionato.modalitaLavoro && annuncioSelezionato.modalitaLavoro.length > 0 && (
-                <div>
-                  <h4 style={{ marginTop: "15px", marginBottom: "5px" }}>Modalità di lavoro:</h4>
-                  <ul style={{ margin: "0", paddingLeft: "20px" }}>
-                    {annuncioSelezionato.modalitaLavoro.map((modo, index) => (
-                      <li key={index}>{modo === "inSede" ? "IN SEDE" : 
-                                      modo === "ibrida" ? "IBRIDA" : 
-                                      "DA REMOTO"}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              
-              {annuncioSelezionato.retribuzione && (
-                <div style={{ marginTop: "15px" }}>
-                  <h4 style={{ marginBottom: "5px" }}>Retribuzione:</h4>
-                  <p>{annuncioSelezionato.retribuzione} EURO/MESE</p>
-                </div>
-              )}
-              
-              <div style={{ marginTop: "20px" }}>
-                <button 
+        {listaAnnunci.length === 0 ? (
+          <p>Nessun annuncio pubblicato. Crea il tuo primo annuncio!</p>
+        ) : (
+          listaAnnunci.map(annuncio => (
+            <AnnuncioCard key={annuncio.id}>
+              <AnnuncioHeader>
+                <TitoloAnnuncio>{annuncio.titolo}</TitoloAnnuncio>
+                <div 
+                  className="delete-button"
+                  onClick={() => removeAnnuncio(annuncio.id)}
                   style={{
-                    padding: "8px 16px",
-                    backgroundColor: "var(--firstColor)",
-                    color: "black",
-                    border: "none",
-                    borderRadius: "8px",
-                    cursor: "pointer"
+                    backgroundColor: '#e74c3c',
+                    color: 'white',
+                    width: '32px',
+                    height: '32px',
+                    borderRadius: '4px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer'
                   }}
                 >
-                  Candidati
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>,
-      document.body
-    );
-  };
-  
-  // Form per la creazione di un nuovo annuncio
-  const renderFormNuovoAnnuncio = () => {
-    const formStyle = {
-      display: "flex",
-      flexDirection: "column",
-      padding: "20px",
-      backgroundColor: "white",
-      borderRadius: "12px",
-      height: "100%",
-      boxShadow: "0 0 10px rgba(0,0,0,0.1)",
-      overflow: "auto",
-      flex: 1
-    };
-    
-    const inputStyle = {
-      padding: "15px",
-      fontSize: "16px",
-      border: "1px solid #ccc",
-      borderRadius: "8px",
-      margin: "10px 0",
-      width: "100%",
-      boxSizing: "border-box"
-    };
-    
-    const textareaStyle = {
-      ...inputStyle,
-      minHeight: "200px",
-      resize: "none"
-    };
-    
-    const buttonStyle = {
-      padding: "12px 24px",
-      backgroundColor: "#8AE270",
-      color: "black",
-      border: "none",
-      borderRadius: "8px",
-      cursor: "pointer",
-      fontSize: "16px",
-      margin: "10px 0"
-    };
-    
-    const titleStyle = {
-      textAlign: "center",
-      marginBottom: "20px",
-      borderBottom: "1px solid #ddd",
-      paddingBottom: "15px",
-      fontSize: "24px"
-    };
-    
-    const checkboxContainerStyle = {
-      margin: "15px 0 20px 0"
-    };
-    
-    const labelStyle = {
-      fontWeight: "bold",
-      marginTop: "15px",
-      fontSize: "18px"
-    };
-
-    return (
-      <div style={formStyle}>
-        {formStep === 1 ? (
-          // Step 1: Titolo e descrizione
-          <>
-            <h2 style={titleStyle}>CREA NUOVO ANNUNCIO</h2>
-            <div>
-              <h3 style={labelStyle}>RUOLO:</h3>
-              <input 
-                type="text" 
-                style={inputStyle} 
-                placeholder='Es. "Frontend Developer"' 
-                value={nuovoAnnuncio.ruolo}
-                onChange={(e) => setNuovoAnnuncio({...nuovoAnnuncio, ruolo: e.target.value})}
-              />
-            </div>
-            
-            <div>
-              <h3 style={labelStyle}>CONTRATTO:</h3>
-             <div style={checkboxContainerStyle}>
-                <CustomRadio 
-                  id="indeterminato"
-                  name="contratto"
-                  label="TEMPO INDETERMINATO"
-                  checked={contratto.tipo === "indeterminato"}
-                  onChange={handleContrattoChange}
-                />
-                <CustomRadio 
-                  id="determinato"
-                  name="contratto"
-                  label="TEMPO DETERMINATO"
-                  checked={contratto.tipo === "determinato"}
-                  onChange={handleContrattoChange}
-                />
-                <CustomRadio 
-                  id="stage"
-                  name="contratto"
-                  label="STAGE"
-                  checked={contratto.tipo === "stage"}
-                  onChange={handleContrattoChange}
-                />
-                <CustomRadio 
-                  id="freelance"
-                  name="contratto"
-                  label="FREELANCE"
-                  checked={contratto.tipo === "freelance"}
-                  onChange={handleContrattoChange}
-                />
-                <CustomRadio 
-                  id="daDefinire"
-                  name="contratto"
-                  label="CONTRATTO DA DEFINIRE"
-                  checked={contratto.tipo === "daDefinire"}
-                  onChange={handleContrattoChange}
-                />
-              </div>
-            </div>
-            
-            <div>
-              <h3 style={labelStyle}>MODALITÀ DI LAVORO:</h3>
-              <div style={checkboxContainerStyle}>
-                <CustomRadio 
-                  id="inSede"
-                  name="modalita"
-                  label="IN SEDE"
-                  checked={modalita.tipo === "inSede"}
-                  onChange={handleModalitaChange}
-                />
-                <CustomRadio 
-                  id="ibrida"
-                  name="modalita"
-                  label="IBRIDA"
-                  checked={modalita.tipo === "ibrida"}
-                  onChange={handleModalitaChange}
-                />
-                <CustomRadio 
-                  id="remoto"
-                  name="modalita"
-                  label="DA REMOTO"
-                  checked={modalita.tipo === "remoto"}
-                  onChange={handleModalitaChange}
-                />
-              </div>
-            </div>
-            
-            <div>
-              <h3 style={labelStyle}>RETRIBUITO:</h3>
-              <input 
-                type="text" 
-                style={inputStyle} 
-                placeholder="EURO/MESE"
-                value={nuovoAnnuncio.retribuzione}
-                onChange={(e) => setNuovoAnnuncio({...nuovoAnnuncio, retribuzione: e.target.value})}
-              />
-            </div>
-            
-            <div style={{display: "flex", justifyContent: "center", marginTop: "20px"}}>
-              <button 
-                style={{...buttonStyle, width: "100px"}}
-                onClick={handlePrevStep}
-              >
-                ←
-              </button>
-              <div style={{width: "20px"}}></div>
-              <button 
-                style={{...buttonStyle, width: "100px"}} 
-                onClick={handleNextStep}
-              >
-                Avanti →
-              </button>
-            </div>
-          </>
-        ) : (
-          // Step 2: Dettagli aggiuntivi
-          <>
-            <h2 style={titleStyle}>CREA UN NUOVO ANNUNCIO</h2>
-            <div>
-              <h3 style={labelStyle}>DESCRIZIONE:</h3>
-              <textarea 
-                style={textareaStyle} 
-                placeholder="Aggiungi una descrizione..." 
-                value={nuovoAnnuncio.descrizione}
-                onChange={(e) => setNuovoAnnuncio({...nuovoAnnuncio, descrizione: e.target.value})}
-              />
-            </div>
-            <div style={{display: "flex", justifyContent: "space-between", marginTop: "20px"}}>
-              <button style={buttonStyle}>←</button>
-              <button 
-                style={buttonStyle} 
-                onClick={handleSubmit}
-              >
-                Crea +
-              </button>
-            </div>
-            
-          </>
+                  <FontAwesomeIcon icon={faTrash} />
+                </div>
+              </AnnuncioHeader>
+              
+              <DettagliAnnuncio>
+                {annuncio.descrizione && <p>{annuncio.descrizione}</p>}
+                
+                <TagContainer>
+                  {annuncio.contratto && annuncio.contratto.map((c, i) => (
+                    <Tag key={`${annuncio.id}-contratto-${i}`}>{getContrattoLabel(c)}</Tag>
+                  ))}
+                  
+                  {annuncio.modalitaLavoro && annuncio.modalitaLavoro.map((m, i) => (
+                    <Tag key={`${annuncio.id}-modalita-${i}`}>{getModalitaLabel(m)}</Tag>
+                  ))}
+                  
+                  {annuncio.retribuzione && <Tag>{annuncio.retribuzione}</Tag>}
+                </TagContainer>
+              </DettagliAnnuncio>
+            </AnnuncioCard>
+          ))
         )}
-      </div>
-    );
-  };
-
-  
-return (
-  <>
-    {renderOverlay()}
-    {renderPopup()}
-    
-    <div style={{
-      display: "flex", 
-      width: "100%", 
-      gap: "20px", 
-      height: "95vh"
-      // Rimosso "scroll: overflow" che non è una proprietà CSS valida
-    }}>
-      <Components.ListaAnnunci 
-        style={{
-          flex: 2,
-          display: "flex",
-          flexDirection: "column"
-        }}
-      >
-        <div
-          style={{
-            borderBottom: "1px solid #ccc",
-            paddingBottom: "15px",
-            width: "100%",
-            display: "flex",
-            flexDirection: "row",
-            paddingLeft: "10px",
-            paddingRight: "10px",
-          }}
-        >
-          <Components.SearchBar></Components.SearchBar>
+      </AnnunciListaContainer>
+      
+      <FormSideContainer>
+        <FormTitle>CREA NUOVO ANNUNCIO</FormTitle>
+        
+        {error && (
+          <div style={{ color: 'red', marginBottom: '15px', padding: '8px', backgroundColor: '#ffeeee', borderRadius: '4px' }}>
+            {error}
+          </div>
+        )}
+        
+        <div>
+          <FormLabel>RUOLO:</FormLabel>
+          <FormInput 
+            type="text"
+            placeholder='Es. "Frontend Developer"'
+            value={formData.ruolo}
+            onChange={(e) => updateField("ruolo", e.target.value)}
+          />
         </div>
         
-        {/* Sposta gli stili direttamente nel ListaAnnunci e rimuovi il div extra */}
-        {annunci.map((annuncio) => (
-          <Components.Annuncio
-            key={annuncio.id}
-            onClick={() => handleAnnuncioClick(annuncio.id)}
-            style={{
-              margin: "10px",
-              flexBasis: "calc(33.333% - 20px)",  // Per mantenere il layout a griglia
-            }}
+        <div>
+          <FormLabel>CONTRATTO:</FormLabel>
+          <OptionsContainer>
+            <RadioOption
+              id="indeterminato"
+              label="TEMPO INDETERMINATO"
+              checked={formData.contratto === "indeterminato"}
+              onChange={handleContrattoChange}
+            />
+            <RadioOption 
+              id="determinato"
+              label="TEMPO DETERMINATO"
+              checked={formData.contratto === "determinato"}
+              onChange={handleContrattoChange}
+            />
+            <RadioOption 
+              id="stage"
+              label="STAGE"
+              checked={formData.contratto === "stage"}
+              onChange={handleContrattoChange}
+            />
+            <RadioOption 
+              id="freelance"
+              label="FREELANCE"
+              checked={formData.contratto === "freelance"}
+              onChange={handleContrattoChange}
+            />
+            <RadioOption 
+              id="daDefinire"
+              label="CONTRATTO DA DEFINIRE"
+              checked={formData.contratto === "daDefinire"}
+              onChange={handleContrattoChange}
+            />
+          </OptionsContainer>
+        </div>
+        
+        <div>
+          <FormLabel>MODALITÀ DI LAVORO:</FormLabel>
+          <OptionsContainer>
+            <RadioOption 
+              id="inSede"
+              label="IN SEDE"
+              checked={formData.modalita === "inSede"}
+              onChange={handleModalitaChange}
+            />
+            <RadioOption 
+              id="ibrida"
+              label="IBRIDA"
+              checked={formData.modalita === "ibrida"}
+              onChange={handleModalitaChange}
+            />
+            <RadioOption 
+              id="remoto"
+              label="DA REMOTO"
+              checked={formData.modalita === "remoto"}
+              onChange={handleModalitaChange}
+            />
+          </OptionsContainer>
+        </div>
+        
+        <div>
+          <FormLabel>DESCRIZIONE:</FormLabel>
+          <FormTextArea
+            placeholder="Descrivi le responsabilità e i requisiti per questo ruolo"
+            value={formData.descrizione || ""}
+            onChange={(e) => updateField("descrizione", e.target.value)}
+          />
+        </div>
+        
+        <div>
+          <FormLabel>RETRIBUZIONE (opzionale):</FormLabel>
+          <FormInput
+            type="text"
+            placeholder='Es. "30,000-40,000€"'
+            value={formData.retribuzione || ""}
+            onChange={(e) => updateField("retribuzione", e.target.value)}
+          />
+        </div>
+        
+        <ButtonGroup>
+          <Button 
+            type="button" 
+            onClick={addAnnuncio}
+            disabled={isLoading}
+            style={{ opacity: isLoading ? 0.7 : 1 }}
           >
-            <Components.AnnuncioImage />
-            <Components.AnnuncioInfo>
-              <Components.AnnuncioTitolo>{annuncio.titolo}</Components.AnnuncioTitolo>
-            </Components.AnnuncioInfo>
-            <Components.AnnuncioButtons>
-              <FooterIcon
-                className="pi pi-trash"
-                style={{ color: "red", margin: "auto" }}
-                onClick={(e) => handleDeleteAnnuncio(annuncio.id, e)}
-              ></FooterIcon>
-            </Components.AnnuncioButtons>
-          </Components.Annuncio>
-        ))}
-      </Components.ListaAnnunci>
-
-      {/* Form per la creazione di un nuovo annuncio */}
-      <div style={{flex: 1, height: "100%"}}>
-        {renderFormNuovoAnnuncio()}
-      </div>
-    </div>
-  </>
-);
+            {isLoading ? "PUBBLICAZIONE..." : "PUBBLICA ANNUNCIO"}
+          </Button>
+          <Button 
+            type="button"
+            style={{ backgroundColor: '#999' }}
+            onClick={resetForm}
+          >
+            RESET
+          </Button>
+        </ButtonGroup>
+      </FormSideContainer>
+    </AnnunciContainer>
+  );
 };
 
 export default ListaAnnunciAzienda;

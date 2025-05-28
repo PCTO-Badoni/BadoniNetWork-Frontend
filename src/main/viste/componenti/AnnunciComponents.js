@@ -181,8 +181,6 @@ export const Annuncio = styled.div`
   flex-direction: row;
   border-radius: 12px;
   background-color: var(--lightFirstColor);
-  -webkit-box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 0 10px -3px rgba(0, 0, 0, 0.4);
   padding: 1em;
   width: 100%;
   height: 7em;
@@ -208,7 +206,6 @@ export const AnnuncioImage = styled.div`
 export const AnnuncioInfo = styled.div`
   height: 100%;
   width: 100%;
-  background-color: rgba(0, 0, 255, 0.3);
   color: var(--contrastColor);
   margin-left: 15px;
   display: flex;
@@ -235,7 +232,6 @@ export const AnnuncioButtons = styled.div`
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: rgba(255, 0, 0, 0.44);
   color: var(--contrastColor);
 `;
 export const listItemProfilePic = styled.div`

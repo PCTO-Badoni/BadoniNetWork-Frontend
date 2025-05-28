@@ -3,7 +3,7 @@ import React from "react";
 import "../styles.css";
 import { toast, ToastContainer, Bounce } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { BrowserRouter as Router, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter as Router, useNavigate } from "react-router-dom";
 import Footer from "../footer";
 
 const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
@@ -101,4 +101,4 @@ function OTP() {
     );
 }
 
-export default OTP; // Aggiungi questa riga per esportare App come esportazione predefinita
+export default OTP;

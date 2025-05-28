@@ -108,6 +108,29 @@ function Register() {
     setIsSending(true);
     event.preventDefault();
 
+  // Controllo lunghezza minima
+  if (!telefono || telefono.trim().length < 5) {
+    error("Inserire un numero di telefono valido");
+    setIsSending(false);
+    return;
+  }
+
+  // Controllo caratteri validi: solo numeri e caratteri di formattazione (+, spazi, trattini, parentesi)
+  const formatoValidoRegex = /^[0-9\s\+\-\(\)]+$/;
+  if (!formatoValidoRegex.test(telefono)) {
+    error("Il numero di telefono può contenere solo cifre e simboli di formattazione");
+    setIsSending(false);
+    return;
+  }
+
+  // Controllo presenza di almeno 5 cifre numeriche (indipendentemente dai separatori)
+  const soloNumeri = telefono.replace(/[^0-9]/g, "");
+  if (soloNumeri.length < 5) {
+    error("Il numero deve contenere almeno 5 cifre");
+    setIsSending(false);
+    return;
+  }
+
     const data = {
       ragionesociale: ragionesociale,
       email: email,
