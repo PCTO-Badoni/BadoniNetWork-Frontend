@@ -1,4 +1,4 @@
-# BadoniNetWork Access GUI
+# BadoniNetWork Frontend
 
 ## Project Overview
 BadoniNetWork Access GUI is a modern React-based web application designed for managing network access and facilitating student-company interactions. The platform serves as a bridge between educational institutions and businesses, offering a comprehensive suite of tools for managing student profiles, company announcements, and professional communications.
