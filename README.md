@@ -133,4 +133,7 @@ yarn build
 
 ## Contributors
 
-@VasseDev
+Pietro Vassena
+Andrea Sormani
+Federico Bugni
+Giovanni Cifariello
