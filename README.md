@@ -131,11 +131,6 @@ yarn build
 - `npm run build` - Creates a production build
 - `npm run preview` - Previews the production build locally
 
-## License
-
-[License Information]
-
 ## Contributors
 
-[Contributor Information]
-
+@VasseDev
