@@ -12,6 +12,7 @@ import Register from "./auth/register/register";
 import MainPage from "./main/mainPage";
 import OTP from "./OTP/indexOTP";
 import Login from "./auth/login/login";
+import CompletaRegistrazioneAzienda from './auth/register/azienda/CompletaRegistrazioneAzienda';
 import ReactDOM from "react-dom";
 import EmailSent from "./auth/register/email/emailSent";
 import ForgotPassword from "./auth/security/forgotPassword";
@@ -84,6 +85,7 @@ function useBodyScroll() {
 function PageController() {
   const [notifications, setNotifications] = useState([]);
   const navigate = useNavigate();
+  const location = useLocation(); // Aggiungi questo hook
 
   const [_, setForceUpdate] = useState(false); // Forza il re-render quando cambia il tema
 
@@ -142,6 +144,20 @@ function PageController() {
         color: "var(--contrastColor)",
       },
       items: [
+        {
+          backgroundColor: "var(--firstColor)",
+          label: "Modifica Profilo",
+          icon: "pi pi-user-edit",
+          color: "var(--contrastColor)",
+          template: itemRenderer,
+          style: {
+            backgroundColor: "var(--firstColor)",
+            color: "var(--contrastColor)",
+          },
+          command: () => {
+            navigate("/student/edit-profile");
+          },
+        },
         {
           backgroundColor: "var(--firstColor)",
           label: "Notifiche",
@@ -220,6 +236,11 @@ function PageController() {
     },
   ];
 
+  // Determina se nascondere l'Avatar basandoti sul percorso
+  const shouldHideAvatar = ['/login', '/register', '/forgotPassword', '/OTP', '/changePassword'].some(route => 
+    location.pathname.includes(route)
+  );
+
   return (
     <PrimeReactProvider>
       <>
@@ -240,56 +261,58 @@ function PageController() {
               Badoni NetWork
             </h3>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "10px",
-              alignItems: "center",
-              justifyContent: "center",
-              paddingRight: "1%",
-              backgroundColor: "var(--firstColor)",
-            }}
-          >
-            <Avatar
-              className="p-overlay-badge"
-              icon="pi pi-user"
-              size="large"
+          {!shouldHideAvatar && (
+            <div
               style={{
-                borderRadius: "100px",
-                backgroundColor: "var(--secondColor)",
-                color: "var(--contrastColor)",
+                display: "flex",
+                flexDirection: "row",
+                gap: "10px",
+                alignItems: "center",
+                justifyContent: "center",
+                paddingRight: "1%",
+                backgroundColor: "var(--firstColor)",
               }}
-              onClick={(event) => menuRight.current.toggle(event)}
             >
-              {notifications.length > 0 && (
-                <Badge
-                  value=" "
-                  style={{
-                    scale: "70%",
-                    marginTop: "6px",
-                    marginRight: "6px",
-                    backgroundColor: "var(--thirdColor)",
-                  }}
-                />
-              )}
-              <div className="card flex justify-content-center">
-                <Menu
-                  model={isNotificationOpen ? notificationItems : items}
-                  popup
-                  ref={menuRight}
-                  className="w-full md:w-15rem"
-                  style={{
-                    maxHeight: "25em",
-                    transition: "max-height 0.5s ease-in-out",
-                    overflowY: "scroll",
-                    backgroundColor: "var(--firstColor)",
-                    color: "var(--contrastColor)",
-                  }}
-                />
-              </div>
-            </Avatar>
-          </div>
+              <Avatar
+                className="p-overlay-badge"
+                icon="pi pi-user"
+                size="large"
+                style={{
+                  borderRadius: "100px",
+                  backgroundColor: "var(--secondColor)",
+                  color: "var(--contrastColor)",
+                }}
+                onClick={(event) => menuRight.current.toggle(event)}
+              >
+                {notifications.length > 0 && (
+                  <Badge
+                    value=" "
+                    style={{
+                      scale: "70%",
+                      marginTop: "6px",
+                      marginRight: "6px",
+                      backgroundColor: "var(--thirdColor)",
+                    }}
+                  />
+                )}
+                <div className="card flex justify-content-center">
+                  <Menu
+                    model={isNotificationOpen ? notificationItems : items}
+                    popup
+                    ref={menuRight}
+                    className="w-full md:w-15rem"
+                    style={{
+                      maxHeight: "25em",
+                      transition: "max-height 0.5s ease-in-out",
+                      overflowY: "scroll",
+                      backgroundColor: "var(--firstColor)",
+                      color: "var(--contrastColor)",
+                    }}
+                  />
+                </div>
+              </Avatar>
+            </div>
+          )}
         </Components.Header>
         <ToastContainer newestOnTop={true} />
         <Toast ref={toast} />
@@ -319,6 +342,7 @@ root.render(
         <Route path="/login" element={<Login />} />
         <Route path="/forgotPassword" element={<ForgotPassword />} />
         <Route path="/changePassword/:email" element={<ChangePassword />} />
+        <Route path="/register/completa-azienda" element={<CompletaRegistrazioneAzienda />} />
         <Route
           path="/homepage/studentProfile/:id"
           element={<StudentProfile />}

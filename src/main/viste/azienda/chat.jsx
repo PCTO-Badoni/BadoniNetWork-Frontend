@@ -80,72 +80,66 @@ const Chat = ({
     },
     {
       id: 7,
-      name: "Andrea Ponzini",
-      profilePic:
-        "https://www.dissapore.com/wp-content/uploads/2014/06/Puzza-di-cibo.jpg",
-    },
-    {
-      id: 8,
       name: "Gabriele Landi",
       profilePic:
         "https://variety.com/wp-content/uploads/2023/11/zelda.jpg?w=1000&h=563&crop=1",
     },
     {
-      id: 9,
+      id: 8,
       name: "Lorenzo Nava",
       profilePic:
         "https://i.natgeofe.com/n/af80ab23-e2e7-4ca6-bf4a-d546f3f74bf9/genius2-albert-einstein-black-white-portrait.jpg",
     },
     {
-      id: 10,
+      id: 9,
       name: "Lorenzo Molteni",
       profilePic:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyUgGMq-qn-eTXO65Kfoc6R8XkT38O63NoBQ&s",
     },
     {
-      id: 11,
+      id: 10,
       name: "Lorenzo Bellotta",
       profilePic:
         "https://www.my-personaltrainer.it/2023/10/04/diabete_900x760.jpeg",
     },
     {
-      id: 12,
+      id: 11,
       name: "Nicolò Musolino",
       profilePic:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfEhguRRbwfoedGpldqYUPlSnhhol80KUcRg&s",
     },
     {
-      id: 13,
+      id: 12,
       name: "Marco Frigerio",
       profilePic:
         "https://www.my-personaltrainer.it/2020/07/20/arrampicata-sportiva-attrezzatura_900x760.jpeg",
     },
     {
-      id: 14,
+      id: 13,
       name: "Davide Mazzoleni",
       profilePic:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZMrUcS8bpgjxDn2xrrR4oF8irQ0Tn11zGNA&s",
     },
     {
-      id: 15,
+      id: 14,
       name: "Nicolò Molteni",
       profilePic:
         "https://upload.wikimedia.org/wikipedia/commons/5/5e/Charles_Leclerc_portrait_2020.png",
     },
     {
-      id: 16,
+      id: 15,
       name: "Filippo Pinizzotto",
       profilePic:
         "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/FC_Internazionale_Milano_2021.svg/800px-FC_Internazionale_Milano_2021.svg.png",
     },
     {
-      id: 17,
+      id: 16,
       name: "Maurizio Testa",
       profilePic:
         "https://fursonafy.com/wp-content/uploads/2022/11/121d9679cb1032d9b2e0177b0d6d2376.jpg",
     },
     {
-      id: 18,
+      id: 17,
       name: "Mohamed Aihableame",
       profilePic:
         "https://www.adlmag.it/wp-content/uploads/2024/02/Senza-titolo-1-1.png",

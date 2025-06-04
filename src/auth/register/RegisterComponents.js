@@ -80,6 +80,7 @@ export const StudenteContainer = styled.div`
   height: 100%;
   transition: all 0.6s ease-in-out;
   left: 0;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   width: ${(props) => (!props.isRegisterClicked ? "50%" : "100%")};
@@ -188,6 +189,17 @@ export const StepsNavButton = styled.button`
 
   &:focus {
     outline: none;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 `;
 
@@ -414,19 +426,124 @@ export const RecapImage = styled.img`
 
 export const RecapContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: center;
-  padding-left: 5em;
-  padding-right: 5em;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 40px 30px 20px 30px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  gap: 15px;
+  overflow-y: auto;
+  height: calc(100vh - 200px);
+  
+  h1 {
+    color: var(--contrastColor);
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0 0 30px 0;
+    text-align: center;
+    width: 100%;
+  }
+`;
 
-  @media only screen and (max-width: 1000px) {
-    padding-left: 2em;
-    padding-right: 2em;
+export const RecapSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 600px;
+  margin-bottom: 15px;
+  
+  h3 {
+    color: var(--contrastColor);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 12px;
+    border-bottom: 1px solid var(--borderColor);
+    padding-bottom: 8px;
+  }
+`;
+
+export const RecapRow = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+  width: 100%;
+  margin-bottom: 10px;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 `;
 
 export const RecapInput = styled.div`
-  @media only screen and (max-width: 1500px) {
-    width: 40%;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  
+  label {
+    color: var(--contrastColor);
+    font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+    text-align: left;
+  }
+
+  input {
+    padding: 8px 12px;
+    border: 2px solid var(--borderColor);
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background-color: #f8f9fa;
+    color: #6c757d;
+  }
+`;
+
+export const ProfileImageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  
+  img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--thirdColor);
+    margin-bottom: 10px;
+  }
+  
+  p {
+    color: var(--contrastColor);
+    font-size: 0.9rem;
+    margin: 0;
+  }
+`;
+
+export const ChipsContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 12px;
+  background-color: #f8f9fa;
+  border: 2px solid var(--borderColor);
+  border-radius: 8px;
+  min-height: 50px;
+  max-height: 100px;
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 2px;
   }
 `;

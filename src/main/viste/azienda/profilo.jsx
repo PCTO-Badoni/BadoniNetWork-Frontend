@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { BsFillGridFill } from "react-icons/bs";
 import Chip from "@mui/material/Chip";
 import { students } from "../../Components/students";
-import { faHouse, faList } from "@fortawesome/free-solid-svg-icons";
+import { faHouse, faList, faEdit, faCheck, faTimes, faBuilding, faEnvelope, faPhone, faMapMarkerAlt, faInfoCircle, faIndustry, faUsers, faGlobe, faSave } from "@fortawesome/free-solid-svg-icons";
 import {
   faRightFromBracket,
   faFilter,
@@ -15,6 +15,8 @@ import { Row } from "primereact/row";
 import { RecapImage } from "../../../auth/register/RegisterComponents";
 import { FooterIcon } from "../../../FooterComponents";
 import { LabelContainer, RecapIcon } from "../componenti/ProfileComponents";
+import { toast, Bounce } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN;
 const listIcon = <FontAwesomeIcon icon={faList} />;
@@ -171,282 +173,299 @@ const Profilo = ({
     }
   };
 
+  const showSuccessToast = (message) => {
+    toast.success(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
+  const showErrorToast = (message) => {
+    toast.error(message, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
+  };
+
   const handleSaveButtonClick = async () => {
     if (buttonText === "Modifica") {
       setButtonText("Salva");
-      setError(null);
+      setError("");
       setSuccess(false);
     } else {
       // Salva i dati tramite API e aggiorna la sessione
-      await salvaProfiloAzienda();
-    }
-  };
+      try {
+        setIsLoading(true);
+        setError(null);
+        setSuccess(false);
 
-  const salvaProfiloAzienda = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-      setSuccess(false);
+        // Validazione base solo per i campi modificabili
+        if (!email.trim()) {
+          setError("L'email è obbligatoria");
+          return;
+        }
 
-      // Validazione base solo per i campi modificabili
-      if (!email.trim()) {
-        setError("L'email è obbligatoria");
-        return;
+        // Ottieni l'email originale dalla sessione per identificare l'utente
+        const emailOriginale = sessionStorage.getItem('email') || 
+                              sessionStorage.getItem('userEmail') || 
+                              localStorage.getItem('email') || 
+                              "";
+
+        // MODIFICATO: Prepara i dati per l'API - invia solo email e telefono
+        const datiPerAPI = {
+          email: email.trim(),
+          telefono: telefono.trim(),
+          email_originale: emailOriginale // Per identificare quale profilo aggiornare
+        };
+
+        console.log("Invio dati profilo aggiornati (solo email e telefono):", datiPerAPI);
+
+        // Chiamata all'API di aggiornamento profilo
+        const response = await fetch(`${prefix}/api/update-profile`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest'
+          },
+          body: JSON.stringify(datiPerAPI)
+        });
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("Errore server:", errorText);
+          throw new Error(`Errore dal server: ${response.status}`);
+        }
+
+        const responseData = await response.json();
+        console.log("Risposta aggiornamento profilo:", responseData);
+
+        // MODIFICATO: Aggiorna solo email e telefono nella sessione
+        sessionStorage.setItem('email', email.trim());
+        sessionStorage.setItem('userEmail', email.trim());
+        sessionStorage.setItem('telefono', telefono.trim());
+
+        // Aggiorna anche localStorage come backup
+        localStorage.setItem('email', email.trim());
+        localStorage.setItem('telefono', telefono.trim());
+
+        console.log('Email e telefono aggiornati nella sessione dopo il salvataggio');
+
+        showSuccessToast("Profilo aggiornato con successo!");
+        setButtonText("Modifica");
+        
+      } catch (error) {
+        console.error("Errore nell'aggiornamento del profilo:", error);
+        showErrorToast(`Errore nell'aggiornamento del profilo: ${error.message}`);
+      } finally {
+        setIsLoading(false);
       }
-
-      // Ottieni l'email originale dalla sessione per identificare l'utente
-      const emailOriginale = sessionStorage.getItem('email') || 
-                            sessionStorage.getItem('userEmail') || 
-                            localStorage.getItem('email') || 
-                            "";
-
-      // MODIFICATO: Prepara i dati per l'API - invia solo email e telefono
-      const datiPerAPI = {
-        email: email.trim(),
-        telefono: telefono.trim(),
-        email_originale: emailOriginale // Per identificare quale profilo aggiornare
-      };
-
-      console.log("Invio dati profilo aggiornati (solo email e telefono):", datiPerAPI);
-
-      // Chiamata all'API di aggiornamento profilo
-      const response = await fetch(`${prefix}/api/update-profile`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
-        body: JSON.stringify(datiPerAPI)
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("Errore server:", errorText);
-        throw new Error(`Errore dal server: ${response.status}`);
-      }
-
-      const responseData = await response.json();
-      console.log("Risposta aggiornamento profilo:", responseData);
-
-      // MODIFICATO: Aggiorna solo email e telefono nella sessione
-      sessionStorage.setItem('email', email.trim());
-      sessionStorage.setItem('userEmail', email.trim());
-      sessionStorage.setItem('telefono', telefono.trim());
-
-      // Aggiorna anche localStorage come backup
-      localStorage.setItem('email', email.trim());
-      localStorage.setItem('telefono', telefono.trim());
-
-      console.log('Email e telefono aggiornati nella sessione dopo il salvataggio');
-
-      setSuccess(true);
-      setButtonText("Modifica");
-      
-    } catch (error) {
-      console.error("Errore nell'aggiornamento del profilo:", error);
-      setError(`Errore nell'aggiornamento del profilo: ${error.message}`);
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <Components.contentContainer>
+      {/* Header migliorato */}
       <Components.TopBar>
-        <UserInfo />
-        <Components.Button
-          style={{ height: "50px", width: "200px", margin: "auto" }}
-          onClick={handleSaveButtonClick}
-          disabled={isLoading}
-        >
-          {isLoading ? "Salvataggio..." : buttonText}
-        </Components.Button>
+        <Components.ProfileHeader>
+          <Components.ProfileHeaderContent>
+            <FontAwesomeIcon icon={faBuilding} size="2x" style={{ color: 'var(--contrastColor)', marginRight: '15px' }} />
+            <div>
+              <Components.CompanyTitle>Profilo Aziendale</Components.CompanyTitle>
+              <Components.CompanySubtitle>Gestisci le informazioni della tua azienda</Components.CompanySubtitle>
+            </div>
+          </Components.ProfileHeaderContent>
+          <Components.ActionButton
+            onClick={handleSaveButtonClick}
+            disabled={isLoading}
+            $isEditing={buttonText === "Salva"}
+          >
+            <FontAwesomeIcon 
+              icon={buttonText === "Salva" ? faSave : faEdit} 
+              style={{ marginRight: '8px' }} 
+            />
+            {isLoading ? "Salvataggio..." : buttonText}
+          </Components.ActionButton>
+        </Components.ProfileHeader>
       </Components.TopBar>
 
-      {/* Messaggi di errore e successo */}
-      {error && (
-        <div style={{ 
-          color: '#dc3545', 
-          backgroundColor: '#f8d7da', 
-          border: '1px solid #f5c6cb', 
-          borderRadius: '4px', 
-          padding: '12px', 
-          margin: '0 20px 20px 20px' 
-        }}>
-          {error}
-        </div>
-      )}
-      
-      {success && (
-        <div style={{ 
-          color: '#155724', 
-          backgroundColor: '#d4edda', 
-          border: '1px solid #c3e6cb', 
-          borderRadius: '4px', 
-          padding: '12px', 
-          margin: '0 20px 20px 20px' 
-        }}>
-          Profilo aggiornato con successo!
-        </div>
-      )}
+      {/* Form container migliorato */}
+      <Components.FormContainer>
+        {/* Sezione campi modificabili */}
+        <Components.FormSection>
+          <Components.SectionHeader>
+            <FontAwesomeIcon icon={faEdit} style={{ marginRight: '10px' }} />
+            Informazioni Modificabili
+          </Components.SectionHeader>
+          
+          <Components.FieldsGrid>
+            <Components.FieldContainer>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '8px' }} />
+                Email Aziendale
+              </Components.FieldLabel>
+              <Components.InputContainer $editable={buttonText === "Salva"}>
+                <Components.StyledInput
+                  type="email"
+                  value={email}
+                  disabled={buttonText !== "Salva"}
+                  onChange={(e) => setEmail(e.target.value)}
+                  $editable={buttonText === "Salva"}
+                  placeholder="email@azienda.com"
+                />
+                {buttonText === "Salva" && (
+                  <Components.EditIcon>
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Components.EditIcon>
+                )}
+              </Components.InputContainer>
+            </Components.FieldContainer>
 
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-around",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          width: "100%",
-        }}
-      >
-        {/* CAMPO MODIFICABILE: Email */}
-        <Components.RecapInput>
-          <label htmlFor="email">Email</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="email"
-              value={email}
-              disabled={buttonText !== "Salva"}
-              onChange={(e) => setEmail(e.target.value)}
-              style={{ paddingRight: "30px" }}
-            />
-            {buttonText === "Salva" && (
-              <RecapIcon
-                className="pi pi-pen-to-square"
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                }}
-              ></RecapIcon>
-            )}
-          </div>
-        </Components.RecapInput>
+            <Components.FieldContainer>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faPhone} style={{ marginRight: '8px' }} />
+                Telefono
+              </Components.FieldLabel>
+              <Components.InputContainer $editable={buttonText === "Salva"}>
+                <Components.StyledInput
+                  type="tel"
+                  value={telefono}
+                  disabled={buttonText !== "Salva"}
+                  onChange={(e) => setTelefono(e.target.value)}
+                  $editable={buttonText === "Salva"}
+                  placeholder="+39 000 000 0000"
+                />
+                {buttonText === "Salva" && (
+                  <Components.EditIcon>
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Components.EditIcon>
+                )}
+              </Components.InputContainer>
+            </Components.FieldContainer>
+          </Components.FieldsGrid>
+        </Components.FormSection>
 
-        {/* CAMPO MODIFICABILE: Telefono */}
-        <Components.RecapInput>
-          <label htmlFor="telefono">Telefono</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="telefono"
-              value={telefono}
-              disabled={buttonText !== "Salva"}
-              onChange={(e) => setTelefono(e.target.value)}
-              style={{ paddingRight: "30px" }}
-            />
-            {buttonText === "Salva" && (
-              <RecapIcon
-                className="pi pi-pen-to-square"
-                style={{
-                  position: "absolute",
-                  right: "10px",
-                  top: "50%",
-                  transform: "translateY(-50%)",
-                }}
-              ></RecapIcon>
-            )}
-          </div>
-        </Components.RecapInput>
+        {/* Sezione informazioni aziendali */}
+        <Components.FormSection>
+          <Components.SectionHeader>
+            <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '10px' }} />
+            Informazioni Aziendali
+            <Components.ReadOnlyBadge>Solo lettura</Components.ReadOnlyBadge>
+          </Components.SectionHeader>
+          {/* Info footer */}
+          <Components.InfoFooter>
+            <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+            Le informazioni aziendali in sola lettura possono essere modificate contattando l'amministratore del sistema.
+          </Components.InfoFooter>
 
-        {/* CAMPI NON MODIFICABILI: Solo visualizzazione */}
-        <Components.RecapInput>
-          <label htmlFor="ragioneSociale">Ragione Sociale</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="ragioneSociale"
-              value={ragioneSociale}
-              disabled={true} // SEMPRE DISABILITATO
-              style={{ 
-                paddingRight: "30px",
-                backgroundColor: "#f8f9fa", // Colore di sfondo per indicare che non è modificabile
-                cursor: "not-allowed"
-              }}
-            />
-          </div>
-        </Components.RecapInput>
+          <Components.FieldsGrid>
+            <Components.FieldContainer>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faBuilding} style={{ marginRight: '8px' }} />
+                Ragione Sociale
+              </Components.FieldLabel>
+              <Components.InputContainer $readOnly>
+                <Components.StyledInput
+                  value={ragioneSociale}
+                  disabled
+                  $readOnly
+                  placeholder="Nome dell'azienda"
+                />
+              </Components.InputContainer>
+            </Components.FieldContainer>
 
-        <Components.RecapInput>
-          <label htmlFor="indirizzo">Indirizzo</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="indirizzo"
-              value={indirizzo}
-              disabled={true} // SEMPRE DISABILITATO
-              style={{ 
-                paddingRight: "30px",
-                backgroundColor: "#f8f9fa",
-                cursor: "not-allowed"
-              }}
-            />
-          </div>
-        </Components.RecapInput>
+            <Components.FieldContainer>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faMapMarkerAlt} style={{ marginRight: '8px' }} />
+                Indirizzo
+              </Components.FieldLabel>
+              <Components.InputContainer $readOnly>
+                <Components.StyledInput
+                  value={indirizzo}
+                  disabled
+                  $readOnly
+                  placeholder="Indirizzo completo"
+                />
+              </Components.InputContainer>
+            </Components.FieldContainer>
 
-        <Components.RecapInput>
-          <label htmlFor="descrizione">Descrizione Azienda</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="descrizione"
-              value={descrizione}
-              disabled={true} // SEMPRE DISABILITATO
-              style={{ 
-                paddingRight: "30px",
-                backgroundColor: "#f8f9fa",
-                cursor: "not-allowed"
-              }}
-            />
-          </div>
-        </Components.RecapInput>
+            <Components.FieldContainer $fullWidth>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faInfoCircle} style={{ marginRight: '8px' }} />
+                Descrizione Azienda
+              </Components.FieldLabel>
+              <Components.InputContainer $readOnly>
+                <Components.StyledTextarea
+                  value={descrizione}
+                  disabled
+                  $readOnly
+                  placeholder="Descrizione dell'azienda e delle sue attività"
+                  rows={3}
+                />
+              </Components.InputContainer>
+            </Components.FieldContainer>
 
-        <Components.RecapInput>
-          <label htmlFor="settore">Settore</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="settore"
-              value={settore}
-              disabled={true} // SEMPRE DISABILITATO
-              style={{ 
-                paddingRight: "30px",
-                backgroundColor: "#f8f9fa",
-                cursor: "not-allowed"
-              }}
-            />
-          </div>
-        </Components.RecapInput>
+            <Components.FieldContainer>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faIndustry} style={{ marginRight: '8px' }} />
+                Settore
+              </Components.FieldLabel>
+              <Components.InputContainer $readOnly>
+                <Components.StyledInput
+                  value={settore}
+                  disabled
+                  $readOnly
+                  placeholder="Settore di attività"
+                />
+              </Components.InputContainer>
+            </Components.FieldContainer>
 
-        <Components.RecapInput>
-          <label htmlFor="dimensioni">Dimensioni Azienda</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="dimensioni"
-              value={dimensioni}
-              disabled={true} // SEMPRE DISABILITATO
-              style={{ 
-                paddingRight: "30px",
-                backgroundColor: "#f8f9fa",
-                cursor: "not-allowed"
-              }}
-            />
-          </div>
-        </Components.RecapInput>
+            <Components.FieldContainer>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faUsers} style={{ marginRight: '8px' }} />
+                Dimensioni Azienda
+              </Components.FieldLabel>
+              <Components.InputContainer $readOnly>
+                <Components.StyledInput
+                  value={dimensioni}
+                  disabled
+                  $readOnly
+                  placeholder="Numero di dipendenti"
+                />
+              </Components.InputContainer>
+            </Components.FieldContainer>
 
-        <Components.RecapInput>
-          <label htmlFor="sitoWeb">Sito Web</label>
-          <div style={{ position: "relative", width: "100%" }}>
-            <Components.Input
-              idtype="sitoWeb"
-              value={sitoWeb}
-              disabled={true} // SEMPRE DISABILITATO
-              style={{ 
-                paddingRight: "30px",
-                backgroundColor: "#f8f9fa",
-                cursor: "not-allowed"
-              }}
-            />
-          </div>
-        </Components.RecapInput>
-      </div>
+            <Components.FieldContainer>
+              <Components.FieldLabel>
+                <FontAwesomeIcon icon={faGlobe} style={{ marginRight: '8px' }} />
+                Sito Web
+              </Components.FieldLabel>
+              <Components.InputContainer $readOnly>
+                <Components.StyledInput
+                  value={sitoWeb}
+                  disabled
+                  $readOnly
+                  placeholder="www.azienda.com"
+                />
+              </Components.InputContainer>
+            </Components.FieldContainer>
+          </Components.FieldsGrid>
+        </Components.FormSection>
+      </Components.FormContainer>
     </Components.contentContainer>
   );
 };

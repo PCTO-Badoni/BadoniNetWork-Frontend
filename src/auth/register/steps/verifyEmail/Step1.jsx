@@ -5,7 +5,10 @@ import { Bounce, toast } from "react-toastify";
 
 const prefix = import.meta.env.VITE_DEFAULT_HOST_DOMAIN
 
-const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
+const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified, handleNext }) => {
+  console.log("Step1 renderizzato con email:", email);
+  console.log("isCodeVerified:", isCodeVerified);
+  
   const [num1, setNum1] = React.useState("");
   const [num2, setNum2] = React.useState("");
   const [num3, setNum3] = React.useState("");
@@ -48,12 +51,16 @@ const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
   }, []);
 
   async function sendOTPCode() {
+    console.log("Tentativo di invio OTP per email:", email);
+    
     const data = {
       email,
     };
 
     if (!isCodeVerified) {
       try {
+        console.log("Invio richiesta OTP...");
+        
         const response = await fetch(
           prefix+"/api/send-student-otp",
           {
@@ -65,25 +72,35 @@ const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
           },
         );
 
+        console.log("Risposta ricevuta:", response);
+
         if (!response.ok) {
           const errorData = await response.json();
+          console.error("Errore nella risposta:", errorData);
           error(errorData.message || "Errore durante la richiesta");
           throw new Error(`HTTP error! status: ${response.status}`);
         }
 
         const responseData = await response.json();
+        console.log("Dati risposta:", responseData);
+        
         if (responseData.message === "Verifica inviata") {
           setIsSent(true);
+          console.log("Toast di successo dovrebbe apparire");
           responseView(responseData.message);
+        } else {
+          console.log("Messaggio inaspettato:", responseData.message);
         }
       } catch (error) {
-        console.error("There was an error!", error);
+        console.error("Errore durante l'invio OTP:", error);
       }
+    } else {
+      console.log("Codice già verificato, non invio OTP");
     }
   }
 
   async function verifyOTPCode(event) {
-    event.preventDefault(); // Add this line to prevent form submission
+    event.preventDefault();
 
     const codice = num1 + num2 + num3 + num4 + num5 + num6;
 
@@ -112,7 +129,16 @@ const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
 
       const responseData = await response.json();
       if (responseData.message === "Codice valido") {
+        // Prima imposta il codice come verificato
         setCodeVerified(true);
+        responseView("Codice verificato con successo!");
+        
+        // Passa allo step successivo dopo un breve delay per permettere l'aggiornamento dello stato
+        setTimeout(() => {
+          if (handleNext) {
+            handleNext(true);
+          }
+        }, 100); // Ridotto a 100ms per un aggiornamento più rapido
       }
     } catch (error) {
       console.error("There was an error!", error);
@@ -168,6 +194,7 @@ const Step1 = React.memo(({ email, setCodeVerified, isCodeVerified }) => {
             placeholder=""
           />
         </div>
+
         <OTPComponents.verifyButton
           id="verifyButton"
           isCodeVerified={isCodeVerified}

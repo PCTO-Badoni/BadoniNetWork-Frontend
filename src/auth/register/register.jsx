@@ -154,6 +154,12 @@ function Register() {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
+      // Salva i dati temporaneamente nella sessione per il completamento
+      sessionStorage.setItem('temp_email', email);
+      sessionStorage.setItem('temp_ragionesociale', ragionesociale);
+      sessionStorage.setItem('temp_telefono', telefono);
+      sessionStorage.setItem('temp_indirizzo', indirizzo);
+
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.indexOf("application/json") !== -1) {
         const responseData = await response.json();
@@ -330,6 +336,7 @@ function Register() {
       if (password === confirmPassword && isValid) {
         setRegisterClicked(true);
         setConfirmPassword("");
+        setCodeVerified(false); // Reset del codice verificato
       } else if (password !== confirmPassword) {
         toast.error("Le password non corrispondono");
         setPasswordsMatch(false);
@@ -339,10 +346,11 @@ function Register() {
         return;
       }
     } else if (activeStep === 1) {
-      if (!isCodeVerified) {
-        error("Prima di continuare verifica la tua email");
-        return;
-      }
+      // Rimuovi questo controllo perché viene gestito automaticamente da Step1
+      // if (!isCodeVerified) {
+      //   error("Prima di continuare verifica la tua email");
+      //   return;
+      // }
     } else if (activeStep === 2) {
       // check if nome and cognome are not empty
       if (nome.split(" ").join("") === "") {
@@ -432,6 +440,7 @@ function Register() {
       email={email}
       setCodeVerified={setCodeVerified}
       isCodeVerified={isCodeVerified}
+      handleNext={handleNext} // Aggiungi questa prop
     />,
     <Step2
       deadlineDate={deadlineDate}
@@ -498,6 +507,7 @@ function Register() {
             >
               {arrowLeft}
             </Components.StepsNavButton>
+            
             <Components.Container>
               <Components.AziendaContainer signingIn={signIn}>
                 {isSending ? (
@@ -683,19 +693,42 @@ function Register() {
                 </Components.Overlay>
               </Components.OverlayContainer>
             </Components.Container>
+            
             <Components.StepsNavButton
               isRegisterClicked={isRegisterClicked}
               onClick={() => {
                 !isRegisterClicked ? setRegisterClicked(true) : handleNext();
               }}
-              disabled={!isRegisterClicked}
-              style={{ marginTop: "6em" }}
+              disabled={
+                !isRegisterClicked || 
+                (activeStep === 1 && !isCodeVerified) // Disabilita se siamo nello step 1 e il codice non è verificato
+              }
+              style={{ 
+                marginTop: "6em",
+                opacity: (!isRegisterClicked || (activeStep === 1 && !isCodeVerified)) ? 0.5 : 1,
+                cursor: (!isRegisterClicked || (activeStep === 1 && !isCodeVerified)) ? 'not-allowed' : 'pointer'
+              }}
             >
               {activeStep === steps.length ? save : arrowRight}
             </Components.StepsNavButton>
           </div>
         </PhotoProvider>
       </div>
+      
+      {/* Assicurati che ci sia il ToastContainer */}
+      <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition={Bounce}
+      />
     </>
   );
 }

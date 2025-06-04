@@ -8,12 +8,14 @@ export const Header = styled.div`
   flex-direction: row;
   justify-content: space-between;
   box-shadow: 0 19px 15px -22px var(--shadowColor);
-  width: 100%;
+  width: 100vw;
   height: 5em;
   position: sticky;
   top: 0;
   z-index: 1000;
   margin-top: -1em;
+  padding-left: calc(50vw - 50%);
+  padding-right: calc(50vw - 50%);
 `;
 
 export const Logo = styled.img.attrs((props) => ({ src: logo }))`

@@ -69,6 +69,26 @@ function OTP() {
 
            const responseData = await response.json();
            responseView(responseData.message);
+
+           // Controllo basato sul response code HTTP 200
+           if (response.status === 200) {
+               // Recupera i dati azienda dalla sessione o dalla risposta
+               const datiAzienda = {
+                   email: sessionStorage.getItem('temp_email') || responseData.email,
+                   ragionesociale: sessionStorage.getItem('temp_ragionesociale') || responseData.ragionesociale,
+                   telefono: sessionStorage.getItem('temp_telefono') || responseData.telefono,
+                   indirizzo: sessionStorage.getItem('temp_indirizzo') || responseData.indirizzo
+               };
+
+               // Breve delay per permettere all'utente di vedere il messaggio di successo
+               setTimeout(() => {
+                   // Reindirizza alla pagina di completamento con i dati azienda
+                   navigate('/register/completa-azienda', { 
+                       state: { datiAzienda } 
+                   });
+               }, 2000);
+           }
+           
        } catch (error) {
            console.error("There was an error!", error);
        }
